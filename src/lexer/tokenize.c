@@ -1,130 +1,109 @@
-
 #include "../../include/minishell.h"
 
-static int	handle_quotes_and_escapes(char *input, int *i,
-				int *in_single_quote, int *in_double_quote)
+static int tokenize_operators(char *in, int *i, t_token **toks)
 {
-	if (input[*i] == '\'' && !*in_double_quote)
-		*in_single_quote = !*in_single_quote;
-	else if (input[*i] == '"' && !*in_single_quote)
-		*in_double_quote = !*in_double_quote;
-	else if (input[*i] == '\\' && input[*i + 1])
-	{
-		(*i)++;
-		return (1);
-	}
-	return (0);
+    if (in[*i] == '<' && in[*i + 1] == '<')
+    {
+        add_token(toks, create_token(TOKEN_HEREDOC, "<<"));
+        *i += 2;
+        return (1);
+    }
+    if (in[*i] == '>' && in[*i + 1] == '>')
+    {
+        add_token(toks, create_token(TOKEN_REDIR_APPEND, ">>"));
+        *i += 2;
+        return (1);
+    }
+    if (in[*i] == '<')
+    {
+        add_token(toks, create_token(TOKEN_REDIR_IN, "<"));
+        (*i)++;
+        return (1);
+    }
+    if (in[*i] == '>')
+    {
+        add_token(toks, create_token(TOKEN_REDIR_OUT, ">"));
+        (*i)++;
+        return (1);
+    }
+    if (in[*i] == '|')
+    {
+        add_token(toks, create_token(TOKEN_PIPE, "|"));
+        (*i)++;
+        return (1);
+    }
+    return (0);
 }
 
-static int	is_special_char(char c)
+static int tokenize_word(char *in, int *i, t_token **toks)
 {
-	return (c == ' ' || c == '\t' || c == '|' || c == '<'
-		|| c == '>' || c == '(' || c == ')');
+    int start;
+    int in_sq; 
+    int in_dq; 
+
+    start = *i;
+    in_sq = 0;
+    in_dq = 0;
+    while (in[*i])
+    {
+        if (in[*i] == '\'' && !in_dq)
+            in_sq = !in_sq;
+        else if (in[*i] == '"' && !in_sq)
+            in_dq = !in_dq;
+
+        if (!in_sq && !in_dq && (ft_isspace(in[*i]) || is_special_char(in[*i])))
+            break;
+        
+        (*i)++;
+    }
+
+    if (in_sq || in_dq)
+    {
+        ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
+        return (0);
+    }
+
+    if (*i > start)
+    {
+        char *word = ft_substr(in, start, *i - start);
+        add_token(toks, create_token(TOKEN_WORD, word));
+        free(word);
+    }
+    return (1); 
 }
 
-static int	tokenize_word(char *input, int *i, t_token **tokens)
+t_token *tokenize(char *in)
 {
-	int		start;
-	int		len;
-	int		in_single_quote;
-	int		in_double_quote;
-	char	*word;
+    t_token *toks;
+    int i;
 
-	start = *i;
-	in_single_quote = 0;
-	in_double_quote = 0;
-	while (input[*i])
-	{
-		if (!in_single_quote && !in_double_quote && is_special_char(input[*i]))
-			break ;
-		if (handle_quotes_and_escapes(input, i, &in_single_quote,
-				&in_double_quote))
-			(*i)++;
-		(*i)++;
-	}
-	len = *i - start;
-	if (len > 0)
-	{
-		word = ft_substr(input, start, len);
-		if (!word)
-			return (0);
-		add_token(tokens, create_token(TOKEN_WORD, word));
-		free(word);
-	}
-	return (1);
-}
+    if (!in)
+        return (NULL);
+    toks = NULL;
+    i = 0;
+    while (in[i])
+    {
+        while (in[i] && ft_isspace(in[i]))
+            i++;
+        if (!in[i])
+            break;
 
-static int	tokenize_operators(char *input, int *i, t_token **tokens)
-{
-	if (input[*i] == '|')
-	{
-		add_token(tokens, create_token(TOKEN_PIPE, "|"));
-		(*i)++;
-	}
-	else if (input[*i] == '<')
-	{
-		if (input[*i + 1] == '<')
-		{
-			add_token(tokens, create_token(TOKEN_HEREDOC, "<<"));
-			*i += 2;
-		}
-		else
-		{
-			add_token(tokens, create_token(TOKEN_REDIR_IN, "<"));
-			(*i)++;
-		}
-	}
-	else if (input[*i] == '>')
-	{
-		if (input[*i + 1] == '>')
-		{
-			add_token(tokens, create_token(TOKEN_REDIR_APPEND, ">>"));
-			*i += 2;
-		}
-		else
-		{
-			add_token(tokens, create_token(TOKEN_REDIR_OUT, ">"));
-			(*i)++;
-		}
-	}
-	else if (input[*i] == '(')
-	{
-		add_token(tokens, create_token(TOKEN_PAREN_OPEN, "("));
-		(*i)++;
-	}
-	else if (input[*i] == ')')
-	{
-		add_token(tokens, create_token(TOKEN_PAREN_CLOSE, ")"));
-		(*i)++;
-	}
-	return (1);
-}
-
-t_token	*tokenize(char *input)
-{
-	t_token	*tokens;
-	int		i;
-
-	if (!input)
-		return (NULL);
-	tokens = NULL;
-	i = 0;
-	while (input[i])
-	{
-		while (input[i] == ' ' || input[i] == '\t')
-			i++;
-		if (!input[i])
-			break ;
-		if (is_special_char(input[i]) && input[i] != ' ' && input[i] != '\t')
-		{
-			if (!tokenize_operators(input, &i, &tokens))
-				break ;
-		}
-		else
-		{
-			if (!tokenize_word(input, &i, &tokens))
-				break ;
-		}
-	}
-	return (tokens);
+        if (is_special_char(in[i]))
+        {
+            if (!tokenize_operators(in, &i, &toks))
+            {
+                free_tokens(toks);
+                return (NULL);
+            }
+        }
+        else
+        {
+            if (!tokenize_word(in, &i, &toks))
+            {
+                free_tokens(toks);
+                return (NULL);
+            }
+        }
+    }
+    return (toks);
 }

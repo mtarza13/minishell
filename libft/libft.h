@@ -4,6 +4,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+void	ft_putnbr_fd(int n, int fd);
 
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
@@ -19,5 +20,7 @@ int		ft_isalnum(int c);
 int		ft_isdigit(int c);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_putstr_fd(char *s, int fd);
+char *ft_strcpy(char *dst, const char *src);
+char	**ft_split(char const *s, char c);
 
 #endif

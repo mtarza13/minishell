@@ -1,125 +1,130 @@
-
 #include "../../include/minishell.h"
 
-static int	handle_input_redirection(t_redir *redir, t_env *env)
-{
-	char	**expanded;
-	int		fd;
+// static int handle_input_redirection(t_redir *redir, t_env *env)
+// {
+//     char **expanded;
+//     int fd;
+//     int word_count = 0;
 
-	if (redir->type == TOKEN_HEREDOC)
-	{
-		fd = setup_heredoc_complete(redir, env);
-		if (fd == -1)
-			return (0);
-		if (dup2(fd, STDIN_FILENO) == -1)
-		{
-			close(fd);
-			perror("minishell: dup2");
-			return (0);
-		}
-		close(fd);
-		return (1);
-	}
-	else if (redir->type == TOKEN_REDIR_IN)
-	{
-		expanded = expand_args_professional(&redir->target, env);
-		if (!expanded || !expanded[0])
-		{
-			ft_free_array(expanded);
-			ft_putstr_fd("minishell: ambiguous redirect\n", 2);
-			return (0);
-		}
-		fd = open(expanded[0], O_RDONLY);
-		if (fd == -1)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(expanded[0], 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd("\n", 2);
-			ft_free_array(expanded);
-			return (0);
-		}
-		if (dup2(fd, STDIN_FILENO) == -1)
-		{
-			close(fd);
-			perror("minishell: dup2");
-			ft_free_array(expanded);
-			return (0);
-		}
-		close(fd);
-		ft_free_array(expanded);
-		return (1);
-	}
-	return (1);
+//     if (redir->type == TOKEN_HEREDOC)
+//     {
+//         fd = setup_heredoc(redir, env);
+//         if (fd < 0) return (0);
+//         dup2(fd, STDIN_FILENO);
+//         close(fd);
+//         return (1);
+//     }
+    
+//     expanded = expand_args_professional(&redir->target, env);
+//     if (!expanded) {
+//         ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+//         return (0);
+//     }
+//     while(expanded[word_count]) word_count++;
+//     if (word_count != 1) {
+//         ft_free_array(expanded);
+//         ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+//         return (0);
+//     }
+
+//     fd = open(expanded[0], O_RDONLY);
+//     if (fd == -1) {
+//         perror(expanded[0]);
+//         ft_free_array(expanded);
+//         return (0);
+//     }
+//     dup2(fd, STDIN_FILENO);
+//     close(fd);
+//     ft_free_array(expanded);
+//     return (1);
+// }
+
+static int handle_output_redirection(t_redir *redir, t_env *env)
+{
+    char **expanded;
+    int fd;
+    int flags;
+    int word_count = 0;
+
+    expanded = expand_args_professional(&redir->target, env);
+    if (!expanded) {
+        ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+        return (0);
+    }
+    while(expanded[word_count]) word_count++;
+    if (word_count != 1) {
+        ft_free_array(expanded);
+        ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+        return (0);
+    }
+
+    if (redir->type == TOKEN_REDIR_APPEND)
+        flags = O_WRONLY | O_CREAT | O_APPEND;
+    else
+        flags = O_WRONLY | O_CREAT | O_TRUNC;
+    
+    fd = open(expanded[0], flags, 0644);
+    if (fd == -1) {
+        perror(expanded[0]);
+        ft_free_array(expanded);
+        return (0);
+    }
+    dup2(fd, STDOUT_FILENO);
+    close(fd);
+    ft_free_array(expanded);
+    return (1);
 }
 
-static int	handle_output_redirection(t_redir *redir, t_env *env)
+static t_redir *find_last_input_redir(t_redir *redirs)
 {
-	char	**expanded;
-	int		flags;
-	int		fd;
-
-	expanded = expand_args_professional(&redir->target, env);
-	if (!expanded || !expanded[0])
-	{
-		ft_free_array(expanded);
-		ft_putstr_fd("minishell: ambiguous redirect\n", 2);
-		return (0);
-	}
-	flags = O_WRONLY | O_CREAT;
-	if (redir->type == TOKEN_REDIR_APPEND)
-		flags |= O_APPEND;
-	else
-		flags |= O_TRUNC;
-	fd = open(expanded[0], flags, 0644);
-	if (fd == -1)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(expanded[0], 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
-		ft_free_array(expanded);
-		return (0);
-	}
-	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		close(fd);
-		perror("minishell: dup2");
-		ft_free_array(expanded);
-		return (0);
-	}
-	close(fd);
-	ft_free_array(expanded);
-	return (1);
+    t_redir *last_input = NULL;
+    while (redirs)
+    {
+        if (redirs->type == TOKEN_REDIR_IN || redirs->type == TOKEN_HEREDOC)
+        {
+            last_input = redirs;
+        }
+        redirs = redirs->next;
+    }
+    return (last_input);
 }
 
-int	setup_redirections(t_redir *redirs, t_env *env)
+int setup_redirections(t_redir *redirs, t_env *env)
 {
-	t_redir	*current;
+    t_redir *current = redirs;
+    t_redir *last_input_redir = find_last_input_redir(redirs);
+    int     heredoc_fd;
 
-	current = redirs;
-	while (current)
-	{
-		if (current->type == TOKEN_REDIR_IN || current->type == TOKEN_HEREDOC)
-		{
-			if (!handle_input_redirection(current, env))
-				return (0);
-		}
-		else if (current->type == TOKEN_REDIR_OUT
-			|| current->type == TOKEN_REDIR_APPEND)
-		{
-			if (!handle_output_redirection(current, env))
-				return (0);
-		}
-		current = current->next;
-	}
-	return (1);
+    while (current)
+    {
+        if (current->type == TOKEN_HEREDOC)
+        {
+            heredoc_fd = setup_heredoc(current, env);
+            if (heredoc_fd < 0)
+                return (0); 
+
+            if (current != last_input_redir)
+                close(heredoc_fd);
+            else
+                dup2(heredoc_fd, STDIN_FILENO);
+        }
+        else if (current->type == TOKEN_REDIR_IN)
+        {
+            if (current == last_input_redir)
+            {
+            }
+        }
+        else if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_APPEND)
+        {
+            if (!handle_output_redirection(current, env))
+                return (0);
+        }
+        current = current->next;
+    }
+    return (1);
 }
-
-int	is_redirection_token(t_token_type type)
+int is_redirection_token(t_token_type type)
 {
-	return (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT
-		|| type == TOKEN_REDIR_APPEND || type == TOKEN_HEREDOC);
+    return (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT ||
+            type == TOKEN_REDIR_APPEND || type == TOKEN_HEREDOC);
 }

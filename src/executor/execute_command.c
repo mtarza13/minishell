@@ -1,4 +1,3 @@
-
 #include "../../include/minishell.h"
 
 static int	execute_external_command(char **args, t_env *env, t_redir *redirs)
@@ -8,6 +7,11 @@ static int	execute_external_command(char **args, t_env *env, t_redir *redirs)
 	char	**envp;
 
 	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return (1);
+	}
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -18,18 +22,15 @@ static int	execute_external_command(char **args, t_env *env, t_redir *redirs)
 		execvp(args[0], args);
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		ft_putstr_fd(": command not found\n", 2);
 		ft_free_array(envp);
-		exit(errno == EACCES ? PERMISSION_DENIED : COMMAND_NOT_FOUND);
+		exit(COMMAND_NOT_FOUND);
 	}
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		env->exit_status = WIFEXITED(status) ? WEXITSTATUS(status) : 1;
-		return (env->exit_status);
-	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	return (1);
 }
 

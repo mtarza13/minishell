@@ -28,16 +28,16 @@ MAIN_SRCS = main.c
 BUILTIN_SRCS = builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
 			   builtins/export.c builtins/pwd.c builtins/unset.c
 
-EXECUTOR_SRCS = executor/execute.c executor/execute_ast.c executor/execute_builtin.c \
+EXECUTOR_SRCS = executor/execute_ast.c executor/execute_builtin.c \
 				executor/execute_command.c executor/redirections.c
 
 LEXER_SRCS = lexer/tokenize.c lexer/token_utils.c
 
-PARSER_SRCS = parser/parse.c parser/parse_command.c parser/parse_pipeline.c \
+PARSER_SRCS = parser/parse_command.c parser/parse_pipeline.c \
 			  parser/parse_redirections.c parser/syntax_validation.c
 
 UTILS_SRCS = utils/ft_utils.c utils/string_utils.c utils/memory_utils.c \
-			 utils/array_utils.c
+			 
 
 ENV_SRCS = env/env_init.c env/env_utils.c env/env_expand.c env/variable_expand.c
 
