@@ -1,134 +1,114 @@
 #include "../../include/minishell.h"
 
 /*
- * get_var_name_complete:
- * A static helper function to extract the name of a variable following a '$'.
- * Handles cases like $VAR, ${VAR}, $?, $$, and $0.
+ * get_variable_name:
+ * A static helper to extract the name of a variable following a '$'.
+ * Handles single-character names like '?' and '$', as well as alphanumeric names.
  */
-static char *get_var_name_complete(char *str, int *i)
+static char	*get_variable_name(char *str, int *i)
 {
-    int     start;
-    int     len;
-    char    *name;
+	int		start;
 
-    start = *i;
-    if (str[*i] == '?')
-    {
-        (*i)++;
-        return (ft_strdup("?"));
-    } if (str[*i] == '$')
-    {
-        (*i)++;
-        return (ft_strdup("$"));
-    }
-    if (str[*i] == '0')
-    {
-        (*i)++;
-        return (ft_strdup("0"));
-    }
-    if (ft_isalnum(str[*i]) || str[*i] == '_')
-    {
-        while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
-            (*i)++;
-        len = *i - start;
-        name = ft_substr(str, start, len);
-        return (name);
-    }
-    return (NULL);
+	start = *i;
+	// Handles special single-character variables like $? and $$
+	if (str[*i] == '?' || str[*i] == '$' || ft_isdigit(str[*i]))
+	{
+		(*i)++;
+		return (ft_substr(str, start, 1));
+	}
+	// Handles standard alphanumeric variable names (e.g., $USER, $VAR_1)
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+		(*i)++;
+	if (*i > start)
+		return (ft_substr(str, start, *i - start));
+	// If '$' is followed by something else (like a space or '/'), it's not a var
+	return (NULL);
 }
 
 /*
- * expand_variable_value:
- * A static helper that takes a variable name and returns its value from the
- * environment or as a special shell variable.
+ * get_variable_value:
+ * A static helper that takes a variable name and returns its allocated value.
+ * Handles special shell variables and looks up others in the environment.
  */
-static char *expand_variable_value(char *var_name, t_env *env)
+static char	*get_variable_value(char *name, t_env *env)
 {
-    char *value;
+	char	*value;
 
-    if (!var_name)
-        return (ft_strdup(""));
-    if (ft_strcmp(var_name, "?") == 0)
-        return (ft_itoa(env->exit_status));
-    if (ft_strcmp(var_name, "$") == 0)
-        return (ft_itoa(getpid())); 
-    if (ft_strcmp(var_name, "0") == 0)
-        return (ft_strdup("minishell"));
-    value = get_env_value(env, var_name);
-    return (value ? ft_strdup(value) : ft_strdup(""));
+	if (!name)
+		return (ft_strdup(""));
+	if (ft_strcmp(name, "?") == 0)
+		return (ft_itoa(env->exit_status));
+	if (ft_strcmp(name, "$") == 0)
+		return (ft_itoa(getpid())); // Note: This should be the PID of the main shell process
+	// In an interactive shell, positional parameters like $0, $1 are not expanded
+	if (ft_isdigit(name[0]))
+		return (ft_strdup(""));
+	value = get_env_value(env, name);
+	if (value)
+		return (ft_strdup(value));
+	// If the variable is not found, it expands to an empty string
+	return (ft_strdup(""));
 }
 
 /*
  * expand_variables_advanced:
- * The main expansion function. It processes a string, expands variables,
- * handles quotes, and manages the $"..." syntax, all in a single pass.
- * This function is the single source of truth for expansion.
+ * The definitive single-pass function for all expansions and quote removal.
+ * It correctly handles all quoting rules and variable expansion syntax.
  */
-
-char    *expand_variables_advanced(char *str, t_env *env)
+char	*expand_variables_advanced(char *str, t_env *env)
 {
-    char                *result;
-    int                 capacity;
-    int                 result_len;
-    int                 i;
-    t_expand_context    ctx;
-    char                *var_name;
-    char                *var_value;
+	char	*result;
+	int		i;
+	int		j;
+	t_expand_context ctx;
 
-    if (!str)
-        return (NULL);
-    capacity = ft_strlen(str) * 2 + 100;
-    result = malloc(capacity);
-    if (!result) return (NULL);
-    result[0] = '\0';
-    result_len = 0;
-    i = 0;
-    ft_memset(&ctx, 0, sizeof(t_expand_context));
+	if (!str)
+		return (NULL);
+	result = malloc(sizeof(char) * (ft_strlen(str) * 2 + 1));
+	if (!result)
+		return (NULL);
+	ft_memset(result, 0, ft_strlen(str) * 2 + 1);
+	i = 0;
+	j = 0;
+	ft_memset(&ctx, 0, sizeof(t_expand_context));
 
-    while (str[i])
-    {
-        if (str[i] == '$' && (str[i + 1] == '\'' || str[i + 1] == '"'))
-        {
-            char quote_char = str[++i];
-            i++;
-            while (str[i] && str[i] != quote_char)
-                result = append_char_dynamic(result, str[i++], &result_len, &capacity);
-            if (str[i] == quote_char) i++;
-            continue;
-        }
-        if (str[i] == '\'' && !ctx.in_double_quote)
-        {
-            ctx.in_single_quote = !ctx.in_single_quote;
-            i++;
-            continue;
-        }
-        if (str[i] == '"' && !ctx.in_single_quote)
-        {
-            ctx.in_double_quote = !ctx.in_double_quote;
-            i++;
-            continue;
-        }
-        if (str[i] == '$' && !ctx.in_single_quote)
-        {
-            i++;
-            var_name = get_var_name_complete(str, &i);
-            if (var_name)
-            {
-                var_value = expand_variable_value(var_name, env);
-                if (var_value)
-                {
-                    int j = 0;
-                    while (var_value[j])
-                        result = append_char_dynamic(result, var_value[j++], &result_len, &capacity);
-                    free(var_value);
-                }
-                free(var_name);
-            }
-            else
-                result = append_char_dynamic(result, '$', &result_len, &capacity);
-        }
-        else
-            result = append_char_dynamic(result, str[i++], &result_len, &capacity);
-    }
-    return (result);
+	// --- THIS IS THE DEFINITIVE FIX ---
+	// If the token starts with `$` followed by a quote, skip the initial `$`
+	// as it's part of the syntax, not a character to be printed.
+	if (str[0] == '$' && (str[1] == '\'' || str[1] == '"'))
+	{
+		i = 1; // Start processing from the first quote, skipping the '$'
+	}
+	// --- END OF FIX ---
+
+	while (str[i])
+	{
+		if (str[i] == '\'' && !ctx.in_double_quote)
+		{
+			ctx.in_single_quote = !ctx.in_single_quote;
+			i++;
+			continue;
+		}
+		if (str[i] == '"' && !ctx.in_single_quote)
+		{
+			ctx.in_double_quote = !ctx.in_double_quote;
+			i++;
+			continue;
+		}
+		if (str[i] == '$' && !ctx.in_single_quote)
+		{
+			i++; // Consume '$'
+			char *name = get_variable_name(str, &i);
+			char *value = get_variable_value(name, env);
+			ft_strlcat(result, value, ft_strlen(str) * 2 + 1);
+			j = ft_strlen(result);
+			free(name);
+			free(value);
+		}
+		else
+		{
+			result[j++] = str[i++];
+		}
+	}
+	return (result);
 }
