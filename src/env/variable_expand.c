@@ -16,8 +16,7 @@ static char *get_var_name_complete(char *str, int *i)
     {
         (*i)++;
         return (ft_strdup("?"));
-    }
-    if (str[*i] == '$')
+    } if (str[*i] == '$')
     {
         (*i)++;
         return (ft_strdup("$"));
@@ -65,7 +64,8 @@ static char *expand_variable_value(char *var_name, t_env *env)
  * handles quotes, and manages the $"..." syntax, all in a single pass.
  * This function is the single source of truth for expansion.
  */
-char *expand_variables_advanced(char *str, t_env *env)
+
+char    *expand_variables_advanced(char *str, t_env *env)
 {
     char                *result;
     int                 capacity;
