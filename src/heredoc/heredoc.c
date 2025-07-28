@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 16:07:19 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:21:27 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*get_heredoc_filename(void)
 	return (filename);
 }
 
-void	heredoc_handle(char *file, char *dlimit, int expand, t_env *env)
+void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 {
 	char *input;
 	int fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -105,7 +105,7 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_env *env)
 		if (!ft_strcmp(input, dlimit))
 			break ;
 		if (!expand)
-			input = expand_variables_advanced(input, env);
+			input = expand_variables_advanced(input, data);
 		write(fd, input, ft_strlen(input));
 		write(fd, "\n", 1);
 	}
@@ -137,7 +137,7 @@ int	heredoc_sig_status(char *dlimit, int status)
 	return (1);
 }
 
-int	feed_heredoc(char *file, char *dlimit, int expand, t_env *env)
+int	feed_heredoc(char *file, char *dlimit, int expand, t_data *data)
 {
 	if (expand)
 		dlimit = remove_quotes_advanced(dlimit);
@@ -147,7 +147,7 @@ int	feed_heredoc(char *file, char *dlimit, int expand, t_env *env)
 	if (!pid)
 	{
 		signals_heredoc_child();
-		heredoc_handle(file, dlimit, expand, env);
+		heredoc_handle(file, dlimit, expand, data);
 	}
 	waitpid(pid, &status, 0);
 	if (!heredoc_sig_status(dlimit, status))
@@ -163,7 +163,7 @@ int	heredoc_check(t_token *token, t_data *data)
 		{
 			char *dlimit = token->next->value;
 			token->next->value = get_heredoc_filename();
-			if (!feed_heredoc(token->next->value, dlimit, (ft_strchr(dlimit, '\'') || ft_strchr(dlimit, '"')), env))
+			if (!feed_heredoc(token->next->value, dlimit, (ft_strchr(dlimit, '\'') || ft_strchr(dlimit, '"')), data))
 				return (0);
 		}
 		token = token->next;

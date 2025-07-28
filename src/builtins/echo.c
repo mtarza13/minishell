@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:01:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/26 17:03:03 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:25:14 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	builtin_echo(char **args)
 			;
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	return (0);
 }

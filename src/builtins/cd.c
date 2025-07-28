@@ -6,19 +6,19 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 16:00:14 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:04:04 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*get_cd_path(char **args, t_env *env)
+static char	*get_cd_path(char **args, t_data *data)
 {
 	char	*path;
 
 	if (!args[1])
 	{
-		path = get_env_value(env, "HOME");
+		path = get_env_value("HOME", data);
 		if (!path)
 		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
@@ -42,18 +42,18 @@ static int arg_count(char **args)
 	return (i);
 }
 
-void	update_env(t_env **head, char *value)
+void	update_env(t_data *data, char *value)
 {
 	t_env *(tmp);
 	char	*cwd;
 	
-	tmp = *head;
+	tmp = data->env;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return ;
 	if (!tmp)
 	{
-		add_env_node(head, new_env_node(ft_strdup(value), ft_strdup(cwd)));
+		add_env_node(&data->env, new_env_node(ft_strdup(value), ft_strdup(cwd)));
 		free(cwd);
 		return ;
 	}
@@ -66,7 +66,7 @@ void	update_env(t_env **head, char *value)
 		}
 		else if (!tmp->next)
 		{
-			add_env_node(head, new_env_node(ft_strdup(value), ft_strdup(cwd)));
+			add_env_node(&data->env, new_env_node(ft_strdup(value), ft_strdup(cwd)));
 			break ;
 		}
 		tmp = tmp->next;
@@ -74,7 +74,7 @@ void	update_env(t_env **head, char *value)
 	free(cwd);
 }
 
-int	builtin_cd(char **args, t_env *env)
+int	builtin_cd(char **args, t_data *data)
 {
 	char	*path;
 	char	*old_pwd;
@@ -83,7 +83,7 @@ int	builtin_cd(char **args, t_env *env)
 	if (arg_count(args) > 2)
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);	
 	old_pwd = getcwd(NULL, 0);
-	path = get_cd_path(args, env);
+	path = get_cd_path(args, data);
 	if (!path)
 	{
 		if (old_pwd)
@@ -103,14 +103,14 @@ int	builtin_cd(char **args, t_env *env)
 	}
 	if (old_pwd)
 	{
-		update_env(&env, "OLDPWD");
+		update_env(data, "OLDPWD");
 		// set_env_value(env, "OLDPWD", old_pwd);
 		free(old_pwd);
 	}
 	new_pwd = getcwd(NULL, 0);
 	if (new_pwd)
 	{
-		update_env(&env, "PWD");
+		update_env(data, "PWD");
 		// set_env_value(env, "PWD", new_pwd);
 		free(new_pwd);
 	}

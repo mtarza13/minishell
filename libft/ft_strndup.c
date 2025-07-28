@@ -6,11 +6,12 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 14:21:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:00:21 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../include/minishell.h"
 
 char	*ft_strndup(const char *s, size_t n)
 {

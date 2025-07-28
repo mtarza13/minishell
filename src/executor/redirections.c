@@ -6,13 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 11:16:59 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:45:22 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int handle_input_redirection(t_redir *redir, t_env *env)
+static int handle_input_redirection(t_redir *redir, t_data *data)
 {
     char **expanded;
     int fd;
@@ -27,7 +27,7 @@ static int handle_input_redirection(t_redir *redir, t_env *env)
     //     return (1);
     // }
     
-    expanded = expand_args_professional(&redir->target, env);
+    expanded = expand_args_professional(&redir->target, data);
     if (!expanded) {
         ft_putstr_fd("minishell 2: ambiguous redirect\n", 2);
         return (0);
@@ -51,14 +51,14 @@ static int handle_input_redirection(t_redir *redir, t_env *env)
     return (1);
 }
 
-static int handle_output_redirection(t_redir *redir, t_env *env)
+static int handle_output_redirection(t_redir *redir, t_data *data)
 {
     char **expanded;
     int fd;
     int flags;
     int word_count = 0;
 
-    expanded = expand_args_professional(&redir->target, env);
+    expanded = expand_args_professional(&redir->target, data);
     if (!expanded) {
         ft_putstr_fd("minishell: ambiguous redirect\n", 2);
         return (0);
@@ -101,7 +101,7 @@ static t_redir *find_last_input_redir(t_redir *redirs)
     return (last_input);
 }
 
-int setup_redirections(t_redir *redirs, t_env *env)
+int setup_redirections(t_redir *redirs, t_data *data)
 {
     t_redir	*current = redirs;
     t_redir	*last_input_redir = find_last_input_redir(redirs);
@@ -125,13 +125,13 @@ int setup_redirections(t_redir *redirs, t_env *env)
         {
             if (current == last_input_redir)
             {
-				if (!handle_input_redirection(current, env))
+				if (!handle_input_redirection(current, data))
 					return (0);
             }
         }
         else if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_APPEND)
         {
-            if (!handle_output_redirection(current, env))
+            if (!handle_output_redirection(current, data))
                 return (0);
         }
         current = current->next;

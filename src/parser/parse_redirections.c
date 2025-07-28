@@ -1,7 +1,7 @@
 #include "../../include/minishell.h"
 
 // Corrected Definition: Added t_env *env
-t_redir *create_redirection(t_token_type type, char *target, t_env *env)
+t_redir *create_redirection(t_token_type type, char *target, t_data *data)
 {
     t_redir *redir = malloc(sizeof(t_redir));
     if (!redir)
@@ -20,7 +20,7 @@ t_redir *create_redirection(t_token_type type, char *target, t_env *env)
         char *final_delimiter; // Use a temporary variable
 
         // Pass env to the analysis function
-        if (analyze_heredoc_delimiter(target, &final_delimiter, &should_expand, env))
+        if (analyze_heredoc_delimiter(target, &final_delimiter, &should_expand, data))
         {
             redir->quoted_delimiter = !should_expand;
             free(final_delimiter); // Free the temporary variable
@@ -44,7 +44,7 @@ void add_redirection(t_redir **redirs, t_redir *new_redir)
     current->next = new_redir;
 }
 
-int parse_single_redirection(t_token **tokens, t_redir **redirs, t_env *env)
+int parse_single_redirection(t_token **tokens, t_redir **redirs, t_data *data)
 {
     t_token_type redir_type;
     t_redir *new_redir;
@@ -58,7 +58,7 @@ int parse_single_redirection(t_token **tokens, t_redir **redirs, t_env *env)
         return (0);
     }
 
-    new_redir = create_redirection(redir_type, (*tokens)->value, env);
+    new_redir = create_redirection(redir_type, (*tokens)->value, data);
     if (!new_redir)
         return (0);
 

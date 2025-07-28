@@ -30,20 +30,20 @@ static char	*get_variable_name(char *str, int *i)
  * A static helper that takes a variable name and returns its allocated value.
  * Handles special shell variables and looks up others in the environment.
  */
-static char	*get_variable_value(char *name, t_env *env)
+static char	*get_variable_value(char *name, t_data *data)
 {
 	char	*value;
 
 	if (!name)
 		return (ft_strdup(""));
 	if (ft_strcmp(name, "?") == 0)
-		return (ft_itoa("0")); // placeholder
+		return (ft_itoa(0)); // placeholder
 	if (ft_strcmp(name, "$") == 0)
 		return (ft_itoa(getpid())); // Note: This should be the PID of the main shell process
 	// In an interactive shell, positional parameters like $0, $1 are not expanded
 	if (ft_isdigit(name[0]))
 		return (ft_strdup(""));
-	value = get_env_value(env, name);
+	value = get_env_value(name, data);
 	if (value)
 		return (ft_strdup(value));
 	// If the variable is not found, it expands to an empty string
@@ -54,7 +54,7 @@ static char	*get_variable_value(char *name, t_env *env)
  * estimate_expansion_size:
  * Estimates the maximum size needed after variable expansion
  */
-static int estimate_expansion_size(char *str, t_env *env)
+static int estimate_expansion_size(char *str, t_data *data)
 {
 	int estimated_size = 0;
 	int i = 0;
@@ -72,7 +72,7 @@ static int estimate_expansion_size(char *str, t_env *env)
 			char *name = get_variable_name(str, &i);
 			if (name)
 			{
-				char *value = get_variable_value(name, env);
+				char *value = get_variable_value(name, data);
 				estimated_size += ft_strlen(value);
 				free(name);
 				free(value);
@@ -100,7 +100,7 @@ static int estimate_expansion_size(char *str, t_env *env)
  * The definitive single-pass function for all expansions and quote removal.
  * It correctly handles all quoting rules and variable expansion syntax.
  */
-char	*expand_variables_advanced(char *str, t_env *env)
+char	*expand_variables_advanced(char *str, t_data *data)
 {
 	char	*result;
 	int		i;
@@ -112,7 +112,7 @@ char	*expand_variables_advanced(char *str, t_env *env)
 		return (NULL);
 	// Calculate buffer size: estimated expansion + 1 for null terminator
 	// Ensure minimum size of 1 for empty strings
-	max_size = estimate_expansion_size(str, env);
+	max_size = estimate_expansion_size(str, data);
 	if (max_size == 0)
 		max_size = 1;
 	else
@@ -152,7 +152,7 @@ char	*expand_variables_advanced(char *str, t_env *env)
 		{
 			i++; // Consume '$'
 			char *name = get_variable_name(str, &i);
-			char *value = get_variable_value(name, env);
+			char *value = get_variable_value(name, data);
 			// Use strcpy/strcat approach or manual copying instead of ft_strlcat
 			int value_len = ft_strlen(value);
 			int k = 0;

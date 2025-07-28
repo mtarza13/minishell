@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:09:52 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/27 10:57:33 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:57:32 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_strjoin_ex(char const *s1, char const *s2)
 	return (dest);
 }
 
-char	*filename(char *cmd, t_env *env)
+char	*filename(char *cmd, t_data *data)
 {
 	char *(path), *(c_path);
 	char **(arr);
@@ -107,7 +107,7 @@ char	*filename(char *cmd, t_env *env)
 		}
 		return (cmd);
 	}
-	path = get_env_value(env, "PATH");
+	path = get_env_value("PATH", data);
 	if (!path)
 		return (cmd);
 	arr = ft_split(path, ':');

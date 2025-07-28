@@ -45,7 +45,7 @@ static t_ast *init_command_node(int argc)
     return (cmd);
 }
 
-t_ast *parse_command_with_redirections(t_token **tokens, t_env *env)
+t_ast *parse_command_with_redirections(t_token **tokens, t_data *data)
 {
     t_ast *cmd;
     int argc;
@@ -60,7 +60,7 @@ t_ast *parse_command_with_redirections(t_token **tokens, t_env *env)
         if (is_redirection_token((*tokens)->type))
         {
             
-            if (!parse_single_redirection(tokens, &cmd->redirs, env))
+            if (!parse_single_redirection(tokens, &cmd->redirs, data))
             {
                 free_ast(cmd);
                 return (NULL);

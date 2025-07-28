@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 09:58:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 16:04:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:24:23 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void handle_line(char *line, t_data *data)
     {
 		if (!heredoc_check(tokens, data))
 			return (free_tokens(tokens), (void)1);
-        ast = parse_pipeline(&tokens, data->env);
+        ast = parse_pipeline(&tokens, data);
         if (ast)
         {
-            data->status = exec_ast(ast, data->env);
+			signals_execute();
+            data->status = exec_ast(ast, data);
             free_ast(ast);
         }
     }

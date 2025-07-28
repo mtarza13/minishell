@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 15:57:22 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:51:03 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	update_env_node(t_env *env, char *key, char *value)
 	}
 }
 
-static void	string_check(char **args, int i, int j, int *f, t_env *env)
+static void	string_check(char **args, int i, int j, int *f, t_data *data)
 {
 	while (args[i][j])
 	{
@@ -162,17 +162,17 @@ static void	string_check(char **args, int i, int j, int *f, t_env *env)
 			if (j != 0 && args[i][j] == '=')
 			{
 				args[i][j] = '\0';
-				if (!get_env_value(env, args[i]))
-					add_env_node(&env, new_env_node \
+				if (!get_env_value(args[i], data))
+					add_env_node(&data->env, new_env_node \
 					(ft_strdup(args[i]), ft_strdup(&args[i][j + 1])));
 				else
-					update_env_node(env, args[i], \
+					update_env_node(data->env, args[i], \
 					ft_strdup(&args[i][j + 1]));
 			}
 			else
 			{
 				// print_error(args[i], 6);
-				// data->status = 1;
+				data->status = 1;
 				*f = 1;
 			}
 			break ;
@@ -247,18 +247,18 @@ static void	bubble_sort(t_env **env_arr, int count)
 	}	
 }
 
-void	print_sorted_env(t_env *env)
+void	print_sorted_env(t_data *data)
 {
 	t_env *(tmp), **(env_arr);
 	int (i), count = 0;
-	tmp = env;
+	tmp = data->env;
 	while (tmp)
 	{
 		count++;
 		tmp = tmp->next;
 	}
 	env_arr = ft_malloc(sizeof(t_env *) * count, 32);
-	tmp = env;
+	tmp = data->env;
 	i = 0;
 	while (tmp)
 	{
@@ -269,12 +269,12 @@ void	print_sorted_env(t_env *env)
 	print_envp(env_arr, count);
 }
 
-int	builtin_export(char **args, t_env *env)
+int	builtin_export(char **args, t_data *data)
 {
 	int (i), j = 0, flag = 0;
 	i = 1;
 	if (!args[i] || !args[i][0])
-		return (print_sorted_env(env), 0);
+		return (print_sorted_env(data), 0);
 	while (args[i])
 	{
 		if (!((args[i][0] >= 'A' && args[i][0] <= 'Z') ||
@@ -288,7 +288,7 @@ int	builtin_export(char **args, t_env *env)
 			flag = 1;
 			continue ;
 		}
-		string_check(args, i, j, &flag, env);
+		string_check(args, i, j, &flag, data);
 		i++;
 	}
 	return (flag);

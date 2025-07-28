@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 13:30:09 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:52:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ static int arg_count(char **args)
 	return (i);
 }
 
-int	builtin_exit(char **args, t_env *env)
+int	builtin_exit(char **args, t_data *data)
 {
 	long	status;
 
-	(void)env;
+	(void)data;
 	status = 0;
 	printf("exit\n");
 	if (args[1])

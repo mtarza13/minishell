@@ -13,12 +13,12 @@ static t_ast *create_pipe_node(t_ast *left, t_ast *right)
     return (node);
 }
 
-t_ast *parse_pipeline(t_token **tokens, t_env *env)
+t_ast *parse_pipeline(t_token **tokens, t_data *data)
 {
     t_ast *left;
     t_ast *right;
 
-    left = parse_command_with_redirections(tokens, env);
+    left = parse_command_with_redirections(tokens, data);
     if (!left) return (NULL);
 
     while (*tokens && (*tokens)->type == TOKEN_PIPE)
@@ -30,7 +30,7 @@ t_ast *parse_pipeline(t_token **tokens, t_env *env)
             free_ast(left);
             return (NULL);
         }
-        right = parse_command_with_redirections(tokens, env);
+        right = parse_command_with_redirections(tokens, data);
         if (!right)
         {
             free_ast(left);

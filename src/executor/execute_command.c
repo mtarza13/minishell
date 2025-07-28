@@ -6,13 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 12:03:29 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:57:07 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	execute_external_command(char **args, t_env *env, t_redir *redirs)
+static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 {
 	pid_t	pid;
 	int		status;
@@ -28,10 +28,10 @@ static int	execute_external_command(char **args, t_env *env, t_redir *redirs)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (!setup_redirections(redirs, env))
+		if (!setup_redirections(redirs, data))
 			exit(1);
-		envp = env_to_array(env);
-		char *file = filename(args[0], env);
+		envp = env_to_array(data);
+		char *file = filename(args[0], data);
 		execve(file, args, envp);
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(args[0], 2);
@@ -54,7 +54,7 @@ static int	execute_external_command(char **args, t_env *env, t_redir *redirs)
 	return (1);
 }
 
-static int	execute_builtin_with_redirections(char **args, t_env *env,
+static int	execute_builtin_with_redirections(char **args, t_data *data,
 			t_redir *redirs)
 {
 	int	stdin_backup;
@@ -64,7 +64,7 @@ static int	execute_builtin_with_redirections(char **args, t_env *env,
 	// 	return 1;
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
-	if (!setup_redirections(redirs, env))
+	if (!setup_redirections(redirs, data))
 	{
 		dup2(stdin_backup, STDIN_FILENO);
 		dup2(stdout_backup, STDOUT_FILENO);
@@ -72,7 +72,7 @@ static int	execute_builtin_with_redirections(char **args, t_env *env,
 		close(stdout_backup);
 		return (1);
 	}
-	status = execute_builtin(args, env);
+	status = execute_builtin(args, data);
 	dup2(stdin_backup, STDIN_FILENO);
 	dup2(stdout_backup, STDOUT_FILENO);
 	close(stdin_backup);
@@ -80,7 +80,7 @@ static int	execute_builtin_with_redirections(char **args, t_env *env,
 	return (status);
 }
 
-int	execute_command(char **args, t_env *env, t_redir *redirs)
+int	execute_command(char **args, t_data *data, t_redir *redirs)
 {
 	if (!args || !args[0])
 	{
@@ -98,7 +98,7 @@ int	execute_command(char **args, t_env *env, t_redir *redirs)
 					int flags;
 					int word_count = 0;
 
-					expanded = expand_args_professional(&current->target, env);
+					expanded = expand_args_professional(&current->target, data);
 					if (!expanded) {
 						ft_putstr_fd("minishell: ambiguous redirect\n", 2);
 						return (EXIT_FAILURE);
@@ -135,7 +135,7 @@ int	execute_command(char **args, t_env *env, t_redir *redirs)
 		return (EXIT_SUCCESS);
 	}
 	if (is_builtin(args[0]))
-		return (execute_builtin_with_redirections(args, env, redirs));
+		return (execute_builtin_with_redirections(args, data, redirs));
 	else
-		return (execute_external_command(args, env, redirs));
+		return (execute_external_command(args, data, redirs));
 }

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:33 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 16:03:54 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:51:46 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_popnode(t_env **env, char *value)
 	}
 }
 
-int	builtin_unset(char **args, t_env *env)
+int	builtin_unset(char **args, t_data *data)
 {
 	int		i;
 
@@ -48,8 +48,8 @@ int	builtin_unset(char **args, t_env *env)
 			ft_popnode(&data->env, args[i]);
 			i++;
 		}
-		env->envp = ft_envp(data->env);
+		data->envp = ft_envp(data->env);
 	}
 	data->status = 0;
-	return (exit_status);
+	return (data->status);
 }

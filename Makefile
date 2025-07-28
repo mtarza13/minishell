@@ -6,7 +6,7 @@
 #    By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/24 13:05:56 by mtarza13          #+#    #+#              #
-#    Updated: 2025/07/27 22:30:42 by yabarhda         ###   ########.fr        #
+#    Updated: 2025/07/28 21:08:27 by yabarhda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ LEXER_SRCS = lexer/tokenize.c lexer/token_utils.c
 PARSER_SRCS = parser/parse_command.c parser/parse_pipeline.c \
 			  parser/parse_redirections.c parser/syntax_validation.c
 
-UTILS_SRCS = utils/ft_utils.c utils/string_utils.c utils/memory_utils.c \
+UTILS_SRCS = utils/ft_utils.c utils/string_utils.c utils/memory_utils.c utils/ft_malloc.c\
 			 
 
 ENV_SRCS = env/env_init.c env/env_utils.c env/env_expand.c env/variable_expand.c

@@ -28,7 +28,7 @@ static char	**add_word_to_array(char **array, char *word)
 	return (new_array);
 }
 
-char	**expand_args_professional(char **args, t_env *env)
+char	**expand_args_professional(char **args, t_data *data)
 {
 	char	**final_args;
 	char	*expanded_str;
@@ -42,7 +42,7 @@ char	**expand_args_professional(char **args, t_env *env)
 	i = 0;
 	while (args[i])
 	{
-		expanded_str = expand_variables_advanced(args[i], env);
+		expanded_str = expand_variables_advanced(args[i], data);
 		if (!expanded_str)
 		{
 			i++;

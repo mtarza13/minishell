@@ -6,15 +6,15 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:36 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 13:33:37 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:42:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int analyze_heredoc_delimiter(char *delimiter, char **final_delimiter, int *should_expand, t_env *env)
+int analyze_heredoc_delimiter(char *delimiter, char **final_delimiter, int *should_expand, t_data *data)
 {
-    (void)env; 
+    (void)data;
 
     if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '"'))
         *should_expand = 0;

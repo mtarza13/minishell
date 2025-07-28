@@ -49,7 +49,7 @@ void free_env(t_env *env)
 {
     if (!env)
         return;
-    if (env->envp)
-        ft_free_array(env->envp);
+    // if (env->envp)
+        // ft_free_array(env->envp);
     free(env);
 }
