@@ -2,8 +2,7 @@
 
 static t_ast *create_pipe_node(t_ast *left, t_ast *right)
 {
-    t_ast *node = malloc(sizeof(t_ast));
-    if (!node) return (NULL);
+    t_ast *node = ft_malloc(sizeof(t_ast), 69);
     node->type = NODE_PIPE;
     node->args = NULL;
     node->arg_count = 0;

@@ -88,9 +88,7 @@ char **env_to_array(t_data *data)
 
     if (!data->env || !data->envp)
         return (NULL);
-    array = malloc(sizeof(char *) * (env_count(data->env) + 1));
-    if (!array)
-        return (NULL);
+    array = ft_malloc(sizeof(char *) * (env_count(data->env) + 1), 69);
     i = 0;
     while (i < env_count(data->env))
     {

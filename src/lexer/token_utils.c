@@ -1,12 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 21:53:48 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 21:53:57 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 t_token *create_token(t_token_type type, char *value)
 {
     t_token *token;
 
-    token = malloc(sizeof(t_token));
-    if (!token)
-        return (NULL);
+    token = ft_malloc(sizeof(t_token), 69);
     token->type = type;
     token->value = NULL;
     if (value)

@@ -6,11 +6,12 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 09:46:53 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/27 22:31:51 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:50:34 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../include/minishell.h"
 
 static int	count_words(char const *s, char c)
 {
@@ -39,7 +40,7 @@ static char	*fill_array(const char *s, char c)
 	i = 0;
 	while (s[len] && s[len] != c)
 		len++;
-	word = (char *)malloc((len + 1) * sizeof(char));
+	word = (char *)ft_malloc((len + 1) * sizeof(char), 69);
 	while (i < len)
 	{
 		word[i] = s[i];
@@ -55,8 +56,8 @@ char	**ft_split(char const *s, char c)
 	char	**array_str;
 
 	i = 0;
-	array_str = (char **)malloc(sizeof(char *) * \
-	(count_words(s, c) + 1));
+	array_str = (char **)ft_malloc(sizeof(char *) * \
+	(count_words(s, c) + 1), 69);
 	while (*s)
 	{
 		while (*s && *s == c)

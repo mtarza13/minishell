@@ -12,7 +12,7 @@ static char	**add_word_to_array(char **array, char *word)
 		while (array[count])
 			count++;
 	}
-	new_array = malloc(sizeof(char *) * (count + 2));
+	new_array = ft_malloc(sizeof(char *) * (count + 2), 69);
 	if (!new_array)
 		return (NULL); 
 	i = 0;

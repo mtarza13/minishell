@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 21:59:38 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 21:59:40 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
@@ -12,9 +23,7 @@ char	*remove_quotes_advanced(char *str)
 	if (!str)
 		return (NULL);
 	capacity = ft_strlen(str) + 1;
-	result = malloc(capacity);
-	if (!result)
-		return (NULL);
+	result = ft_malloc(capacity, 69);
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -75,9 +84,7 @@ char	**split_unquoted_words(char *str)
 	word_count = count_words(str);
 	if (word_count == 0)
 		return (NULL);
-	words = malloc(sizeof(char*) * (word_count + 1));
-	if (!words)
-		return (NULL);
+	words = ft_malloc(sizeof(char*) * (word_count + 1), 69);
 	word_idx = 0;
 	i = 0;
 	while (word_idx < word_count && str[i])

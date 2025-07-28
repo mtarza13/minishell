@@ -117,9 +117,7 @@ char	*expand_variables_advanced(char *str, t_data *data)
 		max_size = 1;
 	else
 		max_size += 1; // Add space for null terminator
-	result = malloc(sizeof(char) * max_size);
-	if (!result)
-		return (NULL);
+	result = ft_malloc(sizeof(char) * max_size, 69);
 	ft_memset(result, 0, max_size);
 	i = 0;
 	j = 0;

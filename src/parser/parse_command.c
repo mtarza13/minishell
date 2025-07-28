@@ -24,8 +24,7 @@ static int count_command_args(t_token *tokens)
 
 static t_ast *init_command_node(int argc)
 {
-    t_ast *cmd = malloc(sizeof(t_ast));
-    if (!cmd) return (NULL);
+    t_ast *cmd = ft_malloc(sizeof(t_ast), 69);
     cmd->type = NODE_COMMAND;
     cmd->redirs = NULL;
     cmd->left = NULL;
@@ -33,7 +32,7 @@ static t_ast *init_command_node(int argc)
     cmd->arg_count = argc;
     if (argc > 0)
     {
-        cmd->args = malloc(sizeof(char *) * (argc + 1));
+        cmd->args = ft_malloc(sizeof(char *) * (argc + 1), 69);
         if (!cmd->args)
         {
             free(cmd);

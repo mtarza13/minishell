@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 20:21:27 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:53:31 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@
 char	*get_heredoc_filename(void)
 {
 	int fd = open("/dev/random", O_RDONLY);
-	char	*filename = malloc(11);
+	char	*filename = ft_malloc(11, 69);
 	read(fd, filename, 10);
 	filename[0] = '.';
 	filename[10] = '\0';

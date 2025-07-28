@@ -3,10 +3,7 @@
 // Corrected Definition: Added t_env *env
 t_redir *create_redirection(t_token_type type, char *target, t_data *data)
 {
-    t_redir *redir = malloc(sizeof(t_redir));
-    if (!redir)
-        return (NULL);
-
+    t_redir *redir = ft_malloc(sizeof(t_redir), 69);
     redir->type = type;
     redir->target = ft_strdup(target);
     redir->expanded_target = NULL;

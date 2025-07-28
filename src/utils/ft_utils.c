@@ -42,9 +42,7 @@ char	*ft_strjoin_free(char *s1, char *s2, int free_s1, int free_s2)
 		return (free_s1 ? s1 : ft_strdup(s1));
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	result = malloc(len1 + len2 + 1);
-	if (!result)
-		return (NULL);
+	result = ft_malloc(len1 + len2 + 1, 69);
 	i = -1;
 	while (++i < len1)
 		result[i] = s1[i];
