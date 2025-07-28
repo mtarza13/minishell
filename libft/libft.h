@@ -22,5 +22,9 @@ void	*ft_memset(void *b, int c, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 char *ft_strcpy(char *dst, const char *src);
 char	**ft_split(char const *s, char c);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+char	*ft_strndup(const char *s, size_t n);
+void	ft_strncpy(char *dest, const char *src, size_t size);
+void	ft_strncat(char *dest, const char *src, size_t size);
 
 #endif

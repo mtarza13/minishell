@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 13:32:27 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 13:32:29 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/05/01 14:56:06 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 14:21:10 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-int	builtin_pwd(char **args, t_env *env)
+char	*ft_strndup(const char *s, size_t n)
 {
-	char	*pwd;
+	char	*dup;
+	size_t	len;
 
-	(void)args;
-	(void)env;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
-	{
-		printf("%s\n", pwd);
-		free(pwd);
-		return (0);
-	}
-	return (1);
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	if (len > n)
+		len = n;
+	dup = (char *)ft_malloc(sizeof(char) * (len + 1), 42);
+	ft_memcpy(dup, s, len);
+	dup[len] = '\0';
+	return (dup);
 }

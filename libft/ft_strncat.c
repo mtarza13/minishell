@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 13:32:27 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 13:32:29 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/05/05 09:55:11 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 15:03:08 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-int	builtin_pwd(char **args, t_env *env)
+void	ft_strncat(char *dest, const char *src, size_t size)
 {
-	char	*pwd;
+	size_t	i;
+	size_t	j;
 
-	(void)args;
-	(void)env;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
+	if ((!src && size == 0) || (!dest && size == 0))
+		return ;
+	i = 0;
+	j = ft_strlen(dest);
+	if (size == 0 || j > size)
+		return ;
+	while (j + i < size - 1 && src[i])
 	{
-		printf("%s\n", pwd);
-		free(pwd);
-		return (0);
+		dest[j + i] = src[i];
+		i++;
 	}
-	return (1);
+	dest[j + i] = '\0';
 }

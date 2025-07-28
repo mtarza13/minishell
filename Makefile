@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mtarza13 <mtarza13@student.42.fr>          +#+  +:+       +#+         #
+#    By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/24 13:05:56 by mtarza13          #+#    #+#              #
-#    Updated: 2025/01/24 13:05:56 by mtarza13         ###   ########.fr        #
+#    Updated: 2025/07/27 22:30:42 by yabarhda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I./include -I./libft
-LIBS = -lreadline -L./libft -lft
+LIBS = -lreadline -I/usr/include/readline -L./libft -lft
 
 # Directories
 SRC_DIR = src
@@ -29,7 +29,8 @@ BUILTIN_SRCS = builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
 			   builtins/export.c builtins/pwd.c builtins/unset.c
 
 EXECUTOR_SRCS = executor/execute_ast.c executor/execute_builtin.c \
-				executor/execute_command.c executor/redirections.c
+				executor/execute_command.c executor/redirections.c \
+				executor/execute_utils.c
 
 LEXER_SRCS = lexer/tokenize.c lexer/token_utils.c
 

@@ -8,6 +8,8 @@ void free_redirections(t_redir *redirs)
     {
         tmp = redirs;
         redirs = redirs->next;
+		if (tmp->type == TOKEN_HEREDOC)
+			unlink(tmp->target);
         free(tmp->target);
         if (tmp->expanded_target)
             free(tmp->expanded_target);

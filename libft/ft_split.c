@@ -1,64 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 09:46:53 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/27 22:31:51 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
 static int	count_words(char const *s, char c)
 {
 	int	count;
-	int	i;
 
 	count = 0;
-	i = 0;
-	while (s[i])
+	while (*s)
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i])
-		{
+		while (*s == c)
+			s++;
+		if (*s)
 			count++;
-			while (s[i] && s[i] != c)
-				i++;
-		}
+		while (*s != c && *s)
+			s++;
 	}
 	return (count);
 }
 
-static void	free_array(char **arr, int i)
+static char	*fill_array(const char *s, char c)
 {
-	while (i-- > 0)
-		free(arr[i]);
-	free(arr);
+	char	*word;
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (s[len] && s[len] != c)
+		len++;
+	word = (char *)malloc((len + 1) * sizeof(char));
+	while (i < len)
+	{
+		word[i] = s[i];
+		i++;
+	}
+	word[i] = '\0';
+	return (word);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**arr;
-	int		words;
 	int		i;
-	int		len;
+	char	**array_str;
 
-	if (!s)
-		return (NULL);
-	words = count_words(s, c);
-	arr = (char **)malloc(sizeof(char *) * (words + 1));
-	if (!arr)
-		return (NULL);
 	i = 0;
-	while (i < words)
+	array_str = (char **)malloc(sizeof(char *) * \
+	(count_words(s, c) + 1));
+	while (*s)
 	{
-		while (*s == c)
+		while (*s && *s == c)
 			s++;
-		len = 0;
-		while (s[len] && s[len] != c)
-			len++;
-		arr[i] = ft_substr(s, 0, len);
-		if (!arr[i])
+		if (*s)
 		{
-			free_array(arr, i);
-			return (NULL);
+			array_str[i] = fill_array(s, c);
+			while (*s && *s != c)
+				s++;
+			i++;
 		}
-		s += len;
-		i++;
 	}
-	arr[i] = NULL;
-	return (arr);
+	array_str[i] = NULL;
+	return (array_str);
 }

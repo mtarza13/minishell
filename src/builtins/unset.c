@@ -1,30 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 13:32:33 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 16:03:54 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+void	ft_popnode(t_env **env, char *value)
+{
+	t_env *(tmp), *(prev);
+	size_t (key_len);
+	tmp = *env;
+	prev = tmp;
+	key_len = ft_strlen(tmp->key);
+	if (!ft_strncmp(tmp->key, value, key_len))
+	{
+		*env = tmp->next;
+		return ;
+	}
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, value, key_len))
+		{
+			prev->next = tmp->next;
+			break ;
+		}
+		prev = tmp;
+		tmp = tmp->next;
+	}
+}
+
 int	builtin_unset(char **args, t_env *env)
 {
-	int	exit_status;
-	int	i;
+	int		i;
 
-	if (!args[1])
-	{
-		ft_putstr_fd("minishell: unset: not enough arguments\n", 2);
-		return (1);
-	}
-	exit_status = 0;
 	i = 1;
-	while (args[i])
+	if (args[i])
 	{
-		if (!is_valid_identifier(args[i]))
+		while (args[i])
 		{
-			ft_putstr_fd("minishell: unset: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-			exit_status = 1;
+			ft_popnode(&data->env, args[i]);
+			i++;
 		}
-		else
-			unset_env_value(env, args[i]);
-		i++;
+		env->envp = ft_envp(data->env);
 	}
+	data->status = 0;
 	return (exit_status);
 }

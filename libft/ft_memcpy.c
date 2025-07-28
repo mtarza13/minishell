@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 13:32:27 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 13:32:29 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/07/28 14:22:53 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 14:23:03 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-int	builtin_pwd(char **args, t_env *env)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	*pwd;
+	size_t	i;
+	char	*d;
+	char	*s;
 
-	(void)args;
-	(void)env;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
+	if (!dest && !src)
+		return (NULL);
+	d = (char *)dest;
+	s = (char *)src;
+	i = 0;
+	while (i < n)
 	{
-		printf("%s\n", pwd);
-		free(pwd);
-		return (0);
+		d[i] = s[i];
+		i++;
 	}
-	return (1);
+	return (dest);
 }

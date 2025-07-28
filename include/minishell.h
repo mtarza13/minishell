@@ -10,13 +10,15 @@
 # include <signal.h>
 # include <fcntl.h> // For open()
 # include <sys/wait.h> // For waitpid()
+# include <sys/stat.h>
+
 
 /* External Library Includes */
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h" // Adjust path if needed
 
-/* Global Variable for Signals */
+/* Global Variables for Signals */
 extern int g_signal_received;
 
 /* --- Enums and Structs --- */
@@ -71,16 +73,18 @@ typedef struct s_ast
 
 typedef struct s_env
 {
-    char    **envp;
-    int     count;
-    int     capacity;
-    int     exit_status;
+	int					count;
+	char				*key;
+	char				*value;
+	struct s_env		*next;
 } t_env;
 
-typedef struct s_shell
+typedef struct s_data
 {
-    t_env *env;
-} t_shell;
+	char	**envp;
+	int		status;
+    t_env	*env;
+} t_data;
 
 typedef struct s_expand_context
 {
@@ -88,6 +92,11 @@ typedef struct s_expand_context
     int in_double_quote;
 } t_expand_context;
 
+typedef struct s_mem
+{
+	void				*ptr;
+	struct s_mem		*next;
+}	t_mem;
 
 /* --- Function Prototypes --- */
 
@@ -111,10 +120,14 @@ int     execute_builtin(char **args, t_env *env);
 int     is_builtin(char *cmd);
 int     setup_redirections(t_redir *redirs, t_env *env);
 int     is_redirection_token(t_token_type type);
+char	*filename(char *cmd, t_env *env);
 
 // --- Heredoc (heredoc/) ---
 int     setup_heredoc(t_redir *redir, t_env *env);
 int     analyze_heredoc_delimiter(char *delimiter, char **final_delimiter, int *should_expand, t_env *env);
+int		heredoc_check_single(t_redir *current, t_env *env);
+int		heredoc_check_multi(t_redir *current, t_env *env);
+int		heredoc_check(t_token *token, t_env *env);
 
 // --- Expansion (env/) ---
 char    *expand_variables_advanced(char *str, t_env *env);
@@ -124,10 +137,13 @@ int     set_env_value(t_env *env, char *name, char *value);
 int     unset_env_value(t_env *env, char *name);
 t_env   *init_env(char **envp);
 char    **env_to_array(t_env *env);
+t_env	*new_env_node(char *key, char *value);
+void	add_env_node(t_env **env, t_env *new);
+char	**ft_envp(t_env *env);
 
 // --- Builtins (builtins/) ---
 int     builtin_cd(char **args, t_env *env);
-int     builtin_echo(char **args, t_env *env);
+int     builtin_echo(char **args);
 int     builtin_env(char **args, t_env *env);
 int     builtin_exit(char **args, t_env *env);
 int     builtin_export(char **args, t_env *env);
@@ -138,6 +154,10 @@ int     builtin_unset(char **args, t_env *env);
 void    setup_signals(void);
 void    handle_signal(int signo);
 void    handle_heredoc_signal(int signo);
+void	handle_sigint_heredoc(int signo);
+void	handle_heredoc_signal_multi(int signo);
+void	signals_heredoc(void);
+void	signals_heredoc_child(void);
 
 // --- Utils (utils/) ---
 void    free_ast(t_ast *ast);
@@ -148,5 +168,6 @@ int     ft_isspace(int c);
 int     is_valid_identifier(char *str);
 char    *remove_quotes_advanced(char *str);
 char    *append_char_dynamic(char *str, char c, int *len, int *capacity);
+void	*ft_malloc(size_t size, int flag);
 
 #endif

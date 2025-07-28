@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_ast.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 13:33:07 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 15:58:01 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
@@ -39,8 +50,8 @@ static int	execute_pipe(t_ast *ast, t_env *env)
 			close(fd[1]);
 			waitpid(pid1, &status1, 0);
 			waitpid(pid2, &status2, 0);
-			env->exit_status = WIFEXITED(status2) ? WEXITSTATUS(status2) : 1;
-			return (env->exit_status);
+			// env->exit_status = WIFEXITED(status2) ? WEXITSTATUS(status2) : 1;
+			return (3); // placeholder
 		}
 	}
 	return (1);

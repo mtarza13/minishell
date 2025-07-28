@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_builtin.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 13:33:21 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 13:33:22 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 int is_builtin(char *cmd)
@@ -17,7 +29,7 @@ int is_builtin(char *cmd)
 int execute_builtin(char **args, t_env *env)
 {
     if (ft_strcmp(args[0], "echo") == 0)
-        return (builtin_echo(args, env));
+        return (builtin_echo(args));
     if (ft_strcmp(args[0], "cd") == 0)
         return (builtin_cd(args, env));
     if (ft_strcmp(args[0], "pwd") == 0)

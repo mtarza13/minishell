@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 13:32:27 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 13:32:29 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/05/05 11:49:53 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/28 15:02:32 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-int	builtin_pwd(char **args, t_env *env)
+void	ft_strncpy(char *dest, const char *src, size_t size)
 {
-	char	*pwd;
+	size_t	i;
 
-	(void)args;
-	(void)env;
-	pwd = getcwd(NULL, 0);
-	if (pwd)
+	i = 0;
+	while (src[i] && i < size - 1)
 	{
-		printf("%s\n", pwd);
-		free(pwd);
-		return (0);
+		dest[i] = src[i];
+		i++;
 	}
-	return (1);
+	dest[i] = '\0';
 }

@@ -38,7 +38,9 @@ void free_tokens(t_token *tokens)
     {
         tmp = tokens;
         tokens = tokens->next;
-        if (tmp->value)
+		if (tmp->type == TOKEN_HEREDOC)
+			unlink(tmp->next->value);
+        if (tmp->value && tmp->type != TOKEN_HEREDOC)
             free(tmp->value);
         free(tmp);
     }

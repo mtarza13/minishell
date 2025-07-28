@@ -3,22 +3,30 @@
 
 void	handle_signal(int signo)
 {
-	if (signo == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_signal_received = CTRL_C_EXIT;
-	}
+	(void)signo;
+	g_signal_received = 1;
+	write(2,"\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	handle_heredoc_signal_multi(int signo)
+{
+	(void)signo;
+	g_signal_received = 1;
+	// exit(130);
 }
 
 void	handle_heredoc_signal(int signo)
 {
-	if (signo == SIGINT)
-	{
-		g_signal_received = CTRL_C_EXIT;
-		write(1, "\n", 1);
-		exit(CTRL_C_EXIT);
-	}
+	(void)signo;
+	exit(130);
+}
+
+void	handle_sigint_heredoc(int signo)
+{
+	(void)signo;
+	g_signal_received = 1;
+	write(2,"^C\n", 3);
 }

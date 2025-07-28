@@ -1,51 +1,49 @@
 #include "../../include/minishell.h"
 
-char *get_env_value(t_env *env, char *name)
+char	*get_env_value(char *var, t_env *env)
 {
-    int i;
-    int len;
-
-    if (!env || !name || !env->envp)
-        return (NULL);
-    len = ft_strlen(name);
-    i = 0;
-    while (env->envp[i])
-    {
-        if (ft_strncmp(env->envp[i], name, len) == 0 && env->envp[i][len] == '=')
-            return (env->envp[i] + len + 1);
-        i++;
-    }
-    return (NULL);
+	int (i), v_len = ft_strlen(var);
+	t_env *(tmp);
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, var, v_len))
+			return (tmp->value);
+		tmp = tmp->next;
+		i++;
+	}
+	return (NULL);
 }
 
-int set_env_value(t_env *env, char *name, char *value)
-{
-    int i;
-    int len;
-    char *new_var;
+// int set_env_value(t_env *env, char *name, char *value)
+// {
+//     int i;
+//     int len;
+//     char *new_var;
 
-    len = ft_strlen(name);
-    i = 0;
-    while (env->envp[i])
-    {
-        if (ft_strncmp(env->envp[i], name, len) == 0 && env->envp[i][len] == '=')
-        {
-            free(env->envp[i]);
-            new_var = ft_strjoin(name, "=");
-            env->envp[i] = ft_strjoin(new_var, value);
-            free(new_var);
-            return (1);
-        }
-        i++;
-    }
+//     len = ft_strlen(name);
+//     i = 0;
+//     while (env->envp[i])
+//     {
+//         if (ft_strncmp(env->envp[i], name, len) == 0 && env->envp[i][len] == '=')
+//         {
+//             free(env->envp[i]);
+//             new_var = ft_strjoin(name, "=");
+//             env->envp[i] = ft_strjoin(new_var, value);
+//             free(new_var);
+//             return (1);
+//         }
+//         i++;
+//     }
  
-    new_var = ft_strjoin(name, "=");
-    env->envp[env->count] = ft_strjoin(new_var, value);
-    free(new_var);
-    env->count++;
-    env->envp[env->count] = NULL; 
-    return (1);
-}
+//     new_var = ft_strjoin(name, "=");
+//     env->envp[env->count] = ft_strjoin(new_var, value);
+//     free(new_var);
+//     env->count++;
+//     env->envp[env->count] = NULL; 
+//     return (1);
+// }
 
 int unset_env_value(t_env *env, char *name)
 {
