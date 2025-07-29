@@ -67,7 +67,7 @@ static int tokenize_word(char *in, int *i, t_token **toks)
     {
         char *word = ft_substr(in, start, *i - start);
         add_token(toks, create_token(TOKEN_WORD, word));
-        free(word);
+        // free(word);
     }
     return (1); 
 }

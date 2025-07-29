@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 20:57:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/29 22:01:26 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (!setup_redirections(redirs, data))
+		{
+			ft_malloc(0, 0);
 			exit(1);
+		}
 		envp = env_to_array(data);
 		char *file = filename(args[0], data);
 		execve(file, args, envp);
@@ -37,6 +40,7 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 		ft_putstr_fd(args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		ft_free_array(envp);
+		ft_malloc(0, 0);
 		exit(COMMAND_NOT_FOUND);
 	}
 	waitpid(pid, &status, 0);

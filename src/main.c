@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 09:58:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:24:23 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 00:34:05 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 int g_signal_received = 0;
 
+void	free_data(void)
+{
+	ft_malloc(0, 0);
+	rl_clear_history();
+}
+
 void handle_line(char *line, t_data *data)
 {
     t_token *tokens;
     t_ast   *ast;
 
     tokens = tokenize(line);
+	free(line);
     if (tokens && validate_syntax(tokens))
     {
 		if (!heredoc_check(tokens, data))
@@ -190,5 +197,6 @@ int main(int argc, char **argv, char **envp)
 	init_data(data, envp);
 	minishell(data);
 	exit_status = data->status;
+	ft_malloc(0, 0);
     return (exit_status);
 }

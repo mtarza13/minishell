@@ -50,10 +50,10 @@ char	*ft_strjoin_free(char *s1, char *s2, int free_s1, int free_s2)
 	while (++i < len2)
 		result[len1 + i] = s2[i];
 	result[len1 + len2] = '\0';
-	if (free_s1)
-		free(s1);
-	if (free_s2)
-		free(s2);
+	// if (free_s1)
+	// 	free(s1);
+	// if (free_s2)
+	// 	free(s2);
 	return (result);
 }
 

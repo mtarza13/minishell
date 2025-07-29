@@ -170,5 +170,6 @@ int     is_valid_identifier(char *str);
 char    *remove_quotes_advanced(char *str);
 char    *append_char_dynamic(char *str, char c, int *len, int *capacity);
 void	*ft_malloc(size_t size, int flag);
+void	free_data(void);
 
 #endif

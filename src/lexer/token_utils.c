@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:53:48 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:53:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:57:24 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void free_tokens(t_token *tokens)
         tokens = tokens->next;
 		if (tmp->type == TOKEN_HEREDOC)
 			unlink(tmp->next->value);
-        if (tmp->value && tmp->type != TOKEN_HEREDOC)
-            free(tmp->value);
-        free(tmp);
+        // if (tmp->value && tmp->type != TOKEN_HEREDOC)
+        //     free(tmp->value);
+        // free(tmp);
     }
 }
 

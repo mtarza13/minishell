@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 20:58:30 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:55:02 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	execute_pipe(t_ast *ast, t_data *data)
 	pid_t	pid2;
 	int		status1;
 	int		status2;
+	int		ex_status;
 
 	if (pipe(fd) == -1)
 		return (1);
@@ -30,7 +31,9 @@ static int	execute_pipe(t_ast *ast, t_data *data)
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		exit(exec_ast(ast->left, data));
+		ex_status = exec_ast(ast->left, data);
+		ft_malloc(0, 0);
+		exit(ex_status);
 	}
 	else if (pid1 > 0)
 	{
@@ -42,7 +45,9 @@ static int	execute_pipe(t_ast *ast, t_data *data)
 			close(fd[1]);
 			dup2(fd[0], STDIN_FILENO);
 			close(fd[0]);
-			exit(exec_ast(ast->right, data));
+			ex_status = exec_ast(ast->left, data);
+			ft_malloc(0, 0);
+			exit(ex_status);
 		}
 		else if (pid2 > 0)
 		{
@@ -50,8 +55,8 @@ static int	execute_pipe(t_ast *ast, t_data *data)
 			close(fd[1]);
 			waitpid(pid1, &status1, 0);
 			waitpid(pid2, &status2, 0);
-			// env->exit_status = WIFEXITED(status2) ? WEXITSTATUS(status2) : 1;
-			return (3); // placeholder
+			data->status = WIFEXITED(status2) ? WEXITSTATUS(status2) : 1;
+			return (data->status);
 		}
 	}
 	return (1);

@@ -21,6 +21,7 @@ void	handle_heredoc_signal_multi(int signo)
 void	handle_heredoc_signal(int signo)
 {
 	(void)signo;
+	ft_malloc(0, 0);
 	exit(130);
 }
 

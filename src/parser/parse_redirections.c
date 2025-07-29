@@ -20,7 +20,7 @@ t_redir *create_redirection(t_token_type type, char *target, t_data *data)
         if (analyze_heredoc_delimiter(target, &final_delimiter, &should_expand, data))
         {
             redir->quoted_delimiter = !should_expand;
-            free(final_delimiter); // Free the temporary variable
+            // free(final_delimiter); // Free the temporary variable
         }
     }
     return (redir);

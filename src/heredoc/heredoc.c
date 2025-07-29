@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:53:31 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:56:32 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 		if (!input)
 		{
 			close(fd);
+			ft_malloc(0, 0);
 			exit(131);
 		}
 		if (!ft_strcmp(input, dlimit))
@@ -110,6 +111,7 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 		write(fd, "\n", 1);
 	}
 	close(fd);
+	ft_malloc(0, 0);
 	exit(0);
 }
 

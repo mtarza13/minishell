@@ -23,8 +23,8 @@ static char	**add_word_to_array(char **array, char *word)
 	}
 	new_array[count] = ft_strdup(word);
 	new_array[count + 1] = NULL;
-	if (array)
-		free(array); 
+	// if (array)
+	// 	free(array); 
 	return (new_array);
 }
 
@@ -66,7 +66,7 @@ char	**expand_args_professional(char **args, t_data *data)
 		
 			final_args = add_word_to_array(final_args, expanded_str);
 		}
-		free(expanded_str);
+		// free(expanded_str);
 		i++;
 	}
 	return (final_args);

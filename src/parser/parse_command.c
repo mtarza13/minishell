@@ -31,14 +31,7 @@ static t_ast *init_command_node(int argc)
     cmd->right = NULL;
     cmd->arg_count = argc;
     if (argc > 0)
-    {
         cmd->args = ft_malloc(sizeof(char *) * (argc + 1), 69);
-        if (!cmd->args)
-        {
-            free(cmd);
-            return (NULL);
-        }
-    }
     else
         cmd->args = NULL;
     return (cmd);

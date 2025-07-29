@@ -74,8 +74,8 @@ static int estimate_expansion_size(char *str, t_data *data)
 			{
 				char *value = get_variable_value(name, data);
 				estimated_size += ft_strlen(value);
-				free(name);
-				free(value);
+				// free(name);
+				// free(value);
 			}
 			else
 			{
@@ -157,8 +157,8 @@ char	*expand_variables_advanced(char *str, t_data *data)
 			// Add bounds checking to prevent buffer overflow
 			while (k < value_len && j < max_size - 1)
 				result[j++] = value[k++];
-			free(name);
-			free(value);
+			// free(name);
+			// free(value);
 		}
 		else
 		{
