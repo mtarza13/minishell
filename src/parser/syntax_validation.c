@@ -2,9 +2,7 @@
 
 static int	print_syntax_error(char *token_value)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-	ft_putstr_fd(token_value, 2);
-	ft_putstr_fd("'\n", 2);
+	ft_printf("minishell: syntax error near unexpected token `%s'\n", token_value);
 	return (0);
 }
 

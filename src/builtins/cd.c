@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 04:41:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 23:51:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*get_cd_path(char **args, t_data *data)
 		path = get_env_value("HOME", data);
 		if (!path)
 		{
-			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			ft_printf("minishell: cd: HOME not set\n");
 			return (NULL);
 		}
 	}
@@ -81,7 +81,7 @@ int	builtin_cd(char **args, t_data *data)
 	char	*new_pwd;
 
 	if (arg_count(args) > 2)
-		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);	
+		return (ft_printf("minishell: cd: too many arguments\n"), 1);	
 	old_pwd = getcwd(NULL, 0);
 	path = get_cd_path(args, data);
 	if (!path)
@@ -98,11 +98,7 @@ int	builtin_cd(char **args, t_data *data)
 	}
 	if (chdir(path) == -1)
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		ft_printf("minishell: cd: %s: %s\n", path, strerror(errno));
 		if (old_pwd)
 			free(old_pwd);
 		return (1);

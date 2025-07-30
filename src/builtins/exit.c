@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 03:44:22 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 23:55:40 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	builtin_exit(char **args, t_data *data)
 		}
 		if (arg_count(args) > 2)
 		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+			ft_printf("minishell: exit: too many arguments\n");
 			return (1);
 		}
 	}

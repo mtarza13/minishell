@@ -59,7 +59,7 @@ static int tokenize_word(char *in, int *i, t_token **toks)
 
     if (in_sq || in_dq)
     {
-        ft_putstr_fd("minishell: syntax error: unclosed quote\n", 2);
+        ft_printf("minishell: syntax error: unclosed quote\n");
         return (0);
     }
 

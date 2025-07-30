@@ -25,7 +25,7 @@ t_ast *parse_pipeline(t_token **tokens, t_data *data)
         *tokens = (*tokens)->next; // Consume '|'
         if (!*tokens || (*tokens)->type == TOKEN_PIPE)
         {
-            ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+			ft_printf("minishell: syntax error near unexpected token `|'\n");
             free_ast(left);
             return (NULL);
         }

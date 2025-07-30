@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 03:44:36 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:05:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,20 @@ static int handle_input_redirection(t_redir *redir, t_data *data)
     
     expanded = expand_args_professional(&redir->target, data);
     if (!expanded) {
-        ft_putstr_fd("minishell 2: ambiguous redirect\n", 2);
+        ft_printf("minishell : ambiguous redirect\n");
         return (0);
     }
     while(expanded[word_count]) word_count++;
     if (word_count != 1) {
         ft_free_array(expanded);
-        ft_putstr_fd("minishell 1: ambiguous redirect\n", 2);
+        ft_printf("minishell : ambiguous redirect\n");
         return (0);
     }
 
     fd = open(expanded[0], O_RDONLY);
     if (fd == -1) {
         perror(expanded[0]);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(expanded[0], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_printf("minishell: %s: No such file or directory\n", expanded[0]);
         ft_free_array(expanded);
         return (0);
     }
@@ -54,13 +52,13 @@ static int handle_output_redirection(t_redir *redir, t_data *data)
 
     expanded = expand_args_professional(&redir->target, data);
     if (!expanded) {
-        ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+        ft_printf("minishell: ambiguous redirect\n");
         return (0);
     }
     while(expanded[word_count]) word_count++;
     if (word_count != 1) {
         ft_free_array(expanded);
-        ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+        ft_printf("minishell: ambiguous redirect\n");
         return (0);
     }
 

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:01:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:25:14 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 23:55:13 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,24 @@ static int	is_valid_flag(char *s)
 
 int	builtin_echo(char **args)
 {
-	int	i;
-	int	newline;
+	int		i;
+	int		newline;
+	char	*string;
 
 	i = 1;
 	newline = is_valid_flag(args[i]);
 	if (!newline)
 		while (!is_valid_flag(args[++i]))
 			;
+	string = ft_strdup("");
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		string = ft_strjoin(string, args[i]);
 		if (args[i + 1])
-			ft_putstr_fd(" ", 1);
+			string = ft_strjoin(string, " ");
 		i++;
 	}
 	if (newline)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd(ft_strjoin(string, "\n"), 1);
 	return (0);
 }

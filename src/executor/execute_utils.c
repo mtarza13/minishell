@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:09:52 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:53:18 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:02:14 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ char	*filename(char *cmd, t_data *data)
 		stat(cmd, &b);
 		if (S_ISDIR(b.st_mode))
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(cmd, 2);
-			ft_putstr_fd(": Is a directory\n", 2);
+			ft_printf("minishell: %s: Is a directory\n", cmd);
 			exit(PERMISSION_DENIED);
 		}
 		if (!access(cmd, F_OK))
@@ -92,17 +90,13 @@ char	*filename(char *cmd, t_data *data)
 				return (cmd);
 			else
 			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(cmd, 2);
-				ft_putstr_fd(": Permission denied\n", 2);
+				ft_printf("minishell: %s: Permission denied\n", cmd);
 				exit(PERMISSION_DENIED);
 			}
 		}
 		else
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(cmd, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			ft_printf("minishell: %s: No such file or directory\n", cmd);
 			exit(COMMAND_NOT_FOUND);
 		}
 		return (cmd);
@@ -121,9 +115,7 @@ char	*filename(char *cmd, t_data *data)
 				return (c_path);
 			else
 			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(c_path, 2);
-				ft_putstr_fd(": Permission denied\n", 2);
+				ft_printf("minishell: %s: Permission denied\n", c_path);
 				exit(PERMISSION_DENIED);
 			}
 		}

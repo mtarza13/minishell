@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 03:52:15 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 23:57:58 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 		envp = env_to_array(data);
 		char *file = filename(args[0], data);
 		execve(file, args, envp);
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_printf("minishell: %s: command not found\n", args[0]);
 		ft_free_array(envp);
 		ft_malloc(0, 0);
 		exit(COMMAND_NOT_FOUND);
@@ -101,13 +99,13 @@ int	execute_command(char **args, t_data *data, t_redir *redirs)
 
 					expanded = expand_args_professional(&current->target, data);
 					if (!expanded) {
-						ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+						ft_printf("minishell: ambiguous redirect\n");
 						return (EXIT_FAILURE);
 					}
 					while(expanded[word_count]) word_count++;
 					if (word_count != 1) {
 						ft_free_array(expanded);
-						ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+						ft_printf("minishell: ambiguous redirect\n");
 						return (EXIT_FAILURE);
 					}
 
@@ -133,20 +131,19 @@ int	execute_command(char **args, t_data *data, t_redir *redirs)
 
 					expanded = expand_args_professional(&current->target, data);
 					if (!expanded) {
-						ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+						ft_printf("minishell: ambiguous redirect\n");
 						return (EXIT_FAILURE);
 					}
 					while(expanded[word_count]) word_count++;
 					if (word_count != 1) {
 						ft_free_array(expanded);
-						ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+						ft_printf("minishell: ambiguous redirect\n");
 						return (EXIT_FAILURE);
 					}
 					fd = open(expanded[0], O_RDONLY);
-					if (fd == -1) {
-						ft_putstr_fd("minishell: ", 2);
-						ft_putstr_fd(expanded[0], 2);
-						ft_putstr_fd(": No such file or directory\n", 2);
+					if (fd == -1)
+					{
+						ft_printf("minishell: %s: No such file or directory\n", expanded[0]);
 						ft_free_array(expanded);
 						return (EXIT_FAILURE);
 					}

@@ -51,7 +51,7 @@ int parse_single_redirection(t_token **tokens, t_redir **redirs, t_data *data)
 
     if (!*tokens || (*tokens)->type != TOKEN_WORD)
     {
-        ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
+		ft_printf("minishell: syntax error near unexpected token\n");
         return (0);
     }
 

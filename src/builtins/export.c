@@ -6,129 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 20:51:03 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 23:56:37 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// static void	sort_env_for_export(char **env_array, int count)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*temp;
-
-// 	i = 0;
-// 	while (i < count - 1)
-// 	{
-// 		j = 0;
-// 		while (j < count - i - 1)
-// 		{
-// 			if (env_array[j] && env_array[j + 1]
-// 				&& ft_strcmp(env_array[j], env_array[j + 1]) > 0)
-// 			{
-// 				temp = env_array[j];
-// 				env_array[j] = env_array[j + 1];
-// 				env_array[j + 1] = temp;
-// 			}
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// static void	print_export_format(char *env_var)
-// {
-// 	char	*equals;
-
-// 	equals = ft_strchr(env_var, '=');
-// 	if (equals)
-// 	{
-// 		*equals = '\0';
-// 		printf("declare -x %s=\"%s\"\n", env_var, equals + 1);
-// 		*equals = '=';
-// 	}
-// 	else
-// 		printf("declare -x %s\n", env_var);
-// }
-
-// static int	export_without_args(t_env *env)
-// {
-// 	char	**sorted_env;
-// 	int		i;
-// 	int		j;
-
-// 	sorted_env = malloc(sizeof(char*) * (env->count + 1));
-// 	if (!sorted_env)
-// 		return (1);
-// 	i = 0;
-// 	j = 0;
-// 	while (i < env->count)
-// 	{
-// 		if (env->envp[i])
-// 			sorted_env[j++] = ft_strdup(env->envp[i]);
-// 		i++;
-// 	}
-// 	sorted_env[j] = NULL;
-// 	sort_env_for_export(sorted_env, j);
-// 	i = 0;
-// 	while (i < j)
-// 	{
-// 		if (sorted_env[i])
-// 			print_export_format(sorted_env[i]);
-// 		i++;
-// 	}
-// 	ft_free_array(sorted_env);
-// 	return (0);
-// }
-
-// static int	export_with_value(t_env *env, char *name, char *value)
-// {
-// 	if (!is_valid_identifier(name))
-// 	{
-// 		ft_putstr_fd("minishell: export: `", 2);
-// 		ft_putstr_fd(name, 2);
-// 		ft_putstr_fd("': not a valid identifier\n", 2);
-// 		return (1);
-// 	}
-// 	if (!set_env_value(env, name, value))
-// 	{
-// 		ft_putstr_fd("minishell: export: failed to set variable\n", 2);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// static int	export_without_value(t_env *env, char *name)
-// {
-// 	char	*existing_value;
-
-// 	if (!is_valid_identifier(name))
-// 	{
-// 		ft_putstr_fd("minishell: export: `", 2);
-// 		ft_putstr_fd(name, 2);
-// 		ft_putstr_fd("': not a valid identifier\n", 2);
-// 		return (1);
-// 	}
-// 	existing_value = get_env_value(env, name);
-// 	if (existing_value)
-// 	{
-// 		if (!set_env_value(env, name, existing_value))
-// 		{
-// 			ft_putstr_fd("minishell: export: failed to export variable\n", 2);
-// 			return (1);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		if (!set_env_value(env, name, NULL))
-// 		{
-// 			ft_putstr_fd("minishell: export: failed to export variable\n", 2);
-// 			return (1);
-// 		}
-// 	}
-// 	return (0);
-// }
 
 int	is_env_char(char c)
 {
@@ -281,9 +163,7 @@ int	builtin_export(char **args, t_data *data)
 			(args[i][0] >= 'a' && args[i][0] <= 'z') ||
 			(args[i][0] == '_')))
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			ft_printf("minishell: export: `%s': not a valid identifier\n", args[i]);
 			i++;
 			flag = 1;
 			continue ;
