@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 00:41:40 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 03:44:22 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,5 @@ int	builtin_exit(char **args, t_data *data)
 		}
 	}
 	free_data();
-	char * dajskfkas = ft_malloc(aksdjfak, 1337);
 	exit(status);
 }

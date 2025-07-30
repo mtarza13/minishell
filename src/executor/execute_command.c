@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/29 22:01:26 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 03:52:15 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 		rl_redisplay();
 		return (128 + WTERMSIG(status));
 	}
-		// return (write(1, "\n", 1), 128 + WTERMSIG(status));
 	return (1);
 }
 
@@ -91,8 +90,6 @@ int	execute_command(char **args, t_data *data, t_redir *redirs)
 		if (redirs)
 		{
 			t_redir *current = redirs;
-			// if (heredoc_check_single(current, env))
-			// 	return (1);
 			while (current)
 			{
 				if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_APPEND)
@@ -130,7 +127,31 @@ int	execute_command(char **args, t_data *data, t_redir *redirs)
 				}
 				else if (current->type == TOKEN_REDIR_IN || current->type == TOKEN_HEREDOC)
 				{
-					// 
+					char **expanded;
+					int fd;
+					int word_count = 0;
+
+					expanded = expand_args_professional(&current->target, data);
+					if (!expanded) {
+						ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+						return (EXIT_FAILURE);
+					}
+					while(expanded[word_count]) word_count++;
+					if (word_count != 1) {
+						ft_free_array(expanded);
+						ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+						return (EXIT_FAILURE);
+					}
+					fd = open(expanded[0], O_RDONLY);
+					if (fd == -1) {
+						ft_putstr_fd("minishell: ", 2);
+						ft_putstr_fd(expanded[0], 2);
+						ft_putstr_fd(": No such file or directory\n", 2);
+						ft_free_array(expanded);
+						return (EXIT_FAILURE);
+					}
+					close(fd);
+					ft_free_array(expanded);
 				}
 				current = current->next;
 			}

@@ -37,7 +37,7 @@ static char	*get_variable_value(char *name, t_data *data)
 	if (!name)
 		return (ft_strdup(""));
 	if (ft_strcmp(name, "?") == 0)
-		return (ft_itoa(0)); // placeholder
+		return (ft_itoa(data->status)); // placeholder
 	if (ft_strcmp(name, "$") == 0)
 		return (ft_itoa(getpid())); // Note: This should be the PID of the main shell process
 	// In an interactive shell, positional parameters like $0, $1 are not expanded

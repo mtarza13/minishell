@@ -6,7 +6,7 @@
 #    By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/24 13:05:56 by mtarza13          #+#    #+#              #
-#    Updated: 2025/07/28 21:08:27 by yabarhda         ###   ########.fr        #
+#    Updated: 2025/07/30 04:20:10 by yabarhda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ EXECUTOR_SRCS = executor/execute_ast.c executor/execute_builtin.c \
 LEXER_SRCS = lexer/tokenize.c lexer/token_utils.c
 
 PARSER_SRCS = parser/parse_command.c parser/parse_pipeline.c \
-			  parser/parse_redirections.c parser/syntax_validation.c
+			  parser/parse_redirections.c parser/syntax_validation.c \
+			  parser/input.c
 
 UTILS_SRCS = utils/ft_utils.c utils/string_utils.c utils/memory_utils.c utils/ft_malloc.c\
 			 

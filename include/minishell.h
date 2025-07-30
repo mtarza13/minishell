@@ -112,6 +112,7 @@ t_ast   *parse_pipeline(t_token **tokens, t_data *data);
 t_ast   *parse_command_with_redirections(t_token **tokens, t_data *data);
 int     parse_single_redirection(t_token **tokens, t_redir **redirs, t_data *data);
 int     validate_syntax(t_token *tokens);
+void	minishell(t_data *data);
 
 // --- Executor (executor/) ---
 int     exec_ast(t_ast *ast, t_data *data);
@@ -140,6 +141,7 @@ char    **env_to_array(t_data *data);
 t_env	*new_env_node(char *key, char *value);
 void	add_env_node(t_env **env, t_env *new);
 char	**ft_envp(t_env *env);
+int		list_len(t_env *env);
 
 // --- Builtins (builtins/) ---
 int     builtin_cd(char **args, t_data *data);

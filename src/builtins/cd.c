@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 22:01:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 04:41:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ int	builtin_cd(char **args, t_data *data)
 			free(old_pwd);
 		return (1);
 	}
+	if (old_pwd)
+	{
+		update_env(data, "OLDPWD");
+		// set_env_value(env, "OLDPWD", old_pwd);
+		free(old_pwd);
+	}
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
@@ -100,12 +106,6 @@ int	builtin_cd(char **args, t_data *data)
 		if (old_pwd)
 			free(old_pwd);
 		return (1);
-	}
-	if (old_pwd)
-	{
-		update_env(data, "OLDPWD");
-		// set_env_value(env, "OLDPWD", old_pwd);
-		free(old_pwd);
 	}
 	new_pwd = getcwd(NULL, 0);
 	if (new_pwd)

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 20:45:22 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/30 03:44:36 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@ static int handle_input_redirection(t_redir *redir, t_data *data)
     char **expanded;
     int fd;
     int word_count = 0;
-
-    // if (redir->type == TOKEN_HEREDOC)
-    // {
-    //     fd = setup_heredoc(redir, env);
-    //     if (fd < 0) return (0);
-    //     dup2(fd, STDIN_FILENO);
-    //     close(fd);
-    //     return (1);
-    // }
     
     expanded = expand_args_professional(&redir->target, data);
     if (!expanded) {
@@ -42,6 +33,9 @@ static int handle_input_redirection(t_redir *redir, t_data *data)
     fd = open(expanded[0], O_RDONLY);
     if (fd == -1) {
         perror(expanded[0]);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(expanded[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
         ft_free_array(expanded);
         return (0);
     }
