@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/31 00:56:57 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/31 01:00:57 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
 # include <stdlib.h>
 # include <unistd.h>
+
 void	ft_putnbr_fd(int n, int fd);
 
 size_t	ft_strlen(const char *s);
@@ -20,7 +32,7 @@ int		ft_isalnum(int c);
 int		ft_isdigit(int c);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_putstr_fd(char *s, int fd);
-char *ft_strcpy(char *dst, const char *src);
+char	*ft_strcpy(char *dest, char *src);
 char	**ft_split(char const *s, char c);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	*ft_strndup(const char *s, size_t n);

@@ -6,13 +6,13 @@
 #    By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/24 13:05:56 by mtarza13          #+#    #+#              #
-#    Updated: 2025/07/30 23:38:09 by yabarhda         ###   ########.fr        #
+#    Updated: 2025/07/31 01:47:59 by yabarhda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc
+CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I./include -I./libft
 LIBS = -lreadline -I/usr/include/readline -L./libft -lft
@@ -26,7 +26,7 @@ LIBFT_DIR = libft
 MAIN_SRCS = main.c
 
 BUILTIN_SRCS = builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
-			   builtins/export.c builtins/pwd.c builtins/unset.c
+			   builtins/export.c builtins/export_utils.c builtins/pwd.c builtins/unset.c
 
 EXECUTOR_SRCS = executor/execute_ast.c executor/execute_builtin.c \
 				executor/execute_command.c executor/redirections.c \

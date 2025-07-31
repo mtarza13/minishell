@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:22:53 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 14:23:03 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 01:57:31 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	char	*d;
 	char	*s;
 
-	if (!dest && !src)
+	if (!dest || !src)
 		return (NULL);
 	d = (char *)dest;
 	s = (char *)src;
