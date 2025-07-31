@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 06:44:17 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:22:08 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ void	minishell(t_data *data)
 {
 	char	*input;
 
-	while (1)
+	while (true)
 	{
 		setup_signals();
-		input = readline("minishell$ ");
-		if (!input)
-		{
-			printf("exit\n");
-			break ;
-		}
+		input = readline("$ ");
 		if (g_signal_received)
 		{
 			data->status = CTRL_C_EXIT;
 			g_signal_received = 0;
+		}
+		if (!input)
+		{
+			printf("exit\n");
+			break ;
 		}
 		if (*input)
 		{

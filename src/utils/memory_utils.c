@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:43:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 02:44:39 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:18:43 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,4 @@ void	free_ast(t_ast *ast)
 		return ;
 	if (ast->redirs)
 		free_redirections(ast->redirs);
-}
-
-void	ft_free_array(char **array)
-{
-	int	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-		i++;
-}
-
-void	free_env(t_env *env)
-{
-	if (!env)
-		return ;
 }

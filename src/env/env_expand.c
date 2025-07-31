@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_expand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:55:49 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 02:55:51 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:18:21 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	**expand_args_professional(char **args, t_data *data)
 				final_args = add_word_to_array(final_args, split_words[j]);
 				j++;
 			}
-			ft_free_array(split_words);
 		}
 		else
 		{

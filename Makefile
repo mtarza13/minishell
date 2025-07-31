@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+         #
+#    By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/24 13:05:56 by mtarza13          #+#    #+#              #
-#    Updated: 2025/07/31 01:47:59 by yabarhda         ###   ########.fr        #
+#    Updated: 2025/07/31 21:05:40 by mtarza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,10 @@ CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I./include -I./libft
 LIBS = -lreadline -I/usr/include/readline -L./libft -lft
 
-# Directories
 SRC_DIR = src
 OBJ_DIR = obj
 LIBFT_DIR = libft
 
-# Source files
 MAIN_SRCS = main.c
 
 BUILTIN_SRCS = builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c \
@@ -48,17 +46,13 @@ SIGNALS_SRCS = signals/signal_handler.c signals/signal_setup.c
 
 HEREDOC_SRCS = heredoc/heredoc.c heredoc/heredoc_utils.c
 
-# All source files
 SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) $(LEXER_SRCS) \
 	   $(PARSER_SRCS) $(UTILS_SRCS) $(ENV_SRCS) $(SIGNALS_SRCS) $(HEREDOC_SRCS)
 
-# Object files
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-# Libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-# Rules
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJS)

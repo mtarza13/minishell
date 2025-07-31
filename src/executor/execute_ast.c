@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 04:24:56 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:18:18 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	exec_ast(t_ast *ast, t_data *data)
 	{
 		expanded = expand_args_professional(ast->args, data);
 		status = execute_command(expanded, data, ast->redirs);
-		ft_free_array(expanded);
 		return (status);
 	}
 	else if (ast->type == NODE_PIPE)

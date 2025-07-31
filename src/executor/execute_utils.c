@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:09:52 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 03:38:12 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:06:02 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,9 @@ static char	*get_cmd_path(char *path, char *cmd)
 
 char	*filename(char *cmd, t_data *data)
 {
-	char *(path);
-	int (i);
-	struct stat (b);
-	i = -1;
+	char		*path;
+	struct stat	b;
+
 	if (!ft_strchr_ex(cmd, '/'))
 	{
 		stat(cmd, &b);
