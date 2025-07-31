@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 23:57:58 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 04:13:53 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,26 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 	pid_t	pid;
 	int		status;
 	char	**envp;
+	char	*file;
 
 	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return (1);
-	}
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (!setup_redirections(redirs, data))
-		{
-			ft_malloc(0, 0);
-			exit(1);
-		}
+			(ft_malloc(0, 0), exit(EXIT_FAILURE));
 		envp = env_to_array(data);
-		char *file = filename(args[0], data);
+		file = filename(args[0], data);
 		execve(file, args, envp);
 		ft_printf("minishell: %s: command not found\n", args[0]);
-		ft_free_array(envp);
-		ft_malloc(0, 0);
-		exit(COMMAND_NOT_FOUND);
+		(ft_malloc(0, 0), exit(COMMAND_NOT_FOUND));
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		return (128 + WTERMSIG(status));
-	}
+		return (ft_printf("\n"), 128 + WTERMSIG(status));
 	return (1);
 }
 
@@ -61,8 +46,7 @@ static int	execute_builtin_with_redirections(char **args, t_data *data,
 	int	stdin_backup;
 	int	stdout_backup;
 	int	status;
-	// if(write(1,"",0) <= 0)
-	// 	return 1;
+
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
 	if (!setup_redirections(redirs, data))
@@ -81,77 +65,38 @@ static int	execute_builtin_with_redirections(char **args, t_data *data,
 	return (status);
 }
 
+static int	redir_check(t_data *data, t_redir *redirs)
+{
+	t_redir	*current;
+
+	current = redirs;
+	while (current)
+	{
+		if (current->type == TOKEN_REDIR_OUT || \
+			current->type == TOKEN_REDIR_APPEND)
+		{
+			if (!handle_output_redirection(current, data, 0))
+				return (EXIT_FAILURE);
+		}
+		else if (current->type == TOKEN_REDIR_IN || \
+				current->type == TOKEN_HEREDOC)
+		{
+			if (!handle_input_redirection(current, data, 1))
+				return (EXIT_FAILURE);
+		}
+		current = current->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
 int	execute_command(char **args, t_data *data, t_redir *redirs)
 {
 	if (!args || !args[0])
 	{
 		if (redirs)
 		{
-			t_redir *current = redirs;
-			while (current)
-			{
-				if (current->type == TOKEN_REDIR_OUT || current->type == TOKEN_REDIR_APPEND)
-				{
-					char **expanded;
-					int fd;
-					int flags;
-					int word_count = 0;
-
-					expanded = expand_args_professional(&current->target, data);
-					if (!expanded) {
-						ft_printf("minishell: ambiguous redirect\n");
-						return (EXIT_FAILURE);
-					}
-					while(expanded[word_count]) word_count++;
-					if (word_count != 1) {
-						ft_free_array(expanded);
-						ft_printf("minishell: ambiguous redirect\n");
-						return (EXIT_FAILURE);
-					}
-
-					if (current->type == TOKEN_REDIR_APPEND)
-						flags = O_WRONLY | O_CREAT | O_APPEND;
-					else
-						flags = O_WRONLY | O_CREAT | O_TRUNC;
-					
-					fd = open(expanded[0], flags, 0644);
-					if (fd == -1) {
-						perror(expanded[0]);
-						ft_free_array(expanded);
-						return (EXIT_FAILURE);
-					}
-					close(fd);
-					ft_free_array(expanded);
-				}
-				else if (current->type == TOKEN_REDIR_IN || current->type == TOKEN_HEREDOC)
-				{
-					char **expanded;
-					int fd;
-					int word_count = 0;
-
-					expanded = expand_args_professional(&current->target, data);
-					if (!expanded) {
-						ft_printf("minishell: ambiguous redirect\n");
-						return (EXIT_FAILURE);
-					}
-					while(expanded[word_count]) word_count++;
-					if (word_count != 1) {
-						ft_free_array(expanded);
-						ft_printf("minishell: ambiguous redirect\n");
-						return (EXIT_FAILURE);
-					}
-					fd = open(expanded[0], O_RDONLY);
-					if (fd == -1)
-					{
-						ft_printf("minishell: %s: No such file or directory\n", expanded[0]);
-						ft_free_array(expanded);
-						return (EXIT_FAILURE);
-					}
-					close(fd);
-					ft_free_array(expanded);
-				}
-				current = current->next;
-			}
+			if (redir_check(data, redirs))
+				return (EXIT_FAILURE);
 			return (EXIT_SUCCESS);
 		}
 		return (EXIT_SUCCESS);

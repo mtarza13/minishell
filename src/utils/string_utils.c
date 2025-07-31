@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:59:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:59:40 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 03:18:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 
 char	*remove_quotes_advanced(char *str)
 {
-	char	*result;
-	int		capacity;
-	int		i;
-	int		j;
-	char	quote;
-
+	char *(result);
+	int (quote), i = 0, j = 0;
 	if (!str)
 		return (NULL);
-	capacity = ft_strlen(str) + 1;
-	result = ft_malloc(capacity, 69);
-	i = 0;
-	j = 0;
+	result = ft_malloc(ft_strlen(str) + 1, 69);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
@@ -73,20 +66,14 @@ static int	count_words(char *str)
 
 char	**split_unquoted_words(char *str)
 {
-	char	**words;
-	int		word_count;
-	int		word_idx;
-	int		i;
-	int		start;
-
+	char **(words);
+	int (word_count), word_idx = 0, i = 0, start;
 	if (!str || !*str)
 		return (NULL);
 	word_count = count_words(str);
 	if (word_count == 0)
 		return (NULL);
-	words = ft_malloc(sizeof(char*) * (word_count + 1), 69);
-	word_idx = 0;
-	i = 0;
+	words = ft_malloc(sizeof(char *) * (word_count + 1), 69);
 	while (word_idx < word_count && str[i])
 	{
 		while (str[i] && ft_isspace(str[i]))
@@ -98,10 +85,7 @@ char	**split_unquoted_words(char *str)
 			i++;
 		words[word_idx] = ft_substr(str, start, i - start);
 		if (!words[word_idx])
-		{
-			ft_free_array(words);
 			return (NULL);
-		}
 		word_idx++;
 	}
 	words[word_idx] = NULL;

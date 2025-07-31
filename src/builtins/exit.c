@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 23:55:40 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 01:03:55 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static long	ft_exit_input(char *s, long *status)
 	return (0);
 }
 
-static int arg_count(char **args)
+static int	arg_count(char **args)
 {
 	int	i;
 

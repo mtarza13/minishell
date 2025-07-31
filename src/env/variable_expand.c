@@ -1,10 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   variable_expand.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/31 02:56:11 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/31 04:32:14 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
-/*
- * get_variable_name:
- * A static helper to extract the name of a variable following a '$'.
- * Handles single-character names like '?' and '$', as well as alphanumeric names.
- */
 static char	*get_variable_name(char *str, int *i)
 {
 	int		start;

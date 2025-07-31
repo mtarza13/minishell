@@ -6,57 +6,57 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:53:48 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 04:58:42 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:36:12 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token *create_token(t_token_type type, char *value)
+t_token	*create_token(t_token_type type, char *value)
 {
-    t_token *token;
+	t_token	*token;
 
-    token = ft_malloc(sizeof(t_token), 69);
-    token->type = type;
-    token->value = NULL;
-    if (value)
-        token->value = ft_strdup(value);
-    token->next = NULL;
-    return (token);
+	token = ft_malloc(sizeof(t_token), 69);
+	token->type = type;
+	token->value = NULL;
+	if (value)
+		token->value = ft_strdup(value);
+	token->next = NULL;
+	return (token);
 }
 
-void add_token(t_token **tokens, t_token *new_token)
+void	add_token(t_token **tokens, t_token *new_token)
 {
-    t_token *current;
+	t_token	*current;
 
-    if (!*tokens)
-    {
-        *tokens = new_token;
-        return;
-    }
-    current = *tokens;
-    while (current->next)
-        current = current->next;
-    current->next = new_token;
+	if (!*tokens)
+	{
+		*tokens = new_token;
+		return ;
+	}
+	current = *tokens;
+	while (current->next)
+		current = current->next;
+	current->next = new_token;
 }
 
-void free_tokens(t_token *tokens)
+void	free_tokens(t_token *tokens)
 {
-    t_token *tmp;
+	t_token	*tmp;
 
-    while (tokens)
-    {
-        tmp = tokens;
-        tokens = tokens->next;
+	while (tokens)
+	{
+		tmp = tokens;
+		tokens = tokens->next;
 		if (tmp->type == TOKEN_HEREDOC)
 		{
 			if (tmp->next)
 				unlink(tmp->next->value);
 		}
-    }
+	}
 }
 
-int is_special_char(char c)
+int	is_special_char(char c)
 {
-    return (c == '|' || c == '<' || c == '>');
+	return (c == '|' || c == '<' || c == '>');
 }

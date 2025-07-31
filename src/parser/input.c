@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 00:22:52 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 04:36:06 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_line(char *line, t_data *data)
 
 	tokens = tokenize(line);
 	free(line);
-	if (tokens && validate_syntax(tokens))
+	if (tokens && validate_syntax(tokens, data))
 	{
 		if (!heredoc_check(tokens, data))
 			return (free_tokens(tokens), (void)1);
@@ -57,5 +57,7 @@ void	minishell(t_data *data)
 			add_history(input);
 			handle_line(input, data);
 		}
+		else
+			free(input);
 	}
 }

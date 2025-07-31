@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 00:04:36 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:32:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	heredoc_sig_status(char *dlimit, int status)
 			return (0);
 		else if (WEXITSTATUS(status) == 131)
 		{
-			ft_printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')", dlimit);
+			ft_printf("minishell: warning: here-document delimited by \
+				end-of-file (wanted `%s')", dlimit);
 			return (1);
 		}
 	}	
@@ -77,10 +78,12 @@ int	heredoc_sig_status(char *dlimit, int status)
 
 int	feed_heredoc(char *file, char *dlimit, int expand, t_data *data)
 {
+	int	pid;
+	int	status;
+
 	if (expand)
 		dlimit = remove_quotes_advanced(dlimit);
 	signals_heredoc();
-	int pid, status;
 	pid = fork();
 	if (!pid)
 	{
@@ -95,13 +98,16 @@ int	feed_heredoc(char *file, char *dlimit, int expand, t_data *data)
 
 int	heredoc_check(t_token *token, t_data *data)
 {
+	char	*dlimit;
+
 	while (token)
 	{
 		if (token->type == TOKEN_HEREDOC)
 		{
-			char *dlimit = token->next->value;
+			dlimit = token->next->value;
 			token->next->value = get_heredoc_filename();
-			if (!feed_heredoc(token->next->value, dlimit, (ft_strchr(dlimit, '\'') || ft_strchr(dlimit, '"')), data))
+			if (!feed_heredoc(token->next->value, dlimit, \
+				(ft_strchr(dlimit, '\'') || ft_strchr(dlimit, '"')), data))
 				return (0);
 		}
 		token = token->next;

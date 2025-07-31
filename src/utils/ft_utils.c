@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/31 02:40:34 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/31 02:42:26 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
@@ -25,36 +36,6 @@ int	is_valid_identifier(char *str)
 		i++;
 	}
 	return (1);
-}
-
-char	*ft_strjoin_free(char *s1, char *s2, int free_s1, int free_s2)
-{
-	char	*result;
-	size_t	len1;
-	size_t	len2;
-	size_t	i;
-
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (free_s2 ? s2 : ft_strdup(s2));
-	if (!s2)
-		return (free_s1 ? s1 : ft_strdup(s1));
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	result = ft_malloc(len1 + len2 + 1, 69);
-	i = -1;
-	while (++i < len1)
-		result[i] = s1[i];
-	i = -1;
-	while (++i < len2)
-		result[len1 + i] = s2[i];
-	result[len1 + len2] = '\0';
-	// if (free_s1)
-	// 	free(s1);
-	// if (free_s2)
-	// 	free(s2);
-	return (result);
 }
 
 char	*append_char_dynamic(char *str, char c, int *len, int *capacity)

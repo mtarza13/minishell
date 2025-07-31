@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 23:51:45 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:36:04 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_cd_path(char **args, t_data *data)
 	return (path);
 }
 
-static int arg_count(char **args)
+static int	arg_count(char **args)
 {
 	int	i;
 
@@ -45,18 +45,14 @@ static int arg_count(char **args)
 void	update_env(t_data *data, char *value)
 {
 	t_env *(tmp);
-	char	*cwd;
-	
+	char *(cwd);
 	tmp = data->env;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return ;
 	if (!tmp)
-	{
-		add_env_node(&data->env, new_env_node(ft_strdup(value), ft_strdup(cwd)));
-		free(cwd);
-		return ;
-	}
+		return (add_env_node(&data->env, new_env_node(ft_strdup(value), \
+		ft_strdup(cwd))), free(cwd), (void)0);
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, value))
@@ -66,7 +62,8 @@ void	update_env(t_data *data, char *value)
 		}
 		else if (!tmp->next)
 		{
-			add_env_node(&data->env, new_env_node(ft_strdup(value), ft_strdup(cwd)));
+			add_env_node(&data->env, new_env_node(ft_strdup(value), \
+			ft_strdup(cwd)));
 			break ;
 		}
 		tmp = tmp->next;
@@ -76,12 +73,9 @@ void	update_env(t_data *data, char *value)
 
 int	builtin_cd(char **args, t_data *data)
 {
-	char	*path;
-	char	*old_pwd;
-	char	*new_pwd;
-
+	char *(path), *(old_pwd), *(new_pwd);
 	if (arg_count(args) > 2)
-		return (ft_printf("minishell: cd: too many arguments\n"), 1);	
+		return (ft_printf("minishell: cd: too many arguments\n"), 1);
 	old_pwd = getcwd(NULL, 0);
 	path = get_cd_path(args, data);
 	if (!path)
@@ -91,12 +85,8 @@ int	builtin_cd(char **args, t_data *data)
 		return (1);
 	}
 	if (old_pwd)
-	{
-		update_env(data, "OLDPWD");
-		// set_env_value(env, "OLDPWD", old_pwd);
-		free(old_pwd);
-	}
-	if (chdir(path) == -1)
+		(update_env(data, "OLDPWD"), free(old_pwd));
+	if (path[0] && chdir(path) == -1)
 	{
 		ft_printf("minishell: cd: %s: %s\n", path, strerror(errno));
 		if (old_pwd)
@@ -105,10 +95,6 @@ int	builtin_cd(char **args, t_data *data)
 	}
 	new_pwd = getcwd(NULL, 0);
 	if (new_pwd)
-	{
-		update_env(data, "PWD");
-		// set_env_value(env, "PWD", new_pwd);
-		free(new_pwd);
-	}
+		(update_env(data, "PWD"), free(new_pwd));
 	return (0);
 }

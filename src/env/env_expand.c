@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_expand.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/31 02:55:49 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/07/31 02:55:51 by yabarhda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static char	**add_word_to_array(char **array, char *word)
@@ -22,9 +34,7 @@ static char	**add_word_to_array(char **array, char *word)
 		i++;
 	}
 	new_array[count] = ft_strdup(word);
-	new_array[count + 1] = NULL;
-	// if (array)
-	// 	free(array); 
+	new_array[count + 1] = NULL; 
 	return (new_array);
 }
 

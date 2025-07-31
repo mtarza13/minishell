@@ -6,37 +6,17 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 23:56:37 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:23:11 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_env_char(char c)
+static int	string_check(char **args, int i, int j, t_data *data)
 {
-	return ((c >= 'a' && c <= 'z') ||
-			(c >= 'A' && c <= 'Z') ||
-			(c >= '0' && c <= '9') ||
-			c == '_');
-}
+	int	f;
 
-void	update_env_node(t_env *env, char *key, char *value)
-{
-	int (v_len);
-	v_len = ft_strlen(key);
-	while (env)
-	{
-		if (!ft_strncmp(env->key, key, v_len))
-		{
-			env->value = value;
-			return ;
-		}
-		env = env->next;
-	}
-}
-
-static void	string_check(char **args, int i, int j, int *f, t_data *data)
-{
+	f = 0;
 	while (args[i][j])
 	{
 		if (!is_env_char(args[i][j]))
@@ -52,59 +32,28 @@ static void	string_check(char **args, int i, int j, int *f, t_data *data)
 					ft_strdup(&args[i][j + 1]));
 			}
 			else
-			{
-				// print_error(args[i], 6);
-				data->status = 1;
-				*f = 1;
-			}
+				f = 1;
 			break ;
 		}
 		j++;
-	}	
+	}
+	return (f);
 }
-
-// int	builtin_export(char **args, t_env *env)
-// {
-// 	int		exit_status;
-// 	int		i;
-// 	char	*equals;
-
-// 	if (!args[1])
-// 		return (export_without_args(env));
-// 	exit_status = 0;
-// 	i = 1;
-// 	while (args[i])
-// 	{
-// 		if (!((args[i][0] >= 'A' && args[i][0] <= 'Z') ||
-// 			(args[i][0] >= 'a' && args[i][0] <= 'z') ||
-// 			(args[i][0] == '_')))
-// 		{
-// 			i++;
-// 			f = 1;
-// 			cmd->data->status = 1;
-// 			continue ;
-// 		}
-// 		equals = ft_strchr(args[i], '=');
-// 		if (equals)
-// 		{
-// 			*equals = '\0';
-// 			exit_status |= export_with_value(env, args[i], equals + 1);
-// 			*equals = '=';
-// 		}
-// 		else
-// 			exit_status |= export_without_value(env, args[i]);
-// 		i++;
-// 	}
-// 	return (exit_status);
-// }
 
 static void	print_envp(t_env **env_arr, int count)
 {
-	int	i;
+	int		i;
+	char	*string;
 
 	i = -1;
 	while (++i < count)
-		printf("declare -x %s=\"%s\"\n", env_arr[i]->key, env_arr[i]->value);
+	{
+		string = ft_strdup("");
+		string = ft_strjoin(string, ft_strjoin("declare -x ", \
+		ft_strjoin(env_arr[i]->key, ft_strjoin("=\"", \
+		ft_strjoin(env_arr[i]->value, "\"\n")))));
+		ft_putstr_fd(string, 1);
+	}
 }
 
 static void	bubble_sort(t_env **env_arr, int count)
@@ -163,12 +112,16 @@ int	builtin_export(char **args, t_data *data)
 			(args[i][0] >= 'a' && args[i][0] <= 'z') ||
 			(args[i][0] == '_')))
 		{
-			ft_printf("minishell: export: `%s': not a valid identifier\n", args[i]);
+			ft_printf("minishell: export: `%s': not a valid identifier\n", \
+				args[i]);
 			i++;
 			flag = 1;
 			continue ;
 		}
-		string_check(args, i, j, &flag, data);
+		flag = string_check(args, i, j, data);
+		if (flag)
+			ft_printf("minishell: export: `%s': not a valid identifier\n", \
+				args[i]);
 		i++;
 	}
 	return (flag);

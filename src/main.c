@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 09:58:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 00:21:47 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:28:15 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ int	main(int argc, char **argv, char **envp)
 	minishell(data);
 	exit_status = data->status;
 	free_data();
-	// ft_malloc(0, 0);
 	return (exit_status);
 }

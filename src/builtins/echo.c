@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:01:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 23:55:13 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:54:09 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ int	builtin_echo(char **args)
 	}
 	if (newline)
 		ft_putstr_fd(ft_strjoin(string, "\n"), 1);
+	else
+		ft_putstr_fd(string, 1);
 	return (0);
 }
