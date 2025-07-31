@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 00:32:49 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:53:54 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,13 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 
 int	heredoc_sig_status(char *dlimit, int status)
 {
-	if (WIFSIGNALED(status))
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		return (0);
-	}
 	if (WIFEXITED(status))
 	{
 		if (WEXITSTATUS(status) == 130)
+		{
+			ft_printf("\n");
 			return (0);
+		}
 		else if (WEXITSTATUS(status) == 131)
 		{
 			ft_printf("minishell: warning: here-document delimited by \
