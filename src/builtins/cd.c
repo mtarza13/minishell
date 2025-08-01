@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 14:48:51 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/01 22:06:26 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,31 @@ static int	arg_count(char **args)
 	return (i);
 }
 
-void	update_env(t_data *data, char *value)
+void	update_env(t_data *data, char *key, char *value)
 {
 	t_env *(tmp);
-	char *(cwd);
 	tmp = data->env;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return ;
 	if (!tmp)
-		return (add_env_node(&data->env, new_env_node(ft_strdup(value), \
-		ft_strdup(cwd))), free(cwd), (void)0);
+		return (add_env_node(&data->env, new_env_node(ft_strdup(key), \
+		ft_strdup(value))), (void)0);
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->key, value))
+		if (!ft_strcmp(tmp->key, key))
 		{
-			tmp->value = ft_strdup(cwd);
+			tmp->value = ft_strdup(value);
 			break ;
 		}
 		else if (!tmp->next)
 		{
-			add_env_node(&data->env, new_env_node(ft_strdup(value), \
-			ft_strdup(cwd)));
+			add_env_node(&data->env, new_env_node(ft_strdup(key), \
+			ft_strdup(value)));
 			break ;
 		}
 		tmp = tmp->next;
 	}
-	free(cwd);
 }
 
-/* static void	getcwd_perror(void)
+static void	getcwd_perror(void)
 {
 	char	*cd;
 	char	*getcwd;
@@ -81,33 +76,26 @@ void	update_env(t_data *data, char *value)
 	getcwd = ft_strdup("getcwd: cannot access parent directories: ");
 	no_file = ft_strdup("No such file or directory");
 	ft_printf("%s\n", ft_strjoin(cd, ft_strjoin(getcwd, no_file)));
-} */
+}
 
 int	builtin_cd(char **args, t_data *data)
 {
-	char *(path), *(old_pwd), *(new_pwd);
+	char *(path), *(pwd);
 	if (arg_count(args) > 2)
 		return (ft_printf("minishell: cd: too many arguments\n"), 1);
-	old_pwd = getcwd(NULL, 0);
-	// if (!old_pwd && args[1] && access(args[1], F_OK) == -1)
-	// 	return (getcwd_perror(), 1);
+	if (args[1] && access(args[1], F_OK) == -1)
+		return (ft_printf("minishell: cd: %s: %s\n", args[1], \
+			strerror(errno)), 1);
 	path = get_cd_path(args, data);
 	if (!path)
-	{
-		if (old_pwd)
-			free(old_pwd);
 		return (1);
-	}
-	(update_env(data, "OLDPWD"), free(old_pwd));
-	if (path[0] && chdir(path) == -1)
-	{
-		ft_printf("minishell: cd: %s: %s\n", path, strerror(errno));
-		if (old_pwd)
-			free(old_pwd);
-		return (1);
-	}
-	new_pwd = getcwd(NULL, 0);
-	if (new_pwd)
-		(update_env(data, "PWD"), free(new_pwd));
+	update_env(data, "OLDPWD", get_env_value("PWD", data));
+	chdir(path);
+	pwd = getcwd(NULL, 0);
+	if (pwd)
+		update_env(data, "PWD", pwd);
+	else if (!pwd)
+		return (getcwd_perror(), 1);
+	free(pwd);
 	return (0);
 }

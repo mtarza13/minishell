@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 14:12:51 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/01 16:08:38 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ t_env				*new_env_node(char *key, char *value);
 void				add_env_node(t_env **env, t_env *new);
 char				**ft_envp(t_env *env);
 int					list_len(t_env *env);
-void				update_env_node(t_env *env, char *key, char *value);
+void				update_env(t_data *data, char *key, char *value);
 int					is_env_char(char c);
 
 int					builtin_cd(char **args, t_data *data);

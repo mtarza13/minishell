@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 02:23:11 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:17:24 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static int	string_check(char **args, int i, int j, t_data *data)
 					add_env_node(&data->env, new_env_node \
 					(ft_strdup(args[i]), ft_strdup(&args[i][j + 1])));
 				else
-					update_env_node(data->env, args[i], \
-					ft_strdup(&args[i][j + 1]));
+					update_env(data, args[i], ft_strdup(&args[i][j + 1]));
 			}
 			else
 				f = 1;
