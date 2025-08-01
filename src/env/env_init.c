@@ -23,12 +23,12 @@ char	**ft_envp(t_env *env)
 	envp = (char **)ft_malloc(sizeof(char *) * list_len(env), 43);
 	while (tmp)
 	{
-		envp[i] = (char *)ft_malloc(sizeof(char) * (ft_strlen(tmp->key) + \
-		ft_strlen(tmp->value) + 2), 65);
+		envp[i] = (char *)ft_malloc(sizeof(char) * (ft_strlen(tmp->key)
+					+ ft_strlen(tmp->value) + 2), 65);
 		ft_strncpy(envp[i], tmp->key, ft_strlen(tmp->key) + 1);
 		ft_strncat(envp[i], "=", ft_strlen(tmp->key) + 2);
-		ft_strncat(envp[i], tmp->value, ft_strlen(tmp->value) + \
-		ft_strlen(tmp->key) + 2);
+		ft_strncat(envp[i], tmp->value, ft_strlen(tmp->value)
+			+ ft_strlen(tmp->key) + 2);
 		i++;
 		tmp = tmp->next;
 	}

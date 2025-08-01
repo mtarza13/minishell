@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:25:13 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 04:30:38 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/01 04:55:59 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 char	*get_env_value(char *var, t_data *data)
 {
-	int		i;
-	int		v_len;
+	size_t	v_len;
 	t_env	*tmp;
 
-	i = 0;
+	if (!var || !data || !data->env)
+		return (NULL);
 	v_len = ft_strlen(var);
 	tmp = data->env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, var, v_len))
+		if (ft_strlen(tmp->key) == v_len && !ft_strncmp(tmp->key, var, v_len))
 			return (tmp->value);
 		tmp = tmp->next;
-		i++;
 	}
 	return (NULL);
 }

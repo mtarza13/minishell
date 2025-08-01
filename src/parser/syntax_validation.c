@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_validation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 02:56:55 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 04:37:30 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/08/01 04:27:50 by mtarza            #+#    #+#             */
+/*   Updated: 2025/08/01 04:27:51 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	print_syntax_error(char *token_value, t_data *data)
 {
-	ft_printf("minishell: syntax error near unexpected token `%s'\n", \
+	ft_printf("minishell: syntax error near unexpected token `%s'\n",
 		token_value);
 	data->status = 2;
 	return (0);

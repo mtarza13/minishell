@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory_utils.c                                     :+:      :+:    :+:   */
+/*   expo_v2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 02:43:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 06:08:07 by mtarza           ###   ########.fr       */
+/*   Created: 2025/08/01 04:48:40 by mtarza            #+#    #+#             */
+/*   Updated: 2025/08/01 05:35:36 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_redirections(t_redir *redirs)
+int	count_split_words(char **split)
 {
-	t_redir	*tmp;
+	int	count;
 
-	while (redirs)
-	{
-		tmp = redirs;
-		redirs = redirs->next;
-		if (tmp->type == TOKEN_HEREDOC)
-			unlink(tmp->target);
-	}
-}
-
-void	free_ast(t_ast *ast)
-{
-	if (!ast)
-		return ;
-	if (ast->redirs)
-		free_redirections(ast->redirs);
+	count = 0;
+	while (split && split[count])
+		count++;
+	return (count);
 }

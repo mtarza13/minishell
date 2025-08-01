@@ -81,7 +81,7 @@ static void	check(va_list args, const char *s)
 
 void	ft_printf(const char *s, ...)
 {
-	va_list		args;
+	va_list	args;
 
 	if (!s)
 		return ;

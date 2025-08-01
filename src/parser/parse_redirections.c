@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 02:56:49 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 03:12:28 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/08/01 04:27:44 by mtarza            #+#    #+#             */
+/*   Updated: 2025/08/01 04:27:45 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ t_redir	*create_redirection(t_token_type type, char *target, t_data *data)
 	redir->next = NULL;
 	if (type == TOKEN_HEREDOC)
 	{
-		if (analyze_heredoc_delimiter(target, &final_delimiter, \
-			&should_expand, data))
+		if (analyze_heredoc_delimiter(target, &final_delimiter, &should_expand,
+				data))
 			redir->quoted_delimiter = !should_expand;
 	}
 	return (redir);

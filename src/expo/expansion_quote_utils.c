@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory_utils.c                                     :+:      :+:    :+:   */
+/*   expansion_quote_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 02:43:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 06:08:07 by mtarza           ###   ########.fr       */
+/*   Created: 2025/08/01 04:41:39 by mtarza            #+#    #+#             */
+/*   Updated: 2025/08/01 05:35:08 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_redirections(t_redir *redirs)
+int	should_expand_dollar(char *str, int i, int sq)
 {
-	t_redir	*tmp;
-
-	while (redirs)
-	{
-		tmp = redirs;
-		redirs = redirs->next;
-		if (tmp->type == TOKEN_HEREDOC)
-			unlink(tmp->target);
-	}
+	if (sq)
+		return (0);
+	if (i > 0 && str[i - 1] == '\\')
+		return (0);
+	return (1);
 }
 
-void	free_ast(t_ast *ast)
+char	*append_to_result(char *result, char *to_append)
 {
-	if (!ast)
-		return ;
-	if (ast->redirs)
-		free_redirections(ast->redirs);
+	char	*new_result;
+
+	if (!result || !to_append)
+		return (result);
+	new_result = ft_strjoin(result, to_append);
+	return (new_result);
 }

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "../include/minishell.h"
+#include "libft.h"
 
 static int	get_len(int n)
 {

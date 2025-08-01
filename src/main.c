@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	g_signal_received = 0;
+int		g_signal_received = 0;
 
 void	free_data(void)
 {

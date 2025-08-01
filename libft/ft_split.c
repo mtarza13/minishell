@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "../include/minishell.h"
+#include "libft.h"
 
 static int	count_words(char const *s, char c)
 {
@@ -56,8 +56,8 @@ char	**ft_split(char const *s, char c)
 	char	**array_str;
 
 	i = 0;
-	array_str = (char **)ft_malloc(sizeof(char *) * \
-	(count_words(s, c) + 1), 69);
+	array_str = (char **)ft_malloc(sizeof(char *) * (count_words(s, c) + 1),
+			69);
 	while (*s)
 	{
 		while (*s && *s == c)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 21:18:18 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/01 05:36:43 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	exec_ast(t_ast *ast, t_data *data)
 		return (1);
 	if (ast->type == NODE_COMMAND)
 	{
-		expanded = expand_args_professional(ast->args, data);
+		expanded = expand_arg_array(ast->args, data);
 		status = execute_command(expanded, data, ast->redirs);
 		return (status);
 	}

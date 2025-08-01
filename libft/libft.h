@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 00:56:57 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 01:00:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/01 06:08:41 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	*ft_strndup(const char *s, size_t n);
 void	ft_strncpy(char *dest, const char *src, size_t size);
 void	ft_strncat(char *dest, const char *src, size_t size);
+int		ft_isalpha(int c);
 
 #endif

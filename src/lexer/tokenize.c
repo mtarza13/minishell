@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 00:36:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 00:53:02 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/08/01 04:27:03 by mtarza            #+#    #+#             */
+/*   Updated: 2025/08/01 04:31:21 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,22 @@ static int	tokenize_operators(char *in, int *i, t_token **toks)
 	{
 		if (in[*i + 1] == '<' || in[*i + 1] == '>')
 		{
-			if (in[*i + 1] == '<')
+			if (in[*i] == '<' && in[*i + 1] == '<')
 				add_token(toks, create_token(TOKEN_HEREDOC, "<<"));
-			else if (in[*i + 1] == '>')
+			else if (in[*i] == '>' && in[*i + 1] == '>')
 				add_token(toks, create_token(TOKEN_REDIR_APPEND, ">>"));
+			(*i) += 2;
+		}
+		else
+		{
+			if (in[*i] == '<')
+				add_token(toks, create_token(TOKEN_REDIR_IN, "<"));
+			else if (in[*i] == '>')
+				add_token(toks, create_token(TOKEN_REDIR_OUT, ">"));
+			else if (in[*i] == '|')
+				add_token(toks, create_token(TOKEN_PIPE, "|"));
 			(*i)++;
 		}
-		else if (in[*i] == '<')
-			add_token(toks, create_token(TOKEN_REDIR_IN, "<"));
-		else if (in[*i] == '>')
-			add_token(toks, create_token(TOKEN_REDIR_OUT, ">"));
-		else if (in[*i] == '|')
-			add_token(toks, create_token(TOKEN_PIPE, "|"));
-		(*i)++;
 		return (1);
 	}
 	return (0);
@@ -58,8 +61,23 @@ static int	tokenize_word(char *in, int *i, t_token **toks)
 	if (in_sq || in_dq)
 		return (ft_printf("minishell: syntax error: unclosed quote\n"), 0);
 	if (*i > start)
-		add_token(toks, create_token(TOKEN_WORD, ft_substr(in, start, \
-			*i - start)));
+		add_token(toks, create_token(TOKEN_WORD, ft_substr(in, start, *i
+					- start)));
+	return (1);
+}
+
+static int	process_token(char *in, int *i, t_token **toks)
+{
+	if (is_special_char(in[*i]))
+	{
+		if (!tokenize_operators(in, i, toks))
+			return (0);
+	}
+	else
+	{
+		if (!tokenize_word(in, i, toks))
+			return (0);
+	}
 	return (1);
 }
 
@@ -78,16 +96,8 @@ t_token	*tokenize(char *in)
 			i++;
 		if (!in[i])
 			break ;
-		if (is_special_char(in[i]))
-		{
-			if (!tokenize_operators(in, &i, &toks))
-				return (free_tokens(toks), NULL);
-		}
-		else
-		{
-			if (!tokenize_word(in, &i, &toks))
-				return (free_tokens(toks), NULL);
-		}
+		if (!process_token(in, &i, &toks))
+			return (free_tokens(toks), NULL);
 	}
 	return (toks);
 }
