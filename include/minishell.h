@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 06:11:38 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/01 14:12:51 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <stdbool.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -103,7 +104,6 @@ typedef struct s_mem
 	struct s_mem	*next;
 }					t_mem;
 
-/* --- Function  EXpnatoin Prototypes --- */
 int					is_ifs_char(char c);
 int					should_expand_dollar(char *str, int i, int sq);
 char				*append_to_result(char *result, char *to_append);
@@ -116,10 +116,8 @@ char				*expand_arg_list(char *str, t_data *data);
 
 char				**split_expanded_string(char *expanded_str);
 char				**expand_arg_array(char **args, t_data *data);
-// expov2
-int	count_total_words(char **args, t_data *data);
+int					count_total_words(char **args, t_data *data);
 int					count_split_words(char **split);
-// expo
 void				init_unquote_vars(int *len, int *i, int *in_quotes,
 						char *quote_char);
 void				init_unquote_vars(int *len, int *i, int *in_quotes,
@@ -132,14 +130,12 @@ void				init_unquote_vars(int *len, int *i, int *in_quotes,
 void				update_quote_state(char c, int *in_quotes,
 						char *quote_char);
 
-// --- Lexer (lexer/) ---
 t_token				*tokenize(char *in);
 t_token				*create_token(t_token_type type, char *value);
 void				add_token(t_token **tokens, t_token *new_token);
 void				free_tokens(t_token *tokens);
 int					is_special_char(char c);
 
-// --- Parser (parser/) ---
 t_ast				*parse_pipeline(t_token **tokens, t_data *data);
 t_ast				*parse_command_with_redirections(t_token **tokens,
 						t_data *data);
@@ -148,7 +144,6 @@ int					parse_single_redirection(t_token **tokens, t_redir **redirs,
 int					validate_syntax(t_token *tokens, t_data *data);
 void				minishell(t_data *data);
 
-// --- Executor (executor/) ---
 int					exec_ast(t_ast *ast, t_data *data);
 int					execute_command(char **args, t_data *data, t_redir *redirs);
 int					execute_builtin(char **args, t_data *data);
@@ -161,7 +156,6 @@ int					handle_input_redirection(t_redir *redir, t_data *data,
 int					handle_output_redirection(t_redir *redir, t_data *data,
 						int f);
 
-// --- Heredoc (heredoc/) ---
 int					setup_heredoc(t_redir *redir, t_env *env);
 int					analyze_heredoc_delimiter(char *delimiter,
 						char **final_delimiter, int *should_expand,
@@ -170,7 +164,6 @@ int					heredoc_check_single(t_redir *current, t_env *env);
 int					heredoc_check_multi(t_redir *current, t_env *env);
 int					heredoc_check(t_token *token, t_data *data);
 
-// --- Expansion (env/) ---
 char				*get_env_value(char *name, t_data *data);
 int					set_env_value(t_env *env, char *name, char *value);
 int					unset_env_value(t_env *env, char *name);
@@ -183,7 +176,6 @@ int					list_len(t_env *env);
 void				update_env_node(t_env *env, char *key, char *value);
 int					is_env_char(char c);
 
-// --- Builtins (builtins/) ---
 int					builtin_cd(char **args, t_data *data);
 int					builtin_echo(char **args);
 int					builtin_env(char **args, t_data *data);
@@ -192,7 +184,6 @@ int					builtin_export(char **args, t_data *data);
 int					builtin_pwd(char **args, t_data *data);
 int					builtin_unset(char **args, t_data *data);
 
-// --- Signals (signals/) ---
 void				setup_signals(void);
 void				handle_signal(int signo);
 void				handle_heredoc_signal(int signo);
@@ -202,7 +193,6 @@ void				signals_heredoc(void);
 void				signals_heredoc_child(void);
 void				signals_execute(void);
 
-// --- Utils (utils/) ---
 void				free_ast(t_ast *ast);
 void				free_redirections(t_redir *redirs);
 void				ft_free_array(char **array);

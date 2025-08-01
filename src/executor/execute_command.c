@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 04:13:53 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/01 14:05:52 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	exit_status(int status)
+{
+	if ((WTERMSIG(status) + 128) == 131)
+		ft_printf("Quit (core dumped)");
+	ft_printf("\n");
+}
 
 static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 {
@@ -36,7 +43,7 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
-		return (ft_printf("\n"), 128 + WTERMSIG(status));
+		return (exit_status(status), 128 + WTERMSIG(status));
 	return (1);
 }
 

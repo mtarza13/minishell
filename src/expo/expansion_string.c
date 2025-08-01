@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_string.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:26:38 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/01 06:07:51 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/01 14:14:27 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,10 @@ static char	*append_char(char *result, char c)
 
 char	*expand_string(char *str, t_data *data)
 {
-	char *result;
-	char *tmp;
-	char *var_value;
-	int i;
-	int in_single_quote;
-	int in_double_quote;
+	char	*result;
+	int		i;
+	int		in_single_quote;
+	int		in_double_quote;
 
 	if (!str)
 		return (NULL);
@@ -109,15 +107,10 @@ char	*expand_string(char *str, t_data *data)
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
-		{
-			tmp = handle_quote(str, &i, &in_single_quote, &in_double_quote);
-			result = append_to_result(result, tmp);
-		}
+			result = append_to_result(result, handle_quote(str, &i, \
+				&in_single_quote, &in_double_quote));
 		else if (str[i] == '$' && should_expand_dollar(str, i, in_single_quote))
-		{
-			var_value = expand_variable(str, &i, data);
-			result = append_to_result(result, var_value);
-		}
+			result = append_to_result(result, expand_variable(str, &i, data));
 		else
 		{
 			result = append_char(result, str[i]);
