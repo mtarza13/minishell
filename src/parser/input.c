@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 14:03:56 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/02 20:24:24 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	minishell(t_data *data)
 	while (true)
 	{
 		setup_signals();
+		data->pipes = false;
 		input = readline("$ ");
 		if (g_signal_received)
 		{
@@ -48,16 +49,11 @@ void	minishell(t_data *data)
 			g_signal_received = 0;
 		}
 		if (!input)
-		{
-			printf("exit\n");
 			break ;
-		}
 		if (*input)
-		{
-			add_history(input);
-			handle_line(input, data);
-		}
+			(add_history(input), handle_line(input, data));
 		else
 			free(input);
 	}
+	ft_printf("exit\n");
 }

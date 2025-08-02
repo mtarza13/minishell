@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:27:37 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/01 04:27:38 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/02 19:58:48 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_ast	*parse_pipeline(t_token **tokens, t_data *data)
 	while (*tokens && (*tokens)->type == TOKEN_PIPE)
 	{
 		*tokens = (*tokens)->next;
+		data->pipes = true;
 		if (!*tokens || (*tokens)->type == TOKEN_PIPE)
 		{
 			ft_printf("minishell: syntax error near unexpected token `|'\n");

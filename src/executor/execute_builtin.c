@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:21 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 04:26:05 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/02 20:32:55 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	execute_builtin(char **args, t_data *data)
 	if (ft_strcmp(args[0], "cd") == 0)
 		return (builtin_cd(args, data));
 	if (ft_strcmp(args[0], "pwd") == 0)
-		return (builtin_pwd(args, data));
+		return (builtin_pwd(data));
 	if (ft_strcmp(args[0], "export") == 0)
 		return (builtin_export(args, data));
 	if (ft_strcmp(args[0], "unset") == 0)
 		return (builtin_unset(args, data));
 	if (ft_strcmp(args[0], "env") == 0)
-		return (builtin_env(args, data));
+		return (builtin_env(data));
 	if (ft_strcmp(args[0], "exit") == 0)
 		return (builtin_exit(args, data));
 	return (1);

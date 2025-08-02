@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 04:13:31 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/02 20:41:32 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	handle_input_redirection(t_redir *redir, t_data *data, int f)
 		return (ft_printf("minishell: %s: No such file or directory\n",
 				expanded[0]), 0);
 	if (f)
-		(dup2(fd, STDIN_FILENO), close(fd));
+		dup2(fd, STDIN_FILENO);
+	close(fd);
 	return (1);
 }
 
@@ -59,7 +60,8 @@ int	handle_output_redirection(t_redir *redir, t_data *data, int f)
 		return (ft_printf("minishell: %s: No such file or directory\n",
 				expanded[0]), 0);
 	if (f)
-		(dup2(fd, STDOUT_FILENO), close(fd));
+		dup2(fd, STDOUT_FILENO);
+	close(fd);
 	return (1);
 }
 

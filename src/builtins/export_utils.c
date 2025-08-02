@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 01:05:36 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 01:07:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/02 20:03:08 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,23 @@ int	is_env_char(char c)
 			(c >= 'A' && c <= 'Z') || \
 			(c >= '0' && c <= '9') || \
 			c == '_');
+}
+
+int	is_valid_key(char *key, t_data *data)
+{
+	t_env	*tmp;
+	size_t	v_len;
+
+	if (!key)
+		return (0);
+	tmp = data->env;
+	v_len = ft_strlen(key);
+	tmp = data->env;
+	while (tmp)
+	{
+		if (ft_strlen(tmp->key) == v_len && !ft_strncmp(tmp->key, key, v_len))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }

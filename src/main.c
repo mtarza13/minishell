@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 09:58:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 00:28:15 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:59:17 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_data(t_data *data, char **envp)
 {
 	rl_outstream = stderr;
 	data->status = 0;
+	data->pipes = false;
 	data->env = init_env(envp);
 	data->envp = ft_envp(data->env);
 }

@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 14:02:16 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/02 21:41:44 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,46 @@ char	*get_heredoc_filename(void)
 {
 	int		fd;
 	char	*filename;
+	int		i;
 
 	fd = open("/dev/random", O_RDONLY);
-	filename = ft_malloc(11, 69);
-	read(fd, filename, 10);
+	filename = ft_malloc(51, 69);
+	read(fd, filename, 50);
 	filename[0] = '.';
-	filename[10] = '\0';
+	for (int j = 0; j < 20; j++)
+	{
+		i = 1;
+		while (i < 50)
+		{
+			if (filename[i] >= '0' && filename[i] <= '9')
+			{
+				if (filename[i] > '8')
+					filename[i] -= 1;
+				else if (filename[i] > '5')
+					filename[i] -= 3;
+				else if (filename[i] == '5')
+					filename[i] = '0';
+				else if (filename[i] < '3')
+					filename[i] += 1;
+
+			}
+			else if (ft_isalnum(filename[i]))
+			{
+				i++;
+				continue ;
+			}
+			else if (filename[i] < 48)
+				filename[i] += 54 - filename[i];
+			else if (filename[i] > 122)
+				filename[i] -= filename[i] - 97;
+			else if (filename[i] >= 91 && filename[i] <= 96)
+				filename[i] -= 20;
+			else if (filename[i] > 57 && filename[i] < 101)
+				filename[i] += 40 - filename[i];
+			i++;
+		}
+	}
+	filename[50] = '\0';
 	close(fd);
 	return (filename);
 }
@@ -44,9 +78,8 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 		if (!ft_strcmp(input, dlimit))
 			break ;
 		if (expand)
-			input = expand_arg_list(input, data);
-		write(fd, input, ft_strlen(input));
-		write(fd, "\n", 1);
+			input = expand_arg_list(&input, data);
+		write(fd, ft_strjoin(input, "\n"), ft_strlen(input) + 1);
 	}
 	close(fd);
 	ft_malloc(0, 0);
@@ -64,8 +97,9 @@ int	heredoc_sig_status(char *dlimit, int status)
 		}
 		else if (WEXITSTATUS(status) == 131)
 		{
-			ft_printf("minishell: warning: here-document delimited by \
-				end-of-file (wanted `%s')", dlimit);
+			ft_printf("%s (wanted `%s')\n", \
+			ft_strjoin("minishell: warning: here-document " \
+			, "delimited by end-of-file"), dlimit);
 			return (1);
 		}
 	}	

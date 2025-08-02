@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+         #
+#    By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/24 13:05:56 by mtarza13          #+#    #+#              #
-#    Updated: 2025/08/01 05:50:12 by mtarza           ###   ########.fr        #
+#    Updated: 2025/08/02 20:53:21 by mtarza           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,7 @@ ENV_SRCS = env/env_init.c env/env_utils.c
 SIGNALS_SRCS = signals/signal_handler.c signals/signal_setup.c
 
 HEREDOC_SRCS = heredoc/heredoc.c heredoc/heredoc_utils.c
-EXPO_SRCS = expo/expansion_array.c expo/expansion_quote_utils.c expo/expansion_string.c \
-			expo/expansion_var_utils.c expo/expansion_word_utils.c expo/expo_utils.c expo/expo_v2.c
+EXPO_SRCS = expo/exp_expand.c expo/exp_count.c expo/exp_quote.c expo/exp_utils.c expo/exp_extract.c 
 			
 SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) $(LEXER_SRCS) \
 	   $(PARSER_SRCS) $(UTILS_SRCS) $(ENV_SRCS) $(SIGNALS_SRCS) $(HEREDOC_SRCS) $(EXPO_SRCS)

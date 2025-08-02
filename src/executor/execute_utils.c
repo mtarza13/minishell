@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:09:52 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 05:02:57 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/02 17:55:54 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*get_cmd_path(char *path, char *cmd)
 			if (!access(c_path, X_OK))
 				return (c_path);
 			else
-				error_n_exit(1, cmd, PERMISSION_DENIED);
+				continue ;
 		}
 	}
 	return (c_path);

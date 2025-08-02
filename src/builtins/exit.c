@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 01:03:55 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/02 20:30:15 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static long	ft_exit_input(char *s, long *status)
 	ft_strtol(s);
 	if ((errno == ERANGE) || f)
 	{
-		printf("minishell: exit: %s: numeric argument required\n", s);
+		ft_printf("minishell: exit: %s: numeric argument required\n", s);
 		*status = 2;
 		return (1);
 	}
@@ -81,9 +81,9 @@ int	builtin_exit(char **args, t_data *data)
 {
 	long	status;
 
-	(void)data;
 	status = 0;
-	printf("exit\n");
+	if (!data->pipes)
+		ft_putstr_fd("exit\n", 1);
 	if (args[1])
 	{
 		if (ft_exit_input(args[1], &status))
@@ -97,6 +97,7 @@ int	builtin_exit(char **args, t_data *data)
 			return (1);
 		}
 	}
+	status = data->status;
 	free_data();
 	exit(status);
 }

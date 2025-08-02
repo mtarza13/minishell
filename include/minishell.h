@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 16:08:38 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/02 20:58:16 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_data
 {
 	char			**envp;
 	int				status;
+	bool			pipes;
 	t_env			*env;
 }					t_data;
 
@@ -104,31 +105,37 @@ typedef struct s_mem
 	struct s_mem	*next;
 }					t_mem;
 
-int					is_ifs_char(char c);
-int					should_expand_dollar(char *str, int i, int sq);
-char				*append_to_result(char *result, char *to_append);
-char				*extract_var_name(char *str, int *i);
-char				*expand_variable(char *str, int *i, t_data *data);
-char				*handle_quote(char *str, int *i, int *sq, int *dq);
-char				*remove_quotes(char *str);
-char				*expand_string(char *str, t_data *data);
-char				*expand_arg_list(char *str, t_data *data);
+typedef struct s_quote_state
+{
+	int	in_single;
+	int	in_double;
+	int	in_word;
+}	t_quote_state;
 
-char				**split_expanded_string(char *expanded_str);
-char				**expand_arg_array(char **args, t_data *data);
+typedef struct s_split_state
+{
+	t_quote_state	state;
+	int				i;
+	int				word_idx;
+}	t_split_state;
+
+int					is_space(char c);
+char				*get_env(t_data *data, char *name);
+char				*ft_strjoin_free(char *s1, char *s2);
+char				*add_char(char *result, char c);
+int					has_quotes(const char *s);
+char				**split_with_quotes(char *str);
+char				*remove_quotes(char *str);
+char				*expand_with_quotes(char *str, t_data *data);
+int					count_words_with_quotes(char *str);
 int					count_total_words(char **args, t_data *data);
-int					count_split_words(char **split);
-void				init_unquote_vars(int *len, int *i, int *in_quotes,
-						char *quote_char);
-void				init_unquote_vars(int *len, int *i, int *in_quotes,
-						char *quote_char);
-void				init_remove_vars(int *i, int *j, int *in_quotes,
-						char *quote_char);
-int					calculate_unquoted_length(char *str);
-void				init_unquote_vars(int *len, int *i, int *in_quotes,
-						char *quote_char);
-void				update_quote_state(char c, int *in_quotes,
-						char *quote_char);
+char				*expand_dollar(char *str, int *i, t_data *data, int in_single);
+void				extract_and_advance(const char *str, int *i, char **words, int *word_idx);
+char				**expand_arg_array(char **args, t_data *data);
+char				*expand_arg_list(char **args, t_data *data);
+char				**fill_result_array(char **args, t_data *data, int total);
+char				*join_strings(char **array);
+void				expand_with_quotes_loop(char *str, t_data *data, char **result);
 
 t_token				*tokenize(char *in);
 t_token				*create_token(t_token_type type, char *value);
@@ -156,17 +163,12 @@ int					handle_input_redirection(t_redir *redir, t_data *data,
 int					handle_output_redirection(t_redir *redir, t_data *data,
 						int f);
 
-int					setup_heredoc(t_redir *redir, t_env *env);
 int					analyze_heredoc_delimiter(char *delimiter,
 						char **final_delimiter, int *should_expand,
 						t_data *data);
-int					heredoc_check_single(t_redir *current, t_env *env);
-int					heredoc_check_multi(t_redir *current, t_env *env);
 int					heredoc_check(t_token *token, t_data *data);
 
 char				*get_env_value(char *name, t_data *data);
-int					set_env_value(t_env *env, char *name, char *value);
-int					unset_env_value(t_env *env, char *name);
 t_env				*init_env(char **envp);
 char				**env_to_array(t_data *data);
 t_env				*new_env_node(char *key, char *value);
@@ -178,25 +180,22 @@ int					is_env_char(char c);
 
 int					builtin_cd(char **args, t_data *data);
 int					builtin_echo(char **args);
-int					builtin_env(char **args, t_data *data);
+int					builtin_env(t_data *data);
 int					builtin_exit(char **args, t_data *data);
 int					builtin_export(char **args, t_data *data);
-int					builtin_pwd(char **args, t_data *data);
+int					builtin_pwd(t_data *data);
 int					builtin_unset(char **args, t_data *data);
 
 void				setup_signals(void);
 void				handle_signal(int signo);
 void				handle_heredoc_signal(int signo);
 void				handle_sigint_heredoc(int signo);
-void				handle_heredoc_signal_multi(int signo);
 void				signals_heredoc(void);
 void				signals_heredoc_child(void);
 void				signals_execute(void);
 
 void				free_ast(t_ast *ast);
 void				free_redirections(t_redir *redirs);
-void				ft_free_array(char **array);
-void				free_env(t_env *env);
 int					ft_isspace(int c);
 int					is_valid_identifier(char *str);
 char				*remove_quotes_advanced(char *str);
@@ -205,5 +204,7 @@ char				*append_char_dynamic(char *str, char c, int *len,
 void				*ft_malloc(size_t size, int flag);
 void				free_data(void);
 void				ft_printf(const char *s, ...);
+void				exit_status(int status);
+int					is_valid_key(char *key, t_data *data);
 
 #endif

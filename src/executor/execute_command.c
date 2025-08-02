@@ -6,13 +6,13 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 14:05:52 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/02 20:37:10 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	exit_status(int status)
+void	exit_status(int status)
 {
 	if ((WTERMSIG(status) + 128) == 131)
 		ft_printf("Quit (core dumped)");
@@ -88,7 +88,7 @@ static int	redir_check(t_data *data, t_redir *redirs)
 		else if (current->type == TOKEN_REDIR_IN
 			|| current->type == TOKEN_HEREDOC)
 		{
-			if (!handle_input_redirection(current, data, 1))
+			if (!handle_input_redirection(current, data, 0))
 				return (EXIT_FAILURE);
 		}
 		current = current->next;

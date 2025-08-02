@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 05:36:43 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/02 20:20:04 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ static int	execute_pipe(t_ast *ast, t_data *data)
 			(close(fd[0]), close(fd[1]));
 			(waitpid(pid[0], &status, 0), waitpid(pid[1], &status, 0));
 			if (WIFEXITED(status))
-				data->status = WEXITSTATUS(status);
-			else
-				data->status = 1;
-			return (data->status);
+				return (WEXITSTATUS(status));
+			if (WIFSIGNALED(status))
+				return (exit_status(status), 128 + WTERMSIG(status));
 		}
 	}
 	return (1);
