@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/03 16:12:59 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/03 22:58:47 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,22 @@
 char	*get_heredoc_filename(void)
 {
 	int		fd;
-	char	*filename;
 	int		i;
+	char	*filename;
+	char	*base;
 
+	base = ft_strdup("0123456789abcdefghijklmnopqrstuvwxyz");
 	fd = open("/dev/random", O_RDONLY);
-	filename = ft_malloc(51, 69);
-	read(fd, filename, 50);
+	filename = ft_malloc(21, 1337);
+	read(fd, filename, 20);
 	filename[0] = '.';
-	for (int j = 0; j < 20; j++)
-	{
-		i = 1;
-		while (i < 50)
-		{
-			if (filename[i] >= '0' && filename[i] <= '9')
-			{
-				if (filename[i] > '8')
-					filename[i] -= 1;
-				else if (filename[i] > '5')
-					filename[i] -= 3;
-				else if (filename[i] == '5')
-					filename[i] = '0';
-				else if (filename[i] < '3')
-					filename[i] += 1;
-
-			}
-			else if (ft_isalnum(filename[i]))
-			{
-				i++;
-				continue ;
-			}
-			else if (filename[i] < 48)
-				filename[i] += 54 - filename[i];
-			else if (filename[i] > 122)
-				filename[i] -= filename[i] - 97;
-			else if (filename[i] >= 91 && filename[i] <= 96)
-				filename[i] -= 20;
-			else if (filename[i] > 57 && filename[i] < 101)
-				filename[i] += 40 - filename[i];
-			i++;
-		}
-	}
-	filename[50] = '\0';
+	i = 0;
+	while (++i < 20)
+		filename[i] = base[(unsigned char)filename[i] % 36];
+	filename[20] = '\0';
 	close(fd);
-	return (ft_strjoin("/tmp/", filename));
+	filename = ft_strjoin("/tmp/", filename);
+	return (filename);
 }
 
 void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
