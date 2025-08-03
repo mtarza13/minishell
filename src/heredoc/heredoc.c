@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 21:41:44 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/03 16:12:59 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,13 @@ char	*get_heredoc_filename(void)
 	}
 	filename[50] = '\0';
 	close(fd);
-	return (filename);
+	return (ft_strjoin("/tmp/", filename));
 }
 
 void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 {
-	int		fd;
-	char	*input;
-
+	int (fd);
+	char *(input), **(args);
 	fd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	while (1)
 	{
@@ -72,18 +71,21 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 		if (!input)
 		{
 			close(fd);
-			ft_malloc(0, 0);
-			exit(131);
+			(ft_malloc(0, 0), exit(131));
 		}
 		if (!ft_strcmp(input, dlimit))
 			break ;
-		if (expand)
-			input = expand_arg_list(&input, data);
+		if (!expand)
+		{
+			args = ft_malloc(sizeof(char *) * 2, 1337);
+			args[0] = input;
+			args[1] = NULL;
+			input = expand_arg_list(args, data);
+		}
 		write(fd, ft_strjoin(input, "\n"), ft_strlen(input) + 1);
 	}
 	close(fd);
-	ft_malloc(0, 0);
-	exit(0);
+	(ft_malloc(0, 0), exit(0));
 }
 
 int	heredoc_sig_status(char *dlimit, int status)

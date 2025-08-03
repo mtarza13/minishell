@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 20:58:16 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/03 16:10:10 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,92 +119,94 @@ typedef struct s_split_state
 	int				word_idx;
 }	t_split_state;
 
-int					is_space(char c);
-char				*get_env(t_data *data, char *name);
-char				*ft_strjoin_free(char *s1, char *s2);
-char				*add_char(char *result, char c);
-int					has_quotes(const char *s);
-char				**split_with_quotes(char *str);
-char				*remove_quotes(char *str);
-char				*expand_with_quotes(char *str, t_data *data);
-int					count_words_with_quotes(char *str);
-int					count_total_words(char **args, t_data *data);
-char				*expand_dollar(char *str, int *i, t_data *data, int in_single);
-void				extract_and_advance(const char *str, int *i, char **words, int *word_idx);
-char				**expand_arg_array(char **args, t_data *data);
-char				*expand_arg_list(char **args, t_data *data);
-char				**fill_result_array(char **args, t_data *data, int total);
-char				*join_strings(char **array);
-void				expand_with_quotes_loop(char *str, t_data *data, char **result);
+int				is_space(char c);
+char			*get_env(t_data *data, char *name);
+char			*ft_strjoin_free(char *s1, char *s2);
+char			*add_char(char *result, char c);
+int				has_quotes(const char *s);
+char			**split_with_quotes(char *str);
+char			*remove_quotes(char *str);
+char			*expand_with_quotes(char *str, t_data *data);
+int				count_words_with_quotes(char *str);
+int				count_total_words(char **args, t_data *data);
+char			*expand_dollar(char *str, int *i, t_data *data, int in_single);
+void			extract_and_advance(const char *str, int *i, char **words, \
+				int *word_idx);
+char			**expand_arg_array(char **args, t_data *data);
+char			*expand_arg_list(char **args, t_data *data);
+char			**fill_result_array(char **args, t_data *data, int total);
+char			*join_strings(char **array);
+void			expand_with_quotes_loop(char *str, t_data *data, char **result);
 
-t_token				*tokenize(char *in);
-t_token				*create_token(t_token_type type, char *value);
-void				add_token(t_token **tokens, t_token *new_token);
-void				free_tokens(t_token *tokens);
-int					is_special_char(char c);
+t_token			*tokenize(char *in);
+t_token			*create_token(t_token_type type, char *value);
+void			add_token(t_token **tokens, t_token *new_token);
+void			free_tokens(t_token *tokens);
+int				is_special_char(char c);
 
-t_ast				*parse_pipeline(t_token **tokens, t_data *data);
-t_ast				*parse_command_with_redirections(t_token **tokens,
-						t_data *data);
-int					parse_single_redirection(t_token **tokens, t_redir **redirs,
-						t_data *data);
-int					validate_syntax(t_token *tokens, t_data *data);
-void				minishell(t_data *data);
+t_ast			*parse_pipeline(t_token **tokens, t_data *data);
+t_ast			*parse_command_with_redirections(t_token **tokens, \
+				t_data *data);
+int				parse_single_redirection(t_token **tokens, t_redir **redirs, \
+				t_data *data);
+int				validate_syntax(t_token *tokens, t_data *data);
+void			minishell(t_data *data);
 
-int					exec_ast(t_ast *ast, t_data *data);
-int					execute_command(char **args, t_data *data, t_redir *redirs);
-int					execute_builtin(char **args, t_data *data);
-int					is_builtin(char *cmd);
-int					setup_redirections(t_redir *redirs, t_data *data);
-int					is_redirection_token(t_token_type type);
-char				*filename(char *cmd, t_data *data);
-int					handle_input_redirection(t_redir *redir, t_data *data,
-						int f);
-int					handle_output_redirection(t_redir *redir, t_data *data,
-						int f);
+int				exec_ast(t_ast *ast, t_data *data);
+int				execute_command(char **args, t_data *data, t_redir *redirs);
+int				execute_builtin(char **args, t_data *data);
+int				is_builtin(char *cmd);
+int				setup_redirections(t_redir *redirs, t_data *data);
+int				is_redirection_token(t_token_type type);
+char			*filename(char *cmd, t_data *data);
+int				handle_input_redirection(t_redir *redir, t_data *data, \
+				int f);
+int				handle_output_redirection(t_redir *redir, t_data *data, \
+				int f);
 
-int					analyze_heredoc_delimiter(char *delimiter,
-						char **final_delimiter, int *should_expand,
-						t_data *data);
-int					heredoc_check(t_token *token, t_data *data);
+int				analyze_heredoc_delimiter(char *delimiter, \
+				char **final_delimiter, int *should_expand, \
+				t_data *data);
+int				heredoc_check(t_token *token, t_data *data);
 
-char				*get_env_value(char *name, t_data *data);
-t_env				*init_env(char **envp);
-char				**env_to_array(t_data *data);
-t_env				*new_env_node(char *key, char *value);
-void				add_env_node(t_env **env, t_env *new);
-char				**ft_envp(t_env *env);
-int					list_len(t_env *env);
-void				update_env(t_data *data, char *key, char *value);
-int					is_env_char(char c);
+char			*get_env_value(char *name, t_data *data);
+t_env			*init_env(char **envp);
+char			**env_to_array(t_data *data);
+t_env			*new_env_node(char *key, char *value);
+void			add_env_node(t_env **env, t_env *new);
+char			**ft_envp(t_env *env);
+int				list_len(t_env *env);
+void			update_env(t_data *data, char *key, char *value);
+int				is_env_char(char c);
 
-int					builtin_cd(char **args, t_data *data);
-int					builtin_echo(char **args);
-int					builtin_env(t_data *data);
-int					builtin_exit(char **args, t_data *data);
-int					builtin_export(char **args, t_data *data);
-int					builtin_pwd(t_data *data);
-int					builtin_unset(char **args, t_data *data);
+int				builtin_cd(char **args, t_data *data);
+int				builtin_echo(char **args);
+int				builtin_env(t_data *data);
+int				builtin_exit(char **args, t_data *data);
+int				builtin_export(char **args, t_data *data);
+int				builtin_pwd(t_data *data);
+int				builtin_unset(char **args, t_data *data);
 
-void				setup_signals(void);
-void				handle_signal(int signo);
-void				handle_heredoc_signal(int signo);
-void				handle_sigint_heredoc(int signo);
-void				signals_heredoc(void);
-void				signals_heredoc_child(void);
-void				signals_execute(void);
+void			setup_signals(void);
+void			handle_signal(int signo);
+void			handle_heredoc_signal(int signo);
+void			handle_sigint_heredoc(int signo);
+void			signals_heredoc(void);
+void			signals_heredoc_child(void);
+void			signals_execute(void);
+void			signals_child(void);
 
-void				free_ast(t_ast *ast);
-void				free_redirections(t_redir *redirs);
-int					ft_isspace(int c);
-int					is_valid_identifier(char *str);
-char				*remove_quotes_advanced(char *str);
-char				*append_char_dynamic(char *str, char c, int *len,
-						int *capacity);
-void				*ft_malloc(size_t size, int flag);
-void				free_data(void);
-void				ft_printf(const char *s, ...);
-void				exit_status(int status);
-int					is_valid_key(char *key, t_data *data);
+void			free_ast(t_ast *ast);
+void			free_redirections(t_redir *redirs);
+int				ft_isspace(int c);
+int				is_valid_identifier(char *str);
+char			*remove_quotes_advanced(char *str);
+char			*append_char_dynamic(char *str, char c, int *len, \
+				int *capacity);
+void			*ft_malloc(size_t size, int flag);
+void			free_data(void);
+void			ft_printf(const char *s, ...);
+void			exit_status(int status);
+int				is_valid_key(char *key, t_data *data);
 
 #endif

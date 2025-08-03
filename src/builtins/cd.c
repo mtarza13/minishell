@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 22:06:26 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/03 15:20:19 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int	builtin_cd(char **args, t_data *data)
 	if (!path)
 		return (1);
 	update_env(data, "OLDPWD", get_env_value("PWD", data));
-	chdir(path);
+	if (chdir(path) == -1)
+		ft_printf("minishell: cd: %s: Permission denied\n", path);
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 		update_env(data, "PWD", pwd);

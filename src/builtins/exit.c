@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 20:30:15 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/03 15:14:37 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static long	ft_exit_input(char *s, long *status)
 	{
 		ft_printf("minishell: exit: %s: numeric argument required\n", s);
 		*status = 2;
-		return (1);
+		return (0);
 	}
 	*status = ft_atoi(s);
 	return (0);
@@ -86,7 +86,7 @@ int	builtin_exit(char **args, t_data *data)
 		ft_putstr_fd("exit\n", 1);
 	if (args[1])
 	{
-		if (ft_exit_input(args[1], &status))
+		if (!ft_exit_input(args[1], &status))
 		{
 			free_data();
 			exit(status);

@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 20:41:32 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/03 15:55:41 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,36 +65,17 @@ int	handle_output_redirection(t_redir *redir, t_data *data, int f)
 	return (1);
 }
 
-static t_redir	*find_last_input_redir(t_redir *redirs)
-{
-	t_redir	*last_input;
-
-	last_input = NULL;
-	while (redirs)
-	{
-		if (redirs->type == TOKEN_REDIR_IN || redirs->type == TOKEN_HEREDOC)
-			last_input = redirs;
-		redirs = redirs->next;
-	}
-	return (last_input);
-}
-
 int	setup_redirections(t_redir *redirs, t_data *data)
 {
 	t_redir	*current;
-	t_redir	*last_input_redir;
 
 	current = redirs;
-	last_input_redir = find_last_input_redir(redirs);
 	while (current)
 	{
 		if (current->type == TOKEN_REDIR_IN || current->type == TOKEN_HEREDOC)
 		{
-			if (current == last_input_redir)
-			{
-				if (!handle_input_redirection(current, data, 1))
-					return (0);
-			}
+			if (!handle_input_redirection(current, data, 1))
+				return (0);
 		}
 		else if (current->type == TOKEN_REDIR_OUT
 			|| current->type == TOKEN_REDIR_APPEND)
