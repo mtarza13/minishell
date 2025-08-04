@@ -1,17 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/01/24 13:05:56 by mtarza            #+#    #+#              #
-#    Updated: 2025/08/03 23:02:47 by mtarza           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 NAME = minishell
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 OBJ_DIR = obj
 LIBFT_DIR = libft

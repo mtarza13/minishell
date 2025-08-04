@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 21:57:05 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 21:16:47 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	minishell(t_data *data)
 	{
 		setup_signals();
 		data->pipes = false;
-		input = readline("$ ");
+		input = readline("% ");
 		if (g_signal_received)
 		{
 			data->status = CTRL_C_EXIT;

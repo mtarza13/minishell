@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 20:12:50 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/02 20:58:07 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 21:15:40 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,31 @@ char	**split_with_quotes(char *str)
 	return (words);
 }
 
-char	*remove_quotes(char *str)
+char	*remove_quotes(char	*str)
 {
-	int		len;
-	char	quote_char;
+	char	*result;
+	int		i;
+	int		j;
+	int		in_single;
+	int		in_double;
 
-	if (!str)
-		return (NULL);
-	len = ft_strlen(str);
-	if (len < 2)
-		return (ft_strdup(str));
-	quote_char = str[0];
-	if ((quote_char == '\'' || quote_char == '"') && str[len - 1] == quote_char)
+	result = ft_malloc(ft_strlen(str) + 1, 69);
+	i = 0;
+	j = 0;
+	in_single = 0;
+	in_double = 0;
+	while (str[i])
 	{
-		return (ft_substr(str, 1, len - 2));
+		if (str[i] == '\'' && !in_double)
+			in_single = !in_single;
+		else if (str[i] == '"' && !in_single)
+			in_double = !in_double;
+		else
+			result[j++] = str[i];
+		i++;
 	}
-	return (ft_strdup(str));
+	result[j] = '\0';
+	return (result);
 }
 
 void	expand_with_quotes_loop(char *str, t_data *data, char **result)

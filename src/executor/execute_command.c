@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/04 03:50:21 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 15:09:02 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	exit_status(int status)
 {
 	if ((WTERMSIG(status) + 128) == 131 || WEXITSTATUS(status) == 131)
-		ft_printf("Quit (core dumped)\n");
+		ft_printf("\n");
 	else if ((WTERMSIG(status) + 128) == 130 || WEXITSTATUS(status) == 130)
 		ft_printf("\n");
 }
