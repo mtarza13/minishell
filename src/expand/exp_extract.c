@@ -61,7 +61,7 @@ char	**fill_result_array(char **args, t_data *data, int total)
 
 	final_idx = 0;
 	i = 0;
-	result = ft_malloc(sizeof(char *) * (total + 1), 69);
+	result = ft_malloc(sizeof(char *) * (total + 1), 1337);
 	while (args[i])
 	{
 		fill_result_line(&args[i], data, result, &final_idx);

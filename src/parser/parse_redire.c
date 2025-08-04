@@ -12,13 +12,13 @@
 
 #include "../../include/minishell.h"
 
-t_redir	*create_redirection(t_token_type type, char *target, t_data *data)
+t_redir	*creat_redir_node(t_token_type type, char *target, t_data *data)
 {
 	int		should_expand;
 	char	*final_delimiter;
 	t_redir	*redir;
 
-	redir = ft_malloc(sizeof(t_redir), 69);
+	redir = ft_malloc(sizeof(t_redir), 1337);
 	redir->type = type;
 	redir->target = ft_strdup(target);
 	redir->expanded_target = NULL;
@@ -49,7 +49,7 @@ void	add_redirection(t_redir **redirs, t_redir *new_redir)
 	current->next = new_redir;
 }
 
-int	parse_single_redirection(t_token **tokens, t_redir **redirs, t_data *data)
+int	parse_single_redir(t_token **tokens, t_redir **redirs, t_data *data)
 {
 	t_token_type	redir_type;
 	t_redir			*new_redir;
@@ -61,7 +61,7 @@ int	parse_single_redirection(t_token **tokens, t_redir **redirs, t_data *data)
 		ft_printf("minishell: syntax error near unexpected token\n");
 		return (0);
 	}
-	new_redir = create_redirection(redir_type, (*tokens)->value, data);
+	new_redir = creat_redir_node(redir_type, (*tokens)->value, data);
 	if (!new_redir)
 		return (0);
 	add_redirection(redirs, new_redir);

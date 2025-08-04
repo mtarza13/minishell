@@ -37,7 +37,7 @@ int	validate_syntax(t_token *tokens, t_data *data)
 			if (current->next->type == TOKEN_PIPE)
 				return (print_syntax_error(current->next->value, data));
 		}
-		if (is_redirection_token(current->type))
+		if (check_is_redir(current->type))
 		{
 			if (!current->next)
 				return (print_syntax_error("newline", data));

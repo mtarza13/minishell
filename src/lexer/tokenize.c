@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static int	tokenize_operators(char *in, int *i, t_token **toks)
+static int	check_token(char *in, int *i, t_token **toks)
 {
 	if (in[*i] == '<' || in[*i] == '>' || in[*i] == '|')
 	{
@@ -70,7 +70,7 @@ static int	process_token(char *in, int *i, t_token **toks)
 {
 	if (is_special_char(in[*i]))
 	{
-		if (!tokenize_operators(in, i, toks))
+		if (!check_token(in, i, toks))
 			return (0);
 	}
 	else

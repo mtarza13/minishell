@@ -16,7 +16,7 @@ static t_ast	*create_pipe_node(t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 
-	node = ft_malloc(sizeof(t_ast), 69);
+	node = ft_malloc(sizeof(t_ast), 1337);
 	node->type = NODE_PIPE;
 	node->args = NULL;
 	node->arg_count = 0;
@@ -31,7 +31,7 @@ t_ast	*parse_pipeline(t_token **tokens, t_data *data)
 	t_ast	*left;
 	t_ast	*right;
 
-	left = parse_command_with_redirections(tokens, data);
+	left = pars_node(tokens, data);
 	if (!left)
 		return (NULL);
 	while (*tokens && (*tokens)->type == TOKEN_PIPE)
@@ -44,7 +44,7 @@ t_ast	*parse_pipeline(t_token **tokens, t_data *data)
 			data->status = 2;
 			return (free_ast(left), NULL);
 		}
-		right = parse_command_with_redirections(tokens, data);
+		right = pars_node(tokens, data);
 		if (!right)
 			return (free_ast(left), NULL);
 		left = create_pipe_node(left, right);

@@ -43,7 +43,7 @@ char	*add_char(char *result, char c)
 {
 	char	*temp;
 
-	temp = ft_malloc(2, 69);
+	temp = ft_malloc(2, 1337);
 	temp[0] = c;
 	temp[1] = '\0';
 	return (ft_strjoin_free(result, temp));

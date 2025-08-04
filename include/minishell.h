@@ -93,12 +93,6 @@ typedef struct s_data
 	t_env			*env;
 }					t_data;
 
-typedef struct s_expand_context
-{
-	int				in_single_quote;
-	int				in_double_quote;
-}					t_expand_context;
-
 typedef struct s_mem
 {
 	void			*ptr;
@@ -145,9 +139,9 @@ void			free_tokens(t_token *tokens);
 int				is_special_char(char c);
 
 t_ast			*parse_pipeline(t_token **tokens, t_data *data);
-t_ast			*parse_command_with_redirections(t_token **tokens, \
+t_ast			*pars_node(t_token **tokens, \
 				t_data *data);
-int				parse_single_redirection(t_token **tokens, t_redir **redirs, \
+int				parse_single_redir(t_token **tokens, t_redir **redirs, \
 				t_data *data);
 int				validate_syntax(t_token *tokens, t_data *data);
 void			minishell(t_data *data);
@@ -157,7 +151,7 @@ int				execute_command(char **args, t_data *data, t_redir *redirs);
 int				execute_builtin(char **args, t_data *data);
 int				is_builtin(char *cmd);
 int				setup_redirections(t_redir *redirs, t_data *data);
-int				is_redirection_token(t_token_type type);
+int				check_is_redir(t_token_type type);
 char			*filename(char *cmd, t_data *data);
 int				handle_input_redirection(t_redir *redir, t_data *data, \
 				int f);

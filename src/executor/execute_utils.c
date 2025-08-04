@@ -37,7 +37,7 @@ static char	*ft_strjoin_ex(char const *s1, char const *s2)
 		return (NULL);
 	s1_len = ft_strlen(s1) + 1;
 	s2_len = ft_strlen(s2);
-	dest = ft_malloc((s1_len + s2_len) * (sizeof(char) + 1), 69);
+	dest = ft_malloc((s1_len + s2_len) * (sizeof(char) + 1), 1337);
 	i = 0;
 	while (s1[i] && i < s1_len - 1)
 	{

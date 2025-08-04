@@ -35,8 +35,8 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 		file = filename(args[0], data);
 		execve(file, args, envp);
 		if (errno == 13)
-			(ft_printf("minishell: %s: Permission denied\n", args[0]), \
-			ft_malloc(0, 0), exit(PERMISSION_DENIED));
+			(ft_printf("minishell: %s: Permission denied\n", args[0]),
+				ft_malloc(0, 0), exit(PERMISSION_DENIED));
 		ft_malloc(0, 0);
 		exit(0);
 	}

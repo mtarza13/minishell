@@ -64,33 +64,23 @@ char	**split_with_quotes(char *str)
 	words[ctx.word_idx] = NULL;
 	return (words);
 }
-//check
 
-char	*remove_quotes(char	*str)
+char	*remove_quotes(char *str)
 {
-	char	*result;
-	int		i;
-	int		j;
-	int		in_single;
-	int		in_double;
+	int		len;
+	char	quote_char;
 
-	result = ft_malloc(ft_strlen(str) + 1, 69);
-	i = 0;
-	j = 0;
-	in_single = 0;
-	in_double = 0;
-	while (str[i])
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	if (len < 2)
+		return (ft_strdup(str));
+	quote_char = str[0];
+	if ((quote_char == '\'' || quote_char == '"') && str[len - 1] == quote_char)
 	{
-		if (str[i] == '\'' && !in_double)
-			in_single = !in_single;
-		else if (str[i] == '"' && !in_single)
-			in_double = !in_double;
-		else
-			result[j++] = str[i];
-		i++;
+		return (ft_substr(str, 1, len - 2));
 	}
-	result[j] = '\0';
-	return (result);
+	return (ft_strdup(str));
 }
 
 void	expand_with_quotes_loop(char *str, t_data *data, char **result)

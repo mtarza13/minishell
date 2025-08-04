@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static int	count_command_args(t_token *tokens)
+static int	count_word(t_token *tokens)
 {
 	int		count;
 	t_token	*current;
@@ -21,7 +21,7 @@ static int	count_command_args(t_token *tokens)
 	current = tokens;
 	while (current && current->type != TOKEN_PIPE)
 	{
-		if (is_redirection_token(current->type))
+		if (check_is_redir(current->type))
 		{
 			current = current->next;
 			if (current)
@@ -36,11 +36,11 @@ static int	count_command_args(t_token *tokens)
 	return (count);
 }
 
-static t_ast	*init_command_node(int argc)
+static t_ast	*init_cmd_node(int argc)
 {
 	t_ast	*cmd;
 
-	cmd = ft_malloc(sizeof(t_ast), 69);
+	cmd = ft_malloc(sizeof(t_ast), 1337);
 	cmd->type = NODE_COMMAND;
 	cmd->redirs = NULL;
 	cmd->left = NULL;
@@ -53,17 +53,17 @@ static t_ast	*init_command_node(int argc)
 	return (cmd);
 }
 
-t_ast	*parse_command_with_redirections(t_token **tokens, t_data *data)
+t_ast	*pars_node(t_token **tokens, t_data *data)
 {
 	t_ast *(cmd);
 	int (argc), i = 0;
-	argc = count_command_args(*tokens);
-	cmd = init_command_node(argc);
+	argc = count_word(*tokens);
+	cmd = init_cmd_node(argc);
 	while (*tokens && (*tokens)->type != TOKEN_PIPE)
 	{
-		if (is_redirection_token((*tokens)->type))
+		if (check_is_redir((*tokens)->type))
 		{
-			if (!parse_single_redirection(tokens, &cmd->redirs, data))
+			if (!parse_single_redir(tokens, &cmd->redirs, data))
 				return (free_ast(cmd), NULL);
 		}
 		else if ((*tokens)->type == TOKEN_WORD)

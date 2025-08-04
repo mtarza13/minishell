@@ -88,7 +88,7 @@ int	setup_redirections(t_redir *redirs, t_data *data)
 	return (1);
 }
 
-int	is_redirection_token(t_token_type type)
+int	check_is_redir(t_token_type type)
 {
 	return (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT
 		|| type == TOKEN_REDIR_APPEND || type == TOKEN_HEREDOC);
