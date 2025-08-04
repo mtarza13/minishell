@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/03 16:06:29 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 03:50:21 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	exit_status(int status)
 {
-	if ((WTERMSIG(status) + 128) == 131)
-		ft_printf("Quit (core dumped)");
-	ft_printf("\n");
+	if ((WTERMSIG(status) + 128) == 131 || WEXITSTATUS(status) == 131)
+		ft_printf("Quit (core dumped)\n");
+	else if ((WTERMSIG(status) + 128) == 130 || WEXITSTATUS(status) == 130)
+		ft_printf("\n");
 }
 
 static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
@@ -32,17 +33,16 @@ static int	execute_external_command(char **args, t_data *data, t_redir *redirs)
 			(ft_malloc(0, 0), exit(EXIT_FAILURE));
 		envp = env_to_array(data);
 		file = filename(args[0], data);
-		(execve(file, args, envp), ft_malloc(0, 0));
+		execve(file, args, envp);
 		if (errno == 13)
 			(ft_printf("minishell: %s: Permission denied\n", args[0]), \
-			exit(PERMISSION_DENIED));
-		else
-			(ft_printf("minishell: %s: command not found\n", args[0]), \
-			exit(COMMAND_NOT_FOUND));
+			ft_malloc(0, 0), exit(PERMISSION_DENIED));
+		ft_malloc(0, 0);
+		exit(0);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+		return (exit_status(status), WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
 		return (exit_status(status), 128 + WTERMSIG(status));
 	return (1);

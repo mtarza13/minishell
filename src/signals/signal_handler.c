@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 00:29:08 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/01 14:07:32 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 03:24:28 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,10 @@ void	handle_sigint_heredoc(int signo)
 {
 	(void)signo;
 	g_signal_received = 1;
+}
+
+void	signals_execute_child(int signo)
+{
+	ft_malloc(0, 0);
+	exit(signo + 128);
 }

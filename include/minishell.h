@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/03 16:10:10 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 03:11:18 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void			signals_heredoc(void);
 void			signals_heredoc_child(void);
 void			signals_execute(void);
 void			signals_child(void);
+void			signals_execute_child(int signo);
 
 void			free_ast(t_ast *ast);
 void			free_redirections(t_redir *redirs);

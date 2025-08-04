@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:07 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 20:20:04 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 03:13:05 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	exec_left(t_ast *ast, t_data *data, int *fd)
 {
 	int	exit_status;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, signals_execute_child);
+	signal(SIGQUIT, signals_execute_child);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
@@ -29,8 +29,8 @@ void	exec_right(t_ast *ast, t_data *data, int *fd)
 {
 	int	exit_status;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, signals_execute_child);
+	signal(SIGQUIT, signals_execute_child);
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
@@ -58,7 +58,7 @@ static int	execute_pipe(t_ast *ast, t_data *data)
 			(close(fd[0]), close(fd[1]));
 			(waitpid(pid[0], &status, 0), waitpid(pid[1], &status, 0));
 			if (WIFEXITED(status))
-				return (WEXITSTATUS(status));
+				return (exit_status(status), WEXITSTATUS(status));
 			if (WIFSIGNALED(status))
 				return (exit_status(status), 128 + WTERMSIG(status));
 		}

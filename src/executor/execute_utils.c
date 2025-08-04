@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:09:52 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 17:55:54 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 03:40:57 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static void	error_n_exit(int perr, char *cmd, int err)
 		ft_printf("minishell: %s: Permission denied\n", cmd);
 	else if (perr == 2)
 		ft_printf("minishell: %s: No such file or directory\n", cmd);
+	else if (perr == 3)
+		ft_printf("minishell: %s: command not found\n", cmd);
 	ft_malloc(0, 0);
 	exit(err);
 }
@@ -80,10 +82,11 @@ static char	*get_cmd_path(char *path, char *cmd)
 			if (!access(c_path, X_OK))
 				return (c_path);
 			else
-				continue ;
+				error_n_exit(1, c_path, PERMISSION_DENIED);
 		}
 	}
-	return (c_path);
+	error_n_exit(3, cmd, COMMAND_NOT_FOUND);
+	return (NULL);
 }
 
 char	*filename(char *cmd, t_data *data)
@@ -109,6 +112,6 @@ char	*filename(char *cmd, t_data *data)
 	}
 	path = get_env_value("PATH", data);
 	if (!path)
-		return (cmd);
+		error_n_exit(2, cmd, COMMAND_NOT_FOUND);
 	return (get_cmd_path(path, cmd));
 }

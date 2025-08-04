@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 20:12:48 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/02 20:50:28 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/03 23:51:05 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ char	*join_strings(char **array)
 	i = 0;
 	while (array[i])
 		len += strlen(array[i++]);
-	result = malloc(len + i + 1);
-	if (!result)
-		return (NULL);
+	result = ft_malloc(len + i + 1, 1337);
 	result[0] = '\0';
 	j = 0;
 	while (array[j])

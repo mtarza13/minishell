@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:25:13 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 17:16:28 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/04 03:25:20 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,20 @@ static int	env_count(t_env *env)
 
 char	**env_to_array(t_data *data)
 {
+	t_env	*tmp;
 	char	**array;
 	int		i;
 
+	tmp = data->env;
 	if (!data->env || !data->envp)
 		return (NULL);
 	array = ft_malloc(sizeof(char *) * (env_count(data->env) + 1), 69);
 	i = 0;
-	while (i < env_count(data->env))
+	while (tmp)
 	{
-		array[i] = ft_strdup(data->envp[i]);
+		array[i] = ft_strjoin(tmp->key, ft_strjoin("=", tmp->value));
 		i++;
+		tmp = tmp->next;
 	}
 	array[i] = NULL;
 	return (array);
