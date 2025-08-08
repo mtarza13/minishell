@@ -50,9 +50,7 @@ char	**expand_arg_array(char **arg, t_data *data)
 	char	**result;
 	char	**split_words;
 
-	int (idx), (i), (j), (count);
-	idx = 0;
-	i = 0;
+	int (idx), (i), (j), (count) = 0;
 	count = count_total_word(arg, data);
 	result = ft_malloc(sizeof(char *) * (count + 1), 1337);
 	while (arg[i])
@@ -64,8 +62,10 @@ char	**expand_arg_array(char **arg, t_data *data)
 			split_words = split_word(remove_quote(expand_string(arg[i], data)));
 			j = 0;
 			while (split_words[j])
-                (result[idx++] = ft_strdup(split_words[j]), \
-                    j++);
+			{
+				result[idx++] = ft_strdup(split_words[j]);
+				j++;
+			}
 		}
 		i++;
 	}

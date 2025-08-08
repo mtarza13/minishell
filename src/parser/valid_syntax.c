@@ -22,10 +22,39 @@ int	is_operator(t_type_token type)
 
 int	is_redir(t_type_token type)
 {
-	if (type == REDIR_IN || type == REDIR_OUT
-		|| type == REDIR_APPEND || type == REDIR_HEREDOC)
+	if (type == REDIR_IN || type == REDIR_OUT || type == REDIR_APPEND
+		|| type == REDIR_HEREDOC)
 		return (1);
 	return (0);
+}
+
+int	is_redir_check(t_token *tmp)
+{
+	if (is_redir(tmp->type))
+	{
+		if (tmp->next == NULL || tmp->next->type != WORD)
+		{
+			if (tmp->next == NULL)
+			{
+				ft_printf("syntax error near unexpected token `newline'\n");
+				return (0);
+			}
+			else
+			{
+				ft_printf("syntax error near unexpected token `%s'\n",
+					tmp->next->value);
+				return (0);
+			}
+		}
+		if (is_redir(tmp->type) && tmp->next && is_operator(tmp->next->type)
+			&& tmp->next->type != WORD)
+		{
+			ft_printf("syntax error near unexpected token `%s'\n",
+				tmp->next->value);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 int	valid_input(t_token *token, t_data *data)
@@ -43,23 +72,14 @@ int	valid_input(t_token *token, t_data *data)
 		{
 			data->pipes = true;
 			if (tmp->next && tmp->next->type == PIPE)
-				return (ft_printf("syntax error near unexpected token `|'\n"), 0);
+				return (ft_printf("syntax error near unexpected token `|'\n"),
+					0);
 			if (tmp->next == NULL)
-				return (ft_printf("syntax error near unexpected token `newline'\n"), 0);
+				return (ft_printf("syntax error  unexpected token `newline'\n"), \
+					0);
 		}
-		if (is_redir(tmp->type))
-		{
-			if (tmp->next == NULL || tmp->next->type != WORD)
-			{
-				if (tmp->next == NULL)
-					return (ft_printf("syntax error near unexpected token `newline'\n"), 0);
-				else
-					return (ft_printf("syntax error near unexpected token `%s'\n", tmp->next->value), 0);
-			}
-		}
-		if (is_redir(tmp->type) && tmp->next && is_operator(tmp->next->type)
-			&& tmp->next->type != WORD)
-			return (ft_printf("syntax error near unexpected token `%s'\n", tmp->next->value), 0);
+		if (!is_redir_check(tmp))
+			return (0);
 		tmp = tmp->next;
 	}
 	return (1);

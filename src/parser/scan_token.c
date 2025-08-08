@@ -12,10 +12,28 @@
 
 #include "../../include/minishell.h"
 
+t_token	*tcheck_red_left(char *line, int *i, t_token *token)
+{
+	if (line[*i] == '<' && line[*i + 1] == '<')
+	{
+		token = add_token(token, creat_token(ft_strdup("<<"), REDIR_HEREDOC));
+		(*i) += 2;
+	}
+	else if (line[*i] == '<')
+	{
+		token = add_token(token, creat_token(ft_strdup("<"), REDIR_IN));
+		(*i)++;
+	}
+	return (token);
+}
+
 t_token	*tokenize_op(char *line, t_token *token, int *i)
 {
 	if (line[*i] == '|')
-		(token = add_token(token, creat_token(ft_strdup("|"), PIPE)), (*i)++);
+	{
+		token = add_token(token, creat_token(ft_strdup("|"), PIPE));
+		(*i)++;
+	}
 	else if (line[*i] == '>' && line[*i + 1] == '>')
 	{
 		token = add_token(token, creat_token(ft_strdup(">>"), REDIR_APPEND));
@@ -26,17 +44,7 @@ t_token	*tokenize_op(char *line, t_token *token, int *i)
 		token = add_token(token, creat_token(ft_strdup(">"), REDIR_OUT));
 		(*i)++;
 	}
-	else if (line[*i] == '<' && line[*i + 1] == '<')
-	{
-		token = add_token(token, creat_token(ft_strdup("<<"),
-					REDIR_HEREDOC));
-		(*i) += 2;
-	}
-	else if (line[*i] == '<')
-	{
-		token = add_token(token, creat_token(ft_strdup("<"), REDIR_IN));
-		(*i)++;
-	}
+	token = tcheck_red_left(line, i, token);
 	return (token);
 }
 
@@ -61,7 +69,8 @@ t_token	*tokenize_word(char *line, t_token *token, int *i)
 		return (NULL);
 	}
 	if (*i > start)
-		token = add_token(token, creat_token(ft_strndup(line + start, *i - start), WORD));
+		token = add_token(token, creat_token(ft_strndup(line + start, *i
+						- start), WORD));
 	return (token);
 }
 

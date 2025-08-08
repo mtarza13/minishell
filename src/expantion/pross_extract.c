@@ -75,10 +75,8 @@ int	split_count_word(char *str)
 char	**split_word(char *str)
 {
 	char	**word;
-	int		count;
-	int		i;
-	int		start;
 
+	int (count), (i), (start);
 	i = 0;
 	if (!str || !*str)
 		return (NULL);
@@ -105,12 +103,9 @@ char	**split_word(char *str)
 
 char	*expand_string(char *arg, t_data *data)
 {
-	char	*result;
-
-	int(i), (s_quote), (d_quote);
+	char *(result);
+	int (i), s_quote = 0, d_quote = 0;
 	i = 0;
-	s_quote = 0;
-	d_quote = 0;
 	if (!arg)
 		return (NULL);
 	result = ft_strdup("");
@@ -122,7 +117,8 @@ char	*expand_string(char *arg, t_data *data)
 			result = add_char(result, arg[i++]);
 		}
 		else if (arg[i] == '"' && !s_quote)
-			(d_quote = !d_quote, result = add_char(result, arg[i++]));
+			(1) && (d_quote = !d_quote) && \
+			(result = add_char(result, arg[i++]));
 		else if (arg[i] == '$' && !s_quote)
 			result = ft_strjoin_f(result, expand_env_value(arg, &i, data));
 		else
