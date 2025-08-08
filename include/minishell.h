@@ -168,4 +168,7 @@ char		*get_env(t_data *data, char *value);
 char		*add_char(char *result, char c);
 int			is_space(char c);
 void		free_array(char **array);
+t_arg		*add_arg(t_arg *head_arg, char *new_cmd);
+int			check_word_utils(t_token **token, t_data *data, t_cmd *cmd);
+
 #endif

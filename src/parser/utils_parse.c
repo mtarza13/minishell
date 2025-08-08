@@ -87,31 +87,12 @@ t_cmd	*parse_cmd(t_token **token, t_data *data)
 			*token = (*token)->next;
 			if (*token == NULL || (*token)->type != WORD)
 				return (NULL);
-			expand_file = expand_string((*token)->value, data);
-			expand_file = remove_quote(expand_file);
-			cmd->redir = add_redir(cmd->redir, creat_redir(type,
-						expand_file));
+			expand_file = remove_quote(expand_string((*token)->value, data));
+			cmd->redir = add_redir(cmd->redir, creat_redir(type, expand_file));
 			*token = (*token)->next;
 		}
-		else if ((*token)->type == WORD)
-		{
-			char *tmp[2] = {(*token)->value, NULL};
-			expand_args = expand_arg_array(tmp, data);
-			if (expand_args)
-			{
-				i = 0;
-				while (expand_args[i])
-				{
-					cmd->arg = add_arg(cmd->arg, expand_args[i]);
-					i++;
-				}
-			}
-			else
-				cmd->arg = add_arg(cmd->arg, (*token)->value);
-			(*token) = (*token)->next;
-		}
-		else
-			break;
+		if (check_word_utils(token, data, cmd) == 1)
+			break ;
 	}
 	return (cmd);
 }

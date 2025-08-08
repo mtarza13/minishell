@@ -12,6 +12,35 @@
 
 #include "../../include/minishell.h"
 
+int	check_word_utils(t_token **token, t_data *data, t_cmd *cmd)
+{
+	char **(expand_args), *(tmp[2]);
+	int (i);
+	tmp[0] = (*token)->value;
+	tmp[1] = NULL;
+	i = 0;
+	expand_args = NULL;
+	if ((*token)->type == WORD)
+	{
+		expand_args = expand_arg_array(tmp, data);
+		if (expand_args)
+		{
+			i = 0;
+			while (expand_args[i])
+			{
+				cmd->arg = add_arg(cmd->arg, expand_args[i]);
+				i++;
+			}
+		}
+		else
+			cmd->arg = add_arg(cmd->arg, (*token)->value);
+		(*token) = (*token)->next;
+	}
+	else
+		return (0);
+	return (1);
+}
+
 t_cmd	*parser(t_token *token, t_data *data)
 {
 	t_cmd	*cmd;
