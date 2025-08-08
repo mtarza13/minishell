@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:40 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/08 18:30:42 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:33:18 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token	*tokenize_op(char *line, t_token *token, int *i)
 	else if (line[*i] == '<' && line[*i + 1] == '<')
 	{
 		token = add_token(token, creat_token(ft_strdup("<<"),
-					TOKEN_REDIR_HEREDOC));
+					REDIR_HEREDOC));
 		(*i) += 2;
 	}
 	else if (line[*i] == '<')
