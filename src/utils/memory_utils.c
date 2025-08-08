@@ -3,32 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:43:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 20:05:55 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 16:48:35 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_redirections(t_redir *redirs)
+void	clean_up(t_token *token)
 {
-	t_redir	*tmp;
-
-	while (redirs)
+	while (token)
 	{
-		tmp = redirs;
-		redirs = redirs->next;
-		if (tmp->type == TOKEN_HEREDOC)
-			unlink(tmp->target);
+		if (token->type == TOKEN_REDIR_HEREDOC)
+			unlink(token->next->value);
+		token = token->next;
 	}
 }
 
-void	free_ast(t_ast *ast)
-{
-	if (!ast)
-		return ;
-	if (ast->redirs)
-		free_redirections(ast->redirs);
-}

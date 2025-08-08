@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 01:22:56 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 16:28:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_exit(char **args, t_data *data)
 
 	status = 0;
 	if (!data->pipes)
-		ft_putstr_fd("exit\n", 1);
+		ft_printf("exit\n");
 	if (args[1])
 	{
 		if (!ft_exit_input(args[1], &status))

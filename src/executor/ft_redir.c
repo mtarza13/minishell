@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 03:46:08 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:38:31 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	check_in(t_cmd *cmd, t_redir *redir, int index)
 {
 	if (cmd->in != -1)
 		close(cmd->in);
-	if (redir->type == TOKEN_HEREDOC || redir->type == TOKEN_REDIR_IN)
-		cmd->in = open(redir->target, O_RDONLY);
+	if (redir->type == TOKEN_REDIR_HEREDOC || redir->type == TOKEN_REDIR_IN)
+		cmd->in = open(redir->file, O_RDONLY);
 	if (cmd->in == -1)
 	{
-		check_access(redir->target);
+		check_access(redir->file);
 		return (1);
 	}
 	return (0);
@@ -47,12 +47,12 @@ int	check_out(t_cmd *cmd, t_redir *redir, int index)
 	if (cmd->out != -1)
 		close(cmd->out);
 	if (redir->type == TOKEN_REDIR_OUT)
-		cmd->out = open(redir->target, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		cmd->out = open(redir->file, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else if (redir->type == TOKEN_REDIR_APPEND)
-		cmd->out = open(redir->target, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		cmd->out = open(redir->file, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (cmd->out == -1)
 	{
-		check_access(redir->target);
+		check_access(redir->file);
 		return (1);
 	}
 	return (0);
@@ -72,12 +72,16 @@ int	redirs(t_cmd *cmd, int index)
 	}
 	while (tmp)
 	{
-		if (tmp->type == REDIR_HEREDOC || tmp->type == REDIR_IN)
+		if (tmp->type == TOKEN_REDIR_HEREDOC || tmp->type == TOKEN_REDIR_IN)
+		{
 			if (check_in(cmd, tmp, index))
 				return (1);
-		else if (tmp->type == REDIR_APPEND || tmp->type == REDIR_OUT)
+		}
+		else if (tmp->type == TOKEN_REDIR_APPEND || tmp->type == TOKEN_REDIR_OUT)
+		{
 			if (check_out(cmd, tmp, index))
 				return (1);
+		}
 		tmp = tmp->next;
 	}
 	if (cmd->in == -1)

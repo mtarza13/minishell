@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 03:43:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:44:49 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 			args = ft_malloc(sizeof(char *) * 2, 1337);
 			args[0] = input;
 			args[1] = NULL;
-			input = expand_arg_list(args, data);
+			// input = expand_arg_list(args, data);
 		}
 		write(fd, ft_strjoin(input, "\n"), ft_strlen(input) + 1);
 	}
@@ -86,8 +86,8 @@ int	feed_heredoc(char *file, char *dlimit, int expand, t_data *data)
 	int	pid;
 	int	status;
 
-	if (expand)
-		dlimit = remove_quotes_advanced(dlimit);
+	// if (expand)
+	// 	dlimit = remove_quotes_advanced(dlimit);
 	signals_heredoc();
 	pid = fork();
 	if (!pid)
@@ -107,7 +107,7 @@ int	heredoc_check(t_token *token, t_data *data)
 
 	while (token)
 	{
-		if (token->type == TOKEN_HEREDOC)
+		if (token->type == TOKEN_REDIR_HEREDOC)
 		{
 			dlimit = token->next->value;
 			token->next->value = get_heredoc_filename();

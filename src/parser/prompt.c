@@ -3,32 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/07 20:37:53 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 17:53:38 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int count_cmds(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = cmd;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+t_cmd	*build_commands(t_cmd *cmd)
+{
+	t_cmd	*tmp_cmd;
+	t_arg	*tmp_arg;
+
+	tmp_cmd = cmd;
+	while (tmp_cmd)
+	{
+		tmp_arg = tmp_cmd->arg;
+		int i = 0;
+		while (tmp_arg)
+		{
+			i++;
+			tmp_arg = tmp_arg->next;
+		}
+		tmp_cmd->args = ft_malloc(sizeof(char *) * (i + 1), 42);
+		i = 0;
+		tmp_arg = tmp_cmd->arg;
+		while (tmp_arg)
+		{
+			tmp_cmd->args[i] = tmp_arg->value;
+			tmp_arg = tmp_arg->next;
+			i++;
+		}
+		tmp_cmd->args[i] = NULL;
+		tmp_cmd = tmp_cmd->next;
+	}
+	return (cmd);
+}
 
 void	handle_line(char *line, t_data *data)
 {
 	t_token	*tokens;
 	t_cmd	*cmd;
 
-	tokens = tokenize(line);
+	cmd = NULL;
+	tokens = tokenizer(line);
 	free(line);
-	if (tokens && validate_syntax(tokens, data))
+	if (tokens && valid_input(tokens, data))
 	{
 		if (!heredoc_check(tokens, data))
 			return (clean_up(tokens), (void)0);
-		cmd = parse_pipeline(tokens, data);
+		cmd = parser(tokens, data);
 		if (cmd)
 		{
+			data->cc = count_cmds(cmd);
+			cmd = build_commands(cmd);
+			data->envp = ft_envp(data->env);
 			signals_execute();
 			data->status = execute(cmd, data);
-			// free_ast(cmd);
 		}
 	}
 	clean_up(tokens);

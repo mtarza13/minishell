@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 04:54:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 04:54:15 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:37:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	close_pipes(t_data *data)
 	}
 }
 
-void	open_pipes(t_cmd *cmd, int cc)
+void	open_pipes(t_cmd *cmd)
 {
 	int (i);
 	i = 0;
@@ -32,12 +32,12 @@ void	open_pipes(t_cmd *cmd, int cc)
 	{
 		cmd->data->pipe[i] = (int *)ft_malloc(sizeof(int) * 2, 2);
 		if (pipe(cmd->data->pipe[i]) == -1)
-			free_n_exit(1, cmd->data->input);
+			free_n_exit(1);
 		i++;
 	}
 }
 
-int	wait(t_data *data, int *pid)
+int	wait_childs(t_data *data, int *pid)
 {
 	int	i;
 	int	status;
@@ -50,6 +50,7 @@ int	wait(t_data *data, int *pid)
 		return (exit_status(status), WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
 		return (exit_status(status), 128 + WTERMSIG(status));
+	return (0);
 }
 
 void	free_n_exit(int status)
