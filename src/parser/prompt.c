@@ -6,13 +6,13 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 17:53:38 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:28:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int count_cmds(t_cmd *cmd)
+static int	count_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	int		i;
@@ -29,14 +29,14 @@ static int count_cmds(t_cmd *cmd)
 
 t_cmd	*build_commands(t_cmd *cmd)
 {
-	t_cmd	*tmp_cmd;
-	t_arg	*tmp_arg;
-
+	t_cmd *(tmp_cmd);
+	t_arg *(tmp_arg);
+	int (i);
 	tmp_cmd = cmd;
 	while (tmp_cmd)
 	{
 		tmp_arg = tmp_cmd->arg;
-		int i = 0;
+		i = 0;
 		while (tmp_arg)
 		{
 			i++;
@@ -47,9 +47,8 @@ t_cmd	*build_commands(t_cmd *cmd)
 		tmp_arg = tmp_cmd->arg;
 		while (tmp_arg)
 		{
-			tmp_cmd->args[i] = tmp_arg->value;
+			tmp_cmd->args[i++] = tmp_arg->value;
 			tmp_arg = tmp_arg->next;
-			i++;
 		}
 		tmp_cmd->args[i] = NULL;
 		tmp_cmd = tmp_cmd->next;

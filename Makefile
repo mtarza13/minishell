@@ -23,13 +23,13 @@ LEXER_SRCS =
 
 PARSER_SRCS = prompt.c parser.c scan_token.c util_token.c utils_parse.c valid_syntax.c
 
-UTILS_SRCS = ft_malloc.c ft_printf.c ft_utils.c memory_utils.c string_utils.c
+UTILS_SRCS = ft_malloc.c ft_printf.c ft_utils.c memory_utils.c
 
 ENV_SRCS = env_init.c env_utils.c
 
 SIGNALS_SRCS = signal_handler.c signal_setup.c
 
-HEREDOC_SRCS = ft_heredoc.c ft_heredoc_utils.c
+HEREDOC_SRCS = ft_heredoc.c
 
 #EXPO_SRCS = exp_expand.c exp_count.c exp_quote.c exp_utils.c exp_extract.c
 

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 16:44:49 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:21:50 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	heredoc_check(t_token *token, t_data *data)
 
 	while (token)
 	{
-		if (token->type == TOKEN_REDIR_HEREDOC)
+		if (token->type == REDIR_HEREDOC)
 		{
 			dlimit = token->next->value;
 			token->next->value = get_heredoc_filename();

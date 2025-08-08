@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:40 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/08 15:43:31 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:30:42 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 t_token	*tokenize_op(char *line, t_token *token, int *i)
 {
 	if (line[*i] == '|')
-		(token = add_token(token, creat_token(ft_strdup("|"), TOKEN_PIPE)),
+		(token = add_token(token, creat_token(ft_strdup("|"), PIPE)),
 			(*i)++);
 	else if (line[*i] == '>' && line[*i + 1] == '>')
 	{
-		token = add_token(token, creat_token(ft_strdup(">>"), TOKEN_REDIR_APPEND));
+		token = add_token(token, creat_token(ft_strdup(">>"), REDIR_APPEND));
 		(*i) += 2;
 	}
 	else if (line[*i] == '>')
 	{
-		token = add_token(token, creat_token(ft_strdup(">"), TOKEN_REDIR_OUT));
+		token = add_token(token, creat_token(ft_strdup(">"), REDIR_OUT));
 		(*i)++;
 	}
 	else if (line[*i] == '<' && line[*i + 1] == '<')
@@ -35,7 +35,7 @@ t_token	*tokenize_op(char *line, t_token *token, int *i)
 	}
 	else if (line[*i] == '<')
 	{
-		token = add_token(token, creat_token(ft_strdup("<"), TOKEN_REDIR_IN));
+		token = add_token(token, creat_token(ft_strdup("<"), REDIR_IN));
 		(*i)++;
 	}
 	return (token);
@@ -65,7 +65,7 @@ t_token	*tokenize_word(char *line, t_token *token, int *i)
 	}
 	if (*i > start)
 		token = add_token(token, creat_token(ft_strndup(line + start, *i - start),
-					TOKEN_WORD));
+					WORD));
 	return (token);
 }
 

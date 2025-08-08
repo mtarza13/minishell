@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 16:57:17 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:21:50 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ extern int			g_signal_received;
 # define PERMISSION_DENIED 126
 
 typedef enum e_type_token {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_REDIR_HEREDOC
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HEREDOC
 }	t_type_token;
 
 typedef struct s_mem
@@ -151,5 +151,6 @@ void		clean_up(t_token *token);
 void		free_data(void);
 int			list_len(t_env *env);
 int			heredoc_check(t_token *token, t_data *data);
+void		pipe_redir(t_cmd *cmd, int index);
 
 #endif

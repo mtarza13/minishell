@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 03:42:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 17:10:32 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:15:29 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,20 @@ int	execute_multi(t_cmd *cmd, t_data *data)
 
 void	exec_builtin(t_cmd *cmd)
 {
-	// int	new_in;
 	int	new_out;
 	int	status;
-	int f = cmd->out != STDOUT_FILENO;
+	int	f;
 
 	status = redirs(cmd, -1);
-	// new_in = dup(STDIN_FILENO);
-	if (!f)
+	f = cmd->out != STDOUT_FILENO;
+	if (f)
 	{
 		new_out = dup(STDOUT_FILENO);
-		// (dup2(cmd->in, STDIN_FILENO), close(cmd->in));
 		(dup2(cmd->out, STDOUT_FILENO), close(cmd->out));
 	}
 	if (!status)
 		execute_builtin(cmd->args, cmd->data);
-	// (dup2(new_in, STDIN_FILENO), close(new_in));
-	if (!f)
+	if (f)
 		(dup2(new_out, STDOUT_FILENO), close(new_out));
 	cmd->data->status = status;
 }

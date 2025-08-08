@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:57 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/08 16:57:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:21:08 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_cmd *parser(t_token *token, t_data *data)
             tmp->next = cmd;
             tmp = cmd;
         }
-        if (token && token->type == TOKEN_PIPE)
+        if (token && token->type == PIPE)
             token = token->next;
     }
     return head;

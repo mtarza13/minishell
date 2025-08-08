@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:14 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/08 17:16:33 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:21:08 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,20 @@ t_cmd	*parse_cmd(t_token **token, t_data *data)
 	t_cmd	*cmd;
 
 	cmd = creat_cmd(*token, data);
-	while (*token && (*token)->type != TOKEN_PIPE)
+	while (*token && (*token)->type != PIPE)
 	{
 		if (is_redir((*token)->type))
 		{
 			t_type_token type;
 			type = (*token)->type;
 			*token = (*token)->next;
-			if (*token == NULL || (*token)->type != TOKEN_WORD)
+			if (*token == NULL || (*token)->type != WORD)
 				return (NULL);
 			cmd->redir = add_redir(cmd->redir, creat_redir(type,
 						(*token)->value));
 			*token = (*token)->next;
 		}
-		else if ((*token)->type == TOKEN_WORD)
+		else if ((*token)->type == WORD)
 		{
 			cmd->arg = add_arg(cmd->arg, (*token)->value);
 			(*token) = (*token)->next;
