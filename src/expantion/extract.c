@@ -87,8 +87,8 @@ char	*expand_arg_list(char **args, t_data *data)
 	while (expanded[i])
 	{
 		if (i > 0)
-			result = ft_strjoin_fake(result, " ");
-		result = ft_strjoin_free(result, expanded[i]);
+			result = ft_strjoin_f(result, " ");
+		result = ft_strjoin_f(result, expanded[i]);
 		i++;
 	}
 	return (result);
