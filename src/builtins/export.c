@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 20:09:36 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 01:23:05 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	print_sorted_env(t_data *data)
 	print_envp(env_arr, count);
 }
 
-int	builtin_export(char **args, t_data *data)
+int	ft_export(char **args, t_data *data)
 {
 	int (i), j = 0, flag = 0;
 	i = 1;

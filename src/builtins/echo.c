@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:01:54 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/31 00:54:09 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:22:49 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_valid_flag(char *s)
 	return (0);
 }
 
-int	builtin_echo(char **args)
+int	ft_echo(char **args)
 {
 	int		i;
 	int		newline;

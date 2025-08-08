@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/03 15:14:37 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 01:22:56 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static long	ft_exit_input(char *s, long *status)
 		return (0);
 	}
 	*status = ft_atoi(s);
-	return (0);
+	return (1);
 }
 
 static int	arg_count(char **args)
@@ -77,7 +77,7 @@ static int	arg_count(char **args)
 	return (i);
 }
 
-int	builtin_exit(char **args, t_data *data)
+int	ft_exit(char **args, t_data *data)
 {
 	long	status;
 

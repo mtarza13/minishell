@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:27:13 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/02 20:05:30 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/05 14:21:02 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	add_token(t_token **tokens, t_token *new_token)
 	current->next = new_token;
 }
 
-void	free_tokens(t_token *tokens)
+void	clean_up(t_token *tokens)
 {
 	t_token	*tmp;
 

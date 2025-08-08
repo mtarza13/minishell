@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/04 21:16:47 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/07 20:37:53 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 void	handle_line(char *line, t_data *data)
 {
 	t_token	*tokens;
-	t_ast	*ast;
+	t_cmd	*cmd;
 
 	tokens = tokenize(line);
 	free(line);
 	if (tokens && validate_syntax(tokens, data))
 	{
 		if (!heredoc_check(tokens, data))
-			return (free_tokens(tokens), (void)1);
-		ast = parse_pipeline(&tokens, data);
-		if (ast)
+			return (clean_up(tokens), (void)0);
+		cmd = parse_pipeline(tokens, data);
+		if (cmd)
 		{
 			signals_execute();
-			data->status = exec_ast(ast, data);
-			free_ast(ast);
+			data->status = execute(cmd, data);
+			// free_ast(cmd);
 		}
 	}
-	free_tokens(tokens);
+	clean_up(tokens);
 }
 
 void	minishell(t_data *data)

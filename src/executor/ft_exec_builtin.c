@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_builtin.c                                  :+:      :+:    :+:   */
+/*   ft_exec_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:33:21 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/02 20:32:55 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 03:47:47 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ int	is_builtin(char *cmd)
 int	execute_builtin(char **args, t_data *data)
 {
 	if (ft_strcmp(args[0], "echo") == 0)
-		return (builtin_echo(args));
+		return (ft_echo(args));
 	if (ft_strcmp(args[0], "cd") == 0)
-		return (builtin_cd(args, data));
+		return (ft_cd(args, data));
 	if (ft_strcmp(args[0], "pwd") == 0)
-		return (builtin_pwd(data));
+		return (ft_pwd(data));
 	if (ft_strcmp(args[0], "export") == 0)
-		return (builtin_export(args, data));
+		return (ft_export(args, data));
 	if (ft_strcmp(args[0], "unset") == 0)
-		return (builtin_unset(args, data));
+		return (ft_unset(args, data));
 	if (ft_strcmp(args[0], "env") == 0)
-		return (builtin_env(data));
+		return (ft_env(data));
 	if (ft_strcmp(args[0], "exit") == 0)
-		return (builtin_exit(args, data));
+		return (ft_exit(args, data));
 	return (1);
 }

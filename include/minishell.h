@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/04 03:11:18 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 01:23:28 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,13 @@ typedef struct s_data
 	t_env			*env;
 }					t_data;
 
+typedef struct s_cmd
+{
+	char			**args;
+	t_redir			*redir;
+	struct s_cmd	*next;
+}					t_cmd;
+
 typedef struct s_mem
 {
 	void			*ptr;
@@ -135,11 +142,11 @@ void			expand_with_quotes_loop(char *str, t_data *data, char **result);
 t_token			*tokenize(char *in);
 t_token			*create_token(t_token_type type, char *value);
 void			add_token(t_token **tokens, t_token *new_token);
-void			free_tokens(t_token *tokens);
+void			clean_up(t_token *tokens);
 int				is_special_char(char c);
 
-t_ast			*parse_pipeline(t_token **tokens, t_data *data);
-t_ast			*pars_node(t_token **tokens, \
+t_ast			*parse_pipeline(t_token *tokens, t_data *data);
+t_ast			*pars_node(t_token *tokens, \
 				t_data *data);
 int				parse_single_redir(t_token **tokens, t_redir **redirs, \
 				t_data *data);
@@ -173,13 +180,13 @@ int				list_len(t_env *env);
 void			update_env(t_data *data, char *key, char *value);
 int				is_env_char(char c);
 
-int				builtin_cd(char **args, t_data *data);
-int				builtin_echo(char **args);
-int				builtin_env(t_data *data);
-int				builtin_exit(char **args, t_data *data);
-int				builtin_export(char **args, t_data *data);
-int				builtin_pwd(t_data *data);
-int				builtin_unset(char **args, t_data *data);
+int				ft_cd(char **args, t_data *data);
+int				ft_echo(char **args);
+int				ft_env(t_data *data);
+int				ft_exit(char **args, t_data *data);
+int				ft_export(char **args, t_data *data);
+int				ft_pwd(t_data *data);
+int				ft_unset(char **args, t_data *data);
 
 void			setup_signals(void);
 void			handle_signal(int signo);

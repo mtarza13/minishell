@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:27:03 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/02 20:05:34 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/05 14:21:06 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_token	*tokenize(char *in)
 		if (!in[i])
 			break ;
 		if (!process_token(in, &i, &toks))
-			return (free_tokens(toks), NULL);
+			return (clean_up(toks), NULL);
 	}
 	return (toks);
 }

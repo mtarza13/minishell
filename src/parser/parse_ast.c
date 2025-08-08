@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_command.c                                    :+:      :+:    :+:   */
+/*   parse_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:27:30 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/02 20:05:38 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/05 14:30:09 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,27 @@ static t_ast	*init_cmd_node(int argc)
 	return (cmd);
 }
 
-t_ast	*pars_node(t_token **tokens, t_data *data)
+t_ast	*pars_node(t_token *tokens, t_data *data)
 {
 	t_ast *(cmd);
 	int (argc), i = 0;
-	argc = count_word(*tokens);
+	argc = count_word(tokens);
 	cmd = init_cmd_node(argc);
-	while (*tokens && (*tokens)->type != TOKEN_PIPE)
+	while (tokens && (tokens)->type != TOKEN_PIPE)
 	{
-		if (check_is_redir((*tokens)->type))
+		if (check_is_redir((tokens)->type))
 		{
 			if (!parse_single_redir(tokens, &cmd->redirs, data))
 				return (free_ast(cmd), NULL);
 		}
-		else if ((*tokens)->type == TOKEN_WORD)
+		else if ((tokens)->type == TOKEN_WORD)
 		{
 			if (cmd->args)
-				cmd->args[i++] = ft_strdup((*tokens)->value);
-			*tokens = (*tokens)->next;
+				cmd->args[i++] = ft_strdup((tokens)->value);
+			tokens = (tokens)->next;
 		}
 		else
-			*tokens = (*tokens)->next;
+			tokens = (tokens)->next;
 	}
 	if (cmd->args)
 		cmd->args[i] = NULL;

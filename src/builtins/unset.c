@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:33 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 20:51:46 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:23:11 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_popnode(t_env **env, char *value)
 	}
 }
 
-int	builtin_unset(char **args, t_data *data)
+int	ft_unset(char **args, t_data *data)
 {
 	int		i;
 

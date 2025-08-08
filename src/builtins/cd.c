@@ -6,7 +6,7 @@
 /*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/03 15:20:19 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/08 01:22:44 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	getcwd_perror(void)
 	ft_printf("%s\n", ft_strjoin(cd, ft_strjoin(getcwd, no_file)));
 }
 
-int	builtin_cd(char **args, t_data *data)
+int	ft_cd(char **args, t_data *data)
 {
 	char *(path), *(pwd);
 	if (arg_count(args) > 2)
