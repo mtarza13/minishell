@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 03:42:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 18:15:29 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/09 00:55:35 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	execute_multi(t_cmd *cmd, t_data *data)
 {
 	char *(file);
-	int (status), (stat), *(pid), i = -1;
+	int (stat), *(pid), i = -1;
 	pid = ft_malloc(sizeof(int) * data->cc, 1337);
 	open_pipes(cmd);
 	while (++i < data->cc)

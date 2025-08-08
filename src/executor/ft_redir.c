@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 18:21:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/09 00:56:04 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	check_access(char *file)
 		print_error(file, 1);
 }
 
-int	check_in(t_cmd *cmd, t_redir *redir, int index)
+int	check_in(t_cmd *cmd, t_redir *redir)
 {
 	if (cmd->in != -1)
 		close(cmd->in);
@@ -42,7 +42,7 @@ int	check_in(t_cmd *cmd, t_redir *redir, int index)
 	return (0);
 }
 
-int	check_out(t_cmd *cmd, t_redir *redir, int index)
+int	check_out(t_cmd *cmd, t_redir *redir)
 {
 	if (cmd->out != -1)
 		close(cmd->out);
@@ -69,12 +69,12 @@ int	redirs(t_cmd *cmd, int index)
 	{
 		if (tmp->type == REDIR_HEREDOC || tmp->type == REDIR_IN)
 		{
-			if (check_in(cmd, tmp, index))
+			if (check_in(cmd, tmp))
 				return (1);
 		}
 		else if (tmp->type == REDIR_APPEND || tmp->type == REDIR_OUT)
 		{
-			if (check_out(cmd, tmp, index))
+			if (check_out(cmd, tmp))
 				return (1);
 		}
 		tmp = tmp->next;
