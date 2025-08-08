@@ -1,23 +1,12 @@
 #include "../../include/minishell.h"
 
-char	*join_string(char *result, char *temp)
-{
-	char	*new_result;
-
-	new_result = ft_strjoin(result, temp);
-	return (new_result);
-}
-
 char	*add_char(char *result, char c)
 {
-	char	*temp;
-
-	temp = malloc(2);
-	if (!temp)
-		return (NULL);
+	char	temp[2];
+	
 	temp[0] = c;
 	temp[1] = '\0';
-	return (join_string(result, temp));
+	return (ft_strjoin(result, temp));
 }
 
 char	*get_env(t_data *data, char *value)

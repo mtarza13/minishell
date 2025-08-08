@@ -28,6 +28,7 @@ void	pipe_redir(t_cmd *cmd, int index)
 
 int	execute(t_cmd *cmd, t_data *data)
 {
+	
 	if (data->cc == 1)
 		return (execute_single(cmd, data));
 	else

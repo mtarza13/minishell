@@ -80,15 +80,15 @@ char	*expand_arg_list(char **args, t_data *data)
 	int		i;
 
 	i = 0;
-	expanded = expand_args_array(args, data);
+	expanded = expand_arg_array(args, data);
 	if (!expanded)
 		return (NULL);
 	result = ft_strdup("");
 	while (expanded[i])
 	{
 		if (i > 0)
-			result = ft_strjoin_f(result, " ");
-		result = ft_strjoin_f(result, expanded[i]);
+			result = ft_strjoin(result, " ");
+		result = ft_strjoin(result, expanded[i]);
 		i++;
 	}
 	return (result);

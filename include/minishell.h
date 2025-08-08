@@ -152,5 +152,23 @@ void		free_data(void);
 int			list_len(t_env *env);
 int			heredoc_check(t_token *token, t_data *data);
 void		pipe_redir(t_cmd *cmd, int index);
+char	*expand_arg_list(char **args, t_data *data);
 
+// Expansion function declarations (add to minishell.h)
+char	*expand_env_value(char *str, int *i, t_data *data);
+char	*remove_quote(char *str);
+char	*expand_string(char *arg, t_data *data);
+char	**expand_arg_array(char **arg, t_data *data);
+char	*expand_arg_list(char **args, t_data *data);
+char	**split_word(char *str);
+int		split_count_word(char *str);
+int		has_quote(char *str);
+int		count_total_word(char **arg, t_data *data);
+
+// Utility functions
+char	*get_env(t_data *data, char *value);
+char	*add_char(char *result, char c);
+char	*join_string(char *result, char *temp);
+int		is_space(char c);
+void	free_array(char **array);
 #endif

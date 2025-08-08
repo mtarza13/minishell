@@ -53,7 +53,7 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 			args = ft_malloc(sizeof(char *) * 2, 1337);
 			args[0] = input;
 			args[1] = NULL;
-			// input = expand_arg_list(args, data);
+			 input = expand_arg_list(args, data);
 		}
 		write(fd, ft_strjoin(input, "\n"), ft_strlen(input) + 1);
 	}
@@ -86,8 +86,8 @@ int	feed_heredoc(char *file, char *dlimit, int expand, t_data *data)
 	int	pid;
 	int	status;
 
-	// if (expand)
-	// 	dlimit = remove_quotes_advanced(dlimit);
+	 if (expand)
+	 	dlimit = remove_quote(dlimit);
 	signals_heredoc();
 	pid = fork();
 	if (!pid)

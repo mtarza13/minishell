@@ -10,7 +10,7 @@ INCLUDES = -I./$(INCLUDE_DIR) -I./$(LIBFT_DIR)
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBS = -lreadline -I/usr/include/readline -L./libft -lft
 
-VPATH = src src/builtins src/env src/executor src/expand src/heredoc \
+VPATH = src src/builtins src/env src/executor src/expantion src/heredoc \
 		src/lexer src/parser src/signals src/utils
 
 MAIN_SRCS = main.c
@@ -18,8 +18,6 @@ MAIN_SRCS = main.c
 BUILTIN_SRCS = cd.c echo.c env.c exit.c export.c export_utils.c pwd.c unset.c
 
 EXECUTOR_SRCS = ft_exec_builtin.c ft_exec_utils.c ft_exec_utils2.c ft_execute.c ft_pre_exec.c ft_redir.c
-
-LEXER_SRCS =
 
 PARSER_SRCS = prompt.c parser.c scan_token.c util_token.c utils_parse.c valid_syntax.c
 
@@ -31,9 +29,9 @@ SIGNALS_SRCS = signal_handler.c signal_setup.c
 
 HEREDOC_SRCS = ft_heredoc.c
 
-#EXPO_SRCS = exp_expand.c exp_count.c exp_quote.c exp_utils.c exp_extract.c
+EXPO_SRCS = expantion_utils.c extract.c pross_extract.c
 
-SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) $(LEXER_SRCS) \
+SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) $(EXECUTOR_SRCS) \
 	   $(PARSER_SRCS) $(UTILS_SRCS) $(ENV_SRCS) $(SIGNALS_SRCS) $(HEREDOC_SRCS) $(EXPO_SRCS)
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
