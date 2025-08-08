@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:24:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 18:21:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/09 00:07:08 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	heredoc_handle(char *file, char *dlimit, int expand, t_data *data)
 			args = ft_malloc(sizeof(char *) * 2, 1337);
 			args[0] = input;
 			args[1] = NULL;
-			 input = expand_arg_list(args, data);
+			input = expand_arg_list(args, data);
 		}
 		write(fd, ft_strjoin(input, "\n"), ft_strlen(input) + 1);
 	}
@@ -86,8 +86,8 @@ int	feed_heredoc(char *file, char *dlimit, int expand, t_data *data)
 	int	pid;
 	int	status;
 
-	 if (expand)
-	 	dlimit = remove_quote(dlimit);
+	if (expand)
+		dlimit = remove_quote(dlimit);
 	signals_heredoc();
 	pid = fork();
 	if (!pid)

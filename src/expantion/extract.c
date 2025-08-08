@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/09 00:05:17 by mtarza            #+#    #+#             */
+/*   Updated: 2025/08/09 00:05:19 by mtarza           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 int	has_quote(char *str)
@@ -50,7 +62,8 @@ char	**expand_arg_array(char **arg, t_data *data)
 	char	**result;
 	char	**split_words;
 
-	int (idx), (i), (j), (count) = 0;
+	int (idx), i = 0, j = 0, count = 0;
+	idx = 0;
 	count = count_total_word(arg, data);
 	result = ft_malloc(sizeof(char *) * (count + 1), 1337);
 	while (arg[i])

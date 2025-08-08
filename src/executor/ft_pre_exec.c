@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pre_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 18:19:28 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 23:48:58 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	pipe_redir(t_cmd *cmd, int index)
 
 int	execute(t_cmd *cmd, t_data *data)
 {
-	
 	if (data->cc == 1)
 		return (execute_single(cmd, data));
 	else

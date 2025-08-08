@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pross_extract.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/09 00:05:07 by mtarza            #+#    #+#             */
+/*   Updated: 2025/08/09 00:05:09 by mtarza           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 char	*expand_env_value(char *str, int *i, t_data *data)
@@ -109,6 +121,8 @@ char	*expand_string(char *arg, t_data *data)
 	if (!arg)
 		return (NULL);
 	result = ft_strdup("");
+	if (!arg)
+		return (NULL);
 	while (arg[i])
 	{
 		if (arg[i] == '\'' && !d_quote)

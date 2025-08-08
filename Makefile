@@ -31,7 +31,7 @@ HEREDOC_SRCS = ft_heredoc.c
 
 EXPO_SRCS = expantion_utils.c extract.c pross_extract.c
 
-SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) $(EXECUTOR_SRCS) \
+SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) \
 	   $(PARSER_SRCS) $(UTILS_SRCS) $(ENV_SRCS) $(SIGNALS_SRCS) $(HEREDOC_SRCS) $(EXPO_SRCS)
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
