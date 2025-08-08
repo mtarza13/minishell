@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:14 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/08 18:21:08 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:36:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ t_arg	*add_arg(t_arg *head_arg, char *new_cmd)
 
 t_cmd	*parse_cmd(t_token **token, t_data *data)
 {
-	t_cmd	*cmd;
+	t_cmd			*cmd;
+	t_type_token	type;
 
 	cmd = creat_cmd(*token, data);
 	while (*token && (*token)->type != PIPE)
 	{
 		if (is_redir((*token)->type))
 		{
-			t_type_token type;
 			type = (*token)->type;
 			*token = (*token)->next;
 			if (*token == NULL || (*token)->type != WORD)
