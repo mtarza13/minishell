@@ -9,10 +9,9 @@
 /*   Updated: 2025/08/09 00:08:21 by mtarza           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
-t_cmd	*creat_cmd(t_token *token, t_data *data)
+t_cmd	*creat_cmd(t_data *data)
 {
 	t_cmd	*cmd;
 
@@ -74,11 +73,9 @@ t_cmd	*parse_cmd(t_token **token, t_data *data)
 {
 	t_cmd			*cmd;
 	t_type_token	type;
-	char			**expand_args;
 	char			*expand_file;
-	int				i;
 
-	cmd = creat_cmd(*token, data);
+	cmd = creat_cmd(data);
 	while (*token && (*token)->type != PIPE)
 	{
 		if (is_redir((*token)->type))
