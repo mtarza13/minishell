@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 03:42:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 16:13:16 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:16:19 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	execute_multi(t_cmd *cmd, t_data *data)
 			signals_child();
 			if (redirs(cmd, i))
 				free_n_exit(1);
-			(if_redirs(cmd), close_pipes(data));
+			(if_redirs(cmd), close_pipes(data), if_nocmd(cmd));
 			if (is_builtin(cmd->args[0]))
 			{
 				stat = execute_builtin(cmd->args, data);
@@ -75,7 +75,7 @@ int	execute_single(t_cmd *cmd, t_data *data)
 			signals_child();
 			if (redirs(cmd, -1))
 				free_n_exit(1);
-			if_redirs(cmd);
+			(if_redirs(cmd), if_nocmd(cmd));
 			file = filename(cmd->args[0], data);
 			execve(file, cmd->args, data->envp);
 			free_n_exit(1);

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 16:15:43 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:15:10 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void				free_data(void);
 void				pipe_redir(t_cmd *cmd, int index);
 void				p_syntax_err(char *s);
 void				free_array(char **array);
+void				if_nocmd(t_cmd *cmd);
 
 t_env				*init_env(char **env);
 t_env				*new_env_node(char *key, char *value);
