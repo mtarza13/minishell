@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:09:52 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 03:47:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/09 20:42:26 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,11 @@ static void	error_n_exit(int perr, char *cmd, int err)
 
 static char	*get_cmd_path(char *path, char *cmd)
 {
-	char		**arr;
-	char		*c_path;
-	struct stat	b;
-	int			i;
-
+	char **(arr), *(c_path), *(old_path);
+	struct stat (b);
+	int (i);
 	i = -1;
+	old_path = NULL;
 	arr = ft_split(path, ':');
 	while (arr[++i])
 	{
@@ -82,9 +81,11 @@ static char	*get_cmd_path(char *path, char *cmd)
 			if (!access(c_path, X_OK))
 				return (c_path);
 			else
-				error_n_exit(1, c_path, PERMISSION_DENIED);
+				old_path = c_path;
 		}
 	}
+	if (old_path)
+		error_n_exit(1, old_path, PERMISSION_DENIED);
 	error_n_exit(3, cmd, COMMAND_NOT_FOUND);
 	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:00:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 01:22:44 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/09 20:40:05 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static void	getcwd_perror(void)
 int	ft_cd(char **args, t_data *data)
 {
 	char *(path), *(pwd);
+	int (status);
+	status = 0;
 	if (arg_count(args) > 2)
 		return (ft_printf("minishell: cd: too many arguments\n"), 1);
 	if (args[1] && access(args[1], F_OK) == -1)
@@ -91,12 +93,15 @@ int	ft_cd(char **args, t_data *data)
 		return (1);
 	update_env(data, "OLDPWD", get_env_value("PWD", data));
 	if (chdir(path) == -1)
+	{
 		ft_printf("minishell: cd: %s: Permission denied\n", path);
+		status = 1;
+	}
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 		update_env(data, "PWD", pwd);
 	else if (!pwd)
 		return (getcwd_perror(), 1);
 	free(pwd);
-	return (0);
+	return (status);
 }

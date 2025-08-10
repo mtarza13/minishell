@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 03:42:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/09 00:55:35 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/09 20:47:35 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	execute_multi(t_cmd *cmd, t_data *data)
 	return (wait_childs(data, pid));
 }
 
-void	exec_builtin(t_cmd *cmd)
+int	exec_builtin(t_cmd *cmd)
 {
 	int	new_out;
 	int	status;
@@ -55,10 +55,10 @@ void	exec_builtin(t_cmd *cmd)
 		(dup2(cmd->out, STDOUT_FILENO), close(cmd->out));
 	}
 	if (!status)
-		execute_builtin(cmd->args, cmd->data);
+		status = execute_builtin(cmd->args, cmd->data);
 	if (f)
 		(dup2(new_out, STDOUT_FILENO), close(new_out));
-	cmd->data->status = status;
+	return (status);
 }
 
 int	execute_single(t_cmd *cmd, t_data *data)
@@ -66,7 +66,7 @@ int	execute_single(t_cmd *cmd, t_data *data)
 	int (pid), status;
 	char *(file);
 	if (is_builtin(cmd->args[0]))
-		exec_builtin(cmd);
+		return (exec_builtin(cmd));
 	else
 	{
 		pid = fork();

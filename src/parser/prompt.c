@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 18:28:44 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/09 20:46:46 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,29 @@ t_cmd	*build_commands(t_cmd *cmd)
 
 void	handle_line(char *line, t_data *data)
 {
-	t_token	*tokens;
-	t_cmd	*cmd;
-
+	t_token *(tokens);
+	t_cmd *(cmd);
 	cmd = NULL;
 	tokens = tokenizer(line);
 	free(line);
-	if (tokens && valid_input(tokens, data))
+	if (tokens)
 	{
-		if (!heredoc_check(tokens, data))
-			return (clean_up(tokens), (void)0);
-		cmd = parser(tokens, data);
-		if (cmd)
+		if (valid_input(tokens, data))
 		{
-			data->cc = count_cmds(cmd);
-			cmd = build_commands(cmd);
-			data->envp = ft_envp(data->env);
-			signals_execute();
-			data->status = execute(cmd, data);
+			if (!heredoc_check(tokens, data))
+				return (clean_up(tokens), (void)0);
+			cmd = parser(tokens, data);
+			if (cmd)
+			{
+				data->cc = count_cmds(cmd);
+				cmd = build_commands(cmd);
+				data->envp = ft_envp(data->env);
+				signals_execute();
+				data->status = execute(cmd, data);
+			}
 		}
+		else
+			data->status = 2;
 	}
 	clean_up(tokens);
 }
