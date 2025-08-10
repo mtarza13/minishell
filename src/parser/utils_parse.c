@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:14 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/10 20:46:13 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 22:07:32 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_cmd	*parse_cmd(t_token **token, t_data *data)
 			cmd->redir = add_redir(cmd->redir, creat_redir(type, expand_file));
 			*token = (*token)->next;
 		}
-		else if (check_word_utils(token, data, cmd) == 1)
+		else if (check_word_utils(token, data, cmd))
 			continue ;
 		else
 			break ;

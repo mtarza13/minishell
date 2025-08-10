@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:54:05 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/09 00:56:04 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/10 22:31:04 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	redirs(t_cmd *cmd, int index)
 	t_redir	*tmp;
 
 	tmp = cmd->redir;
-	if (!tmp && index != -1 && cmd->data->cc > 1)
+	if (index != -1 && cmd->data->cc > 1)
 		pipe_redir(cmd, index);
 	while (tmp)
 	{

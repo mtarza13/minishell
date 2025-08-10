@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:06:42 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 18:11:02 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:54:21 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static long	ft_exit_input(char *s, long *status)
 		i++;
 	}
 	ft_strtol(s);
-	if ((errno == ERANGE) || f)
+	if ((errno == ERANGE) || f || !s[0])
 	{
 		ft_printf("minishell: exit: %s: numeric argument required\n", s);
 		*status = 2;

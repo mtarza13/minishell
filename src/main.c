@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 09:58:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 16:03:23 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 22:22:29 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_data(void)
 
 void	init_data(t_data *data, char **envp)
 {
-	rl_outstream = stderr;
 	data->status = 0;
 	data->pipes = false;
 	data->env = init_env(envp);

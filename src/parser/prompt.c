@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 15:38:07 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 22:17:29 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ void	minishell(t_data *data)
 		else
 			free(input);
 	}
-	ft_printf("exit\n");
+	// ft_printf("exit\n");
 }

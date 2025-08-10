@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 00:05:17 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/09 00:05:19 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/10 21:47:10 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char	**expand_arg_array(char **arg, t_data *data)
 		else
 		{
 			split_words = split_word(remove_quote(expand_string(arg[i], data)));
+			if (!split_words)
+				return (NULL);
 			j = 0;
 			while (split_words[j])
 			{
