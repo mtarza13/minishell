@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pross_extract.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 00:05:07 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/09 00:05:09 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/10 14:54:38 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*remove_quote(char *str)
 
 	if (!str)
 		return (NULL);
-	result = ft_malloc(ft_strlen(str) + 1, 69);
+	result = ft_malloc(ft_strlen(str) + 1, 1337);
 	i = 0;
 	j = 0;
 	s_quote = 0;

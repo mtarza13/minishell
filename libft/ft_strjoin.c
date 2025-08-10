@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:50:56 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:51:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 14:53:32 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	result = ft_malloc(len1 + len2 + 1, 69);
+	result = ft_malloc(len1 + len2 + 1, 1337);
 	i = 0;
 	while (i < len1)
 	{

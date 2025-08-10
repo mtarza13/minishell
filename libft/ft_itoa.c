@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:49:27 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:49:59 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 14:53:08 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_itoa(int n)
 
 	len = get_len(n);
 	num = n;
-	str = ft_malloc(len + 1, 69);
+	str = ft_malloc(len + 1, 1337);
 	str[len] = '\0';
 	if (num == 0)
 		str[0] = '0';

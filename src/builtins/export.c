@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 01:23:05 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/10 14:53:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	print_sorted_env(t_data *data)
 		count++;
 		tmp = tmp->next;
 	}
-	env_arr = ft_malloc(sizeof(t_env *) * count, 32);
+	env_arr = ft_malloc(sizeof(t_env *) * count, 1337);
 	tmp = data->env;
 	i = 0;
 	while (tmp)

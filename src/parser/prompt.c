@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/09 20:46:46 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 14:54:53 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_cmd	*build_commands(t_cmd *cmd)
 			i++;
 			tmp_arg = tmp_arg->next;
 		}
-		tmp_cmd->args = ft_malloc(sizeof(char *) * (i + 1), 42);
+		tmp_cmd->args = ft_malloc(sizeof(char *) * (i + 1), 1337);
 		i = 0;
 		tmp_arg = tmp_cmd->arg;
 		while (tmp_arg)

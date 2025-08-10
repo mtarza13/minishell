@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:25:13 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/04 03:25:20 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/10 14:54:05 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**env_to_array(t_data *data)
 	tmp = data->env;
 	if (!data->env || !data->envp)
 		return (NULL);
-	array = ft_malloc(sizeof(char *) * (env_count(data->env) + 1), 69);
+	array = ft_malloc(sizeof(char *) * (env_count(data->env) + 1), 1337);
 	i = 0;
 	while (tmp)
 	{

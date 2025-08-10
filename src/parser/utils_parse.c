@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:14 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/09 20:36:13 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 14:55:10 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmd	*creat_cmd(t_data *data)
 {
 	t_cmd	*cmd;
 
-	cmd = ft_malloc(sizeof(t_cmd), 42);
+	cmd = ft_malloc(sizeof(t_cmd), 1337);
 	cmd->data = data;
 	cmd->arg = NULL;
 	cmd->args = NULL;
@@ -31,7 +31,7 @@ t_redir	*creat_redir(t_type_token type, char *file)
 {
 	t_redir	*redir;
 
-	redir = ft_malloc(sizeof(t_redir), 42);
+	redir = ft_malloc(sizeof(t_redir), 1337);
 	redir->file = file;
 	redir->type = type;
 	redir->next = NULL;
@@ -56,7 +56,7 @@ t_arg	*add_arg(t_arg *head_arg, char *new_cmd)
 	t_arg	*node;
 	t_arg	*tmp;
 
-	node = ft_malloc(sizeof(t_arg), 42);
+	node = ft_malloc(sizeof(t_arg), 1337);
 	if (new_cmd == NULL)
 		return (head_arg);
 	node->value = new_cmd;

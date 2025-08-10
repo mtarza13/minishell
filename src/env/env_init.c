@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:22:36 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/30 04:24:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 14:53:59 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ char	**ft_envp(t_env *env)
 
 	i = 0;
 	tmp = env;
-	envp = (char **)ft_malloc(sizeof(char *) * list_len(env), 43);
+	envp = (char **)ft_malloc(sizeof(char *) * list_len(env), 1337);
 	while (tmp)
 	{
 		envp[i] = (char *)ft_malloc(sizeof(char) * (ft_strlen(tmp->key)
-					+ ft_strlen(tmp->value) + 2), 65);
+					+ ft_strlen(tmp->value) + 2), 1337);
 		ft_strncpy(envp[i], tmp->key, ft_strlen(tmp->key) + 1);
 		ft_strncat(envp[i], "=", ft_strlen(tmp->key) + 2);
 		ft_strncat(envp[i], tmp->value, ft_strlen(tmp->value)
@@ -55,7 +55,7 @@ t_env	*new_env_node(char *key, char *value)
 {
 	t_env	*new;
 
-	new = ft_malloc(sizeof(t_env), -42);
+	new = ft_malloc(sizeof(t_env), 1337);
 	new->key = ft_strdup(key);
 	if (value)
 		new->value = ft_strdup(value);

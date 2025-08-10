@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:56:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/07/28 21:00:21 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 14:53:36 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strndup(const char *s, size_t n)
 	len = ft_strlen(s);
 	if (len > n)
 		len = n;
-	dup = (char *)ft_malloc(sizeof(char) * (len + 1), 42);
+	dup = (char *)ft_malloc(sizeof(char) * (len + 1), 1337);
 	ft_memcpy(dup, s, len);
 	dup[len] = '\0';
 	return (dup);
