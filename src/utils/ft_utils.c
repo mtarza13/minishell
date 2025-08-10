@@ -6,11 +6,16 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:40:34 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 15:33:06 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:02:42 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	p_syntax_err(char *s)
+{
+	ft_printf("minishell: syntax error near unexpected token `%s'\n", s);
+}
 
 int	ft_isspace(int c)
 {

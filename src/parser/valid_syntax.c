@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:56:59 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/08 18:21:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:09:27 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,13 @@ int	is_redir_check(t_token *tmp)
 		if (tmp->next == NULL || tmp->next->type != WORD)
 		{
 			if (tmp->next == NULL)
-			{
-				ft_printf("syntax error near unexpected token `newline'\n");
-				return (0);
-			}
+				return (p_syntax_err("newline"), 0);
 			else
-			{
-				ft_printf("syntax error near unexpected token `%s'\n",
-					tmp->next->value);
-				return (0);
-			}
+				return (p_syntax_err(tmp->next->value), 0);
 		}
 		if (is_redir(tmp->type) && tmp->next && is_operator(tmp->next->type)
 			&& tmp->next->type != WORD)
-		{
-			ft_printf("syntax error near unexpected token `%s'\n",
-				tmp->next->value);
-			return (0);
-		}
+			return (p_syntax_err(tmp->next->value), 0);
 	}
 	return (1);
 }
@@ -65,18 +54,16 @@ int	valid_input(t_token *token, t_data *data)
 	if (tmp == NULL)
 		return (1);
 	if (tmp->type == PIPE)
-		return (ft_printf("syntax error near unexpected token `|'\n"), 0);
+		return (p_syntax_err("|"), 0);
 	while (tmp)
 	{
 		if (tmp->type == PIPE)
 		{
 			data->pipes = true;
 			if (tmp->next && tmp->next->type == PIPE)
-				return (ft_printf("syntax error near unexpected token `|'\n"),
-					0);
+				return (p_syntax_err("|"), 0);
 			if (tmp->next == NULL)
-				return (ft_printf("syntax error  unexpected token `newline'\n"), \
-					0);
+				return (p_syntax_err("newline"), 0);
 		}
 		if (!is_redir_check(tmp))
 			return (0);

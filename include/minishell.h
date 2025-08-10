@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/09 00:06:19 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/10 15:05:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int			list_len(t_env *env);
 int			heredoc_check(t_token *token, t_data *data);
 void		pipe_redir(t_cmd *cmd, int index);
 char		*expand_arg_list(char **args, t_data *data);
+void		p_syntax_err(char *s);
 
 char		*expand_env_value(char *str, int *i, t_data *data);
 char		*remove_quote(char *str);
