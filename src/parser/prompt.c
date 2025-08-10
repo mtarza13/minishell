@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 14:54:53 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:38:07 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	handle_line(char *line, t_data *data)
 		}
 		else
 			data->status = 2;
+		clean_up(tokens);
 	}
-	clean_up(tokens);
 }
 
 void	minishell(t_data *data)
@@ -96,7 +96,7 @@ void	minishell(t_data *data)
 		input = readline("% ");
 		if (g_signal_received)
 		{
-			data->status = CTRL_C_EXIT;
+			data->status = g_signal_received;
 			g_signal_received = 0;
 		}
 		if (!input)
