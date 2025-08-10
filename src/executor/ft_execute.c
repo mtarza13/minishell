@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 03:42:22 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/09 20:47:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 16:13:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	execute_multi(t_cmd *cmd, t_data *data)
 			}
 			file = filename(cmd->args[0], data);
 			execve(file, cmd->args, data->envp);
-			free_n_exit(0);
+			free_n_exit(1);
 		}
 		cmd = cmd->next;
 	}
@@ -78,13 +78,13 @@ int	execute_single(t_cmd *cmd, t_data *data)
 			if_redirs(cmd);
 			file = filename(cmd->args[0], data);
 			execve(file, cmd->args, data->envp);
-			free_n_exit(0);
+			free_n_exit(1);
 		}
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			return (exit_status(status), WEXITSTATUS(status));
+			return (exit_status(status, 0), WEXITSTATUS(status));
 		if (WIFSIGNALED(status))
-			return (exit_status(status), 128 + WTERMSIG(status));
+			return (exit_status(status, 0), 128 + WTERMSIG(status));
 	}
 	return (0);
 }

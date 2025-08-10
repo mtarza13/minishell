@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 00:29:08 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 15:37:53 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:42:53 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,4 @@ void	heredoc_sigint_handle(int sig)
 {
 	(void)sig;
 	g_signal_received = CTRL_C_EXIT;
-}
-
-void	signals_execute_child(int sig)
-{
-	ft_malloc(0, 0);
-	exit(sig + 128);
 }

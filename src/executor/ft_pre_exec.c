@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pre_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 10:08:28 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 23:48:58 by mtarza           ###   ########.fr       */
+/*   Updated: 2025/08/10 16:15:21 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_status(int status)
+void	exit_status(int status, int f)
 {
-	if ((WTERMSIG(status) + 128) == 131 || (WTERMSIG(status) + 128) == 130)
+	if (f || (WTERMSIG(status) + 128) == 131 || (WTERMSIG(status) + 128) == 130)
 		ft_printf("\n");
 }
 

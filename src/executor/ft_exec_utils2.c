@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 04:54:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 14:54:23 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 16:12:22 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,24 @@ void	open_pipes(t_cmd *cmd)
 
 int	wait_childs(t_data *data, int *pid)
 {
-	int	i;
-	int	status;
-
-	i = -1;
+	int *(status), i = -1, f = 0, idx = data->cc - 1;
 	close_pipes(data);
-	while (++i < data->cc && waitpid(pid[i], &status, 0) > 0)
+	status = ft_malloc(sizeof(int) * data->cc, 1337);
+	while (++i < data->cc && waitpid(pid[i], &status[i], 0) > 0)
 		;
-	if (WIFEXITED(status))
-		return (exit_status(status), WEXITSTATUS(status));
-	if (WIFSIGNALED(status))
-		return (exit_status(status), 128 + WTERMSIG(status));
+	i = -1;
+	while (++i < data->cc)
+	{
+		if (WIFSIGNALED(status[i]))
+		{
+			f = 1;
+			break ;
+		}
+	}
+	if (WIFEXITED(status[idx]))
+		return (exit_status(status[idx], f), WEXITSTATUS(status[idx]));
+	if (WIFSIGNALED(status[idx]))
+		return (exit_status(status[idx], f), 128 + WTERMSIG(status[idx]));
 	return (0);
 }
 
