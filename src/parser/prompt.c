@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/11 21:43:05 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/11 21:44:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ void	handle_line(char *line, t_data *data)
 	t_cmd *(cmd);
 	cmd = NULL;
 	tokens = tokenizer(line);
-	if (!tokens || !line)
-	{
-		free(line);
-		data->status = 2;
-		return ;
-	}
 	free(line);
 	if (tokens)
 	{
