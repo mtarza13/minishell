@@ -29,8 +29,6 @@ int	check_word_utils(t_token **token, t_data *data, t_cmd *cmd)
 			while (expand_args[i])
 				cmd->arg = add_arg(cmd->arg, expand_args[i++]);
 		}
-		else
-			cmd->arg = add_arg(cmd->arg, (*token)->value);
 		(*token) = (*token)->next;
 	}
 	else

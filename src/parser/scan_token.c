@@ -54,14 +54,14 @@ t_token	*tokenize_word(char *line, t_token *token, int *i)
 	start = *i;
 	while (line[*i])
 	{
-		if (line[*i] == '\'')
+		if (line[*i] == '\'' && !d_quote)
 			s_quote = !s_quote;
-		if (line[*i] == '"')
+		if (line[*i] == '"' && !s_quote)
 			d_quote = !d_quote;
+		(*i)++;
 		if (s_quote == 0 && d_quote == 0 && (ft_isspace(line[*i])
 				|| is_operater_char(line[*i])))
 			break ;
-		(*i)++;
 	}
 	if (s_quote || d_quote)
 	{
@@ -92,7 +92,11 @@ t_token	*tokenizer(char *line)
 		if (is_operater_char(line[i]))
 			token = tokenize_op(line, token, &i);
 		else
+			{
 			token = tokenize_word(line, token, &i);
+			if (!token) 
+				return (NULL);
+			}
 	}
 	return (token);
 }

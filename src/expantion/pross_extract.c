@@ -131,8 +131,10 @@ char	*expand_string(char *arg, t_data *data)
 			result = add_char(result, arg[i++]);
 		}
 		else if (arg[i] == '"' && !s_quote)
-			(1) && (d_quote = !d_quote) && \
-			(result = add_char(result, arg[i++]));
+		{ 
+			d_quote = !d_quote;
+			result = add_char(result, arg[i++]);
+		}
 		else if (arg[i] == '$' && !s_quote)
 			result = ft_strjoin(result, expand_env_value(arg, &i, data));
 		else

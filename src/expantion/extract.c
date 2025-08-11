@@ -65,6 +65,8 @@ char	**expand_arg_array(char **arg, t_data *data)
 	int (idx), i = 0, j = 0, count = 0;
 	idx = 0;
 	count = count_total_word(arg, data);
+	if(count == 0)
+		return (NULL);
 	result = ft_malloc(sizeof(char *) * (count + 1), 1337);
 	while (arg[i])
 	{

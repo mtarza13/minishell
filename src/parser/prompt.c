@@ -62,6 +62,11 @@ void	handle_line(char *line, t_data *data)
 	t_cmd *(cmd);
 	cmd = NULL;
 	tokens = tokenizer(line);
+	if(!tokens || !line )
+	{
+		free(line),data->status = 2;
+		return;
+	}
 	free(line);
 	if (tokens)
 	{
