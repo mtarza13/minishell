@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:32:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 14:53:44 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 23:11:24 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,7 @@ int	ft_export(char **args, t_data *data)
 		return (print_sorted_env(data), 0);
 	while (args[i])
 	{
-		if (!((args[i][0] >= 'A' && args[i][0] <= 'Z') ||
-			(args[i][0] >= 'a' && args[i][0] <= 'z') ||
-			(args[i][0] == '_')))
+		if (!is_valid_identifier(args[i]))
 		{
 			ft_printf("minishell: export: `%s': not a valid identifier\n", \
 				args[i]);

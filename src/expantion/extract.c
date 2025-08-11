@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 00:05:17 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/10 21:47:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/11 21:35:39 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ int	count_total_word(char **arg, t_data *data)
 
 char	**expand_arg_array(char **arg, t_data *data)
 {
-	char	**result;
-	char	**split_words;
-
-	int (idx), i = 0, j = 0, count = 0;
+	char **(result), **(split_words);
+	int (idx), i = 0, j = 0, count = count_total_word(arg, data);
 	idx = 0;
-	count = count_total_word(arg, data);
+	if (count == 0)
+		return (NULL);
 	result = ft_malloc(sizeof(char *) * (count + 1), 1337);
 	while (arg[i])
 	{
@@ -77,10 +76,7 @@ char	**expand_arg_array(char **arg, t_data *data)
 				return (NULL);
 			j = 0;
 			while (split_words[j])
-			{
-				result[idx++] = ft_strdup(split_words[j]);
-				j++;
-			}
+				result[idx++] = ft_strdup(split_words[j++]);
 		}
 		i++;
 	}

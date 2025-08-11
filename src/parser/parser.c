@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:57:57 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/10 22:09:36 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/11 09:52:31 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	check_word_utils(t_token **token, t_data *data, t_cmd *cmd)
 			while (expand_args[i])
 				cmd->arg = add_arg(cmd->arg, expand_args[i++]);
 		}
-		else
-			cmd->arg = add_arg(cmd->arg, (*token)->value);
 		(*token) = (*token)->next;
 	}
 	else

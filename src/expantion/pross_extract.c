@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 00:05:07 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/10 14:54:38 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/11 21:36:53 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,6 @@ char	*expand_string(char *arg, t_data *data)
 	if (!arg)
 		return (NULL);
 	result = ft_strdup("");
-	if (!arg)
-		return (NULL);
 	while (arg[i])
 	{
 		if (arg[i] == '\'' && !d_quote)
@@ -131,8 +129,10 @@ char	*expand_string(char *arg, t_data *data)
 			result = add_char(result, arg[i++]);
 		}
 		else if (arg[i] == '"' && !s_quote)
-			(1) && (d_quote = !d_quote) && \
-			(result = add_char(result, arg[i++]));
+		{
+			d_quote = !d_quote;
+			result = add_char(result, arg[i++]);
+		}		
 		else if (arg[i] == '$' && !s_quote)
 			result = ft_strjoin(result, expand_env_value(arg, &i, data));
 		else

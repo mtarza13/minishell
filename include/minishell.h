@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 02:46:50 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 21:15:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/10 23:13:21 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int					has_quote(char *str);
 int					count_total_word(char **arg, t_data *data);
 int					is_space(char c);
 int					check_word_utils(t_token **token, t_data *data, t_cmd *cmd);
+int					is_valid_identifier(char *s);
 
 char				**ft_envp(t_env *env);
 char				*filename(char *cmd, t_data *data);

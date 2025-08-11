@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 04:17:11 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/10 22:17:29 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/11 21:43:05 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,27 @@ t_cmd	*build_commands(t_cmd *cmd)
 	return (cmd);
 }
 
+static void	calibrating_cmds(t_cmd *cmd, t_data *data)
+{
+	data->cc = count_cmds(cmd);
+	cmd = build_commands(cmd);
+	data->envp = ft_envp(data->env);
+	signals_execute();
+	data->status = execute(cmd, data);
+}
+
 void	handle_line(char *line, t_data *data)
 {
 	t_token *(tokens);
 	t_cmd *(cmd);
 	cmd = NULL;
 	tokens = tokenizer(line);
+	if (!tokens || !line)
+	{
+		free(line);
+		data->status = 2;
+		return ;
+	}
 	free(line);
 	if (tokens)
 	{
@@ -71,13 +86,7 @@ void	handle_line(char *line, t_data *data)
 				return (clean_up(tokens), (void)0);
 			cmd = parser(tokens, data);
 			if (cmd)
-			{
-				data->cc = count_cmds(cmd);
-				cmd = build_commands(cmd);
-				data->envp = ft_envp(data->env);
-				signals_execute();
-				data->status = execute(cmd, data);
-			}
+				calibrating_cmds(cmd, data);
 		}
 		else
 			data->status = 2;
@@ -106,5 +115,5 @@ void	minishell(t_data *data)
 		else
 			free(input);
 	}
-	// ft_printf("exit\n");
+	ft_printf("exit\n");
 }
