@@ -1,40 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util_token.c                                       :+:      :+:    :+:   */
+/*   ft_signal_setup.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 14:57:26 by mtarza            #+#    #+#             */
-/*   Updated: 2025/08/10 14:54:56 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/07/31 00:28:54 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/08/12 20:17:05 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token	*creat_token(char *line, t_type_token type)
+void	setup_signals(void)
 {
-	t_token	*token;
-
-	token = ft_malloc(sizeof(t_token), 1337);
-	token->type = type;
-	token->value = line;
-	token->next = NULL;
-	return (token);
+	signal(SIGINT, sigint_handle);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-t_token	*add_token(t_token *token, t_token *new)
+void	signals_heredoc(void)
 {
-	t_token	*t;
+	signal(SIGINT, heredoc_sigint_handle);
+	signal(SIGQUIT, SIG_IGN);
+}
 
-	if (token == NULL)
-	{
-		token = new;
-		return (new);
-	}
-	t = token;
-	while (t->next)
-		t = t->next;
-	t->next = new;
-	return (token);
+void	signals_heredoc_child(void)
+{
+	signal(SIGINT, heredoc_child_handle);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signals_execute(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signals_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }

@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 OBJ_DIR = obj
 LIBFT_DIR = libft
@@ -15,21 +15,21 @@ VPATH = src src/builtins src/env src/executor src/expantion src/heredoc \
 
 MAIN_SRCS = main.c
 
-BUILTIN_SRCS = cd.c echo.c env.c exit.c export.c export_utils.c pwd.c unset.c
+BUILTIN_SRCS = ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_export_utils.c ft_pwd.c ft_unset.c
 
 EXECUTOR_SRCS = ft_exec_builtin.c ft_exec_utils.c ft_exec_utils2.c ft_execute.c ft_pre_exec.c ft_redir.c
 
-PARSER_SRCS = prompt.c parser.c scan_token.c util_token.c utils_parse.c valid_syntax.c
+PARSER_SRCS = ft_prompt.c ft_parser.c ft_scan_token.c ft_util_token.c ft_utils_parse.c ft_valid_syntax.c
 
-UTILS_SRCS = ft_malloc.c ft_printf.c ft_utils.c memory_utils.c
+UTILS_SRCS = ft_malloc.c ft_printf.c ft_utils.c ft_memory_utils.c
 
-ENV_SRCS = env_init.c env_utils.c
+ENV_SRCS = ft_env_init.c ft_env_utils.c
 
-SIGNALS_SRCS = signal_handler.c signal_setup.c
+SIGNALS_SRCS = ft_signal_handler.c ft_signal_setup.c
 
 HEREDOC_SRCS = ft_heredoc.c
 
-EXPO_SRCS = expantion_utils.c extract.c pross_extract.c
+EXPO_SRCS = ft_expantion_utils.c ft_extract.c ft_pross_extract.c
 
 SRCS = $(MAIN_SRCS) $(BUILTIN_SRCS) $(EXECUTOR_SRCS) \
 	   $(PARSER_SRCS) $(UTILS_SRCS) $(ENV_SRCS) $(SIGNALS_SRCS) $(HEREDOC_SRCS) $(EXPO_SRCS)

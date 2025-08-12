@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_memory_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtarza <mtarza@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 13:32:27 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/08 01:23:08 by mtarza           ###   ########.fr       */
+/*   Created: 2025/07/31 02:43:22 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/08/12 20:17:31 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_pwd(t_data *data)
+void	clean_up(t_token *token)
 {
-	ft_putstr_fd(ft_strjoin(get_env_value("PWD", data), "\n"), 1);
-	return (0);
+	while (token)
+	{
+		if (token->type == REDIR_HEREDOC)
+		{
+			if (token->next)
+				unlink(token->next->value);
+		}
+		token = token->next;
+	}
 }
